@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Main</title>
+    <link rel="stylesheet" type="text/css" href="css/index-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
+    <script src="js/scripts.js"></script>
+</head>
+<body>
+<header>
+    <div class="header-flex-box">
+        <div class="header-left">
+            <div class="header-logo-col">
+                <a class="header-logo-ref" href="index.html">
+                    <img class="img-logo" src="images/logo-white.png" alt="header-logo">
+                </a>
+            </div>
+            <nav class="header-menu">
+                <div class="menu-col ">
+                    <a href="index.html" class="menu-href menu-href-active">
+                        <div></div>
+                        HOME</a>
+                </div>
+                <div class="menu-col">
+                    <a href="about.html" class="menu-href">
+                        <div></div>
+                        ABOUT</a>
+                </div>
+                <div class="menu-col">
+                    <a href="contact.html" class="menu-href">
+                        <div></div>
+                        CONTACT US</a>
+                </div>
+                <div class="menu-col">
+                    <a href="error.html" class="menu-href">
+                        <div></div>
+                        ERROR</a>
+                </div>
+            </nav>
+        </div>
+        <div class="header-add-col">
+            <button onclick="document.location='add-post.html'" class="header-add-button">
+                ADD POST
+            </button>
+        </div>
+        <div class="header-log-col">
+            <div class="header-username-col"> UserName</div>
+
+            <button class="header-button" onclick="document.location='sign.html'"> SIGN IN </button>
+            <!--            <a class="header-button" href=""> SIGN OUT </a>-->
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="main-container">
+        <div class="filter-col">
+            <form class="filter-fieldset">
+                <div class="filter-head"> Filter by</div>
+                <ul class="filter-ul">
+                    <li>
+                        <label class="filter-label">
+                            <div>
+                                <input type="checkbox" class="filter-checkbox">
+                                <span>Date</span>
+                            </div>
+                            <input name="filter-input-date" type="date" class="filter-input">
+                        </label>
+                    </li>
+                    <li>
+                        <label class="filter-label">
+                            <div>
+                                <input  type="checkbox" class="filter-checkbox">
+                                <span>Author</span>
+                            </div>
+                            <input name="filter-input-author" type="text" class="filter-input" placeholder="Username">
+                        </label>
+                    </li>
+                    <li>
+                        <label class="filter-label">
+                            <div>
+                                <input  type="checkbox" class="filter-checkbox" placeholder="Hashtag">
+                                <span>Hashtag</span>
+                            </div>
+                            <input name="filter-input-hashtag" type="text" class="filter-input" placeholder="Hashtag">
+                        </label>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <div class="main-col">
+            <div class="main-box-inline-block">
+                <div class="card-box">
+                    <div class="card-main-col">
+                        <div class="card-main-box col-full">
+                            <div class="card-img-box">
+<!--                                <img src="images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                            </div>
+                            <div class="card-text-box">
+                                <ul class="card-text-top font-card">
+                                    <li><span>Model:</span> F-35 Lightning II</li>
+                                    <li><span>Type:</span> fighter-bomber</li>
+                                    <li><span>Length:</span> 15.57</li>
+                                    <li><span>Wingspan:</span> 10.67</li>
+                                    <li><span>Height:</span> 4.38</li>
+                                    <li><span>Origin:</span> USA</li>
+                                    <li><span>Crew:</span> 1</li>
+                                    <li><span>Max speed:</span> 1930 km/h</li>
+                                    <li><span>Flying dist:</span> 2200km</li>
+                                    <li><span>Price:</span> 84300000$</li>
+                                    <li>
+                                        <hr class="card-text-hr col-full">
+                                    </li>
+                                </ul>
+                                <div class="card-text-bottom-box">
+                                    <ul class="card-text-bottom-left">
+                                        <li class="card-text-user"> username</li>
+                                        <li class="card-id"> id: 123456</li>
+                                        <li class="card-text-time"> 18.02.2021 17:34:09</li>
+                                    </ul>
+
+                                    <input id="like-check" type="checkbox">
+                                    <label for="like-check"></label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-hashtags col-full">
+                            #first #second#third #lkerngerihglergeirhgeruhgelruihgeruigheurhgleiheiurgeiurgherighri
+                        </div>
+                    </div>
+
+                    <div class="card-buttons-col">
+                        <button onclick="document.location='edit.html'" class="card-edit-button"> </button>
+                        <button  class=" card-delete-button"></button>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-main-col">
+                        <div class="card-main-box col-full">
+                            <div class="card-img-box">
+                                <!--                                <img src="images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                            </div>
+                            <div class="card-text-box">
+                                <ul class="card-text-top font-card">
+                                    <li><span>Model:</span> F-35 Lightning II</li>
+                                    <li><span>Type:</span> fighter-bomber</li>
+                                    <li><span>Length:</span> 15.57</li>
+                                    <li><span>Wingspan:</span> 10.67</li>
+                                    <li><span>Height:</span> 4.38</li>
+                                    <li><span>Origin:</span> USA</li>
+                                    <li><span>Crew:</span> 1</li>
+                                    <li><span>Max speed:</span> 1930 km/h</li>
+                                    <li><span>Flying dist:</span> 2200km</li>
+                                    <li><span>Price:</span> 84300000$</li>
+                                    <li>
+                                        <hr class="card-text-hr col-full">
+                                    </li>
+                                </ul>
+                                <div class="card-text-bottom-box">
+                                    <ul class="card-text-bottom-left">
+                                        <li class="card-text-user"> username</li>
+                                        <li class="card-id"> id: 123456</li>
+                                        <li class="card-text-time"> 18.02.2021 17:34:09</li>
+                                    </ul>
+
+                                    <input id="like-check" type="checkbox">
+                                    <label for="like-check"></label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-hashtags col-full">
+                            #first #second#third #lkerngerihglergeirhgeruhgelruihgeruigheurhgleiheiurgeiurgherighri
+                        </div>
+                    </div>
+
+                    <div class="card-buttons-col">
+                        <button onclick="document.location='edit.html'" class="card-edit-button"> </button>
+                        <button  class=" card-delete-button"></button>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-main-col">
+                        <div class="card-main-box col-full">
+                            <div class="card-img-box">
+                                <!--                                <img src="images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                            </div>
+                            <div class="card-text-box">
+                                <ul class="card-text-top font-card">
+                                    <li><span>Model:</span> F-35 Lightning II</li>
+                                    <li><span>Type:</span> fighter-bomber</li>
+                                    <li><span>Length:</span> 15.57</li>
+                                    <li><span>Wingspan:</span> 10.67</li>
+                                    <li><span>Height:</span> 4.38</li>
+                                    <li><span>Origin:</span> USA</li>
+                                    <li><span>Crew:</span> 1</li>
+                                    <li><span>Max speed:</span> 1930 km/h</li>
+                                    <li><span>Flying dist:</span> 2200km</li>
+                                    <li><span>Price:</span> 84300000$</li>
+                                    <li>
+                                        <hr class="card-text-hr col-full">
+                                    </li>
+                                </ul>
+                                <div class="card-text-bottom-box">
+                                    <ul class="card-text-bottom-left">
+                                        <li class="card-text-user"> username</li>
+                                        <li class="card-id"> id: 123456</li>
+                                        <li class="card-text-time"> 18.02.2021 17:34:09</li>
+                                    </ul>
+
+                                    <input id="like-check" type="checkbox">
+                                    <label for="like-check"></label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-hashtags col-full">
+                            #first #second#third #lkerngerihglergeirhgeruhgelruihgeruigheurhgleiheiurgeiurgherighri
+                        </div>
+                    </div>
+
+                    <div class="card-buttons-col">
+                        <button onclick="document.location='edit.html'" class="card-edit-button"> </button>
+                        <button  class=" card-delete-button"></button>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-main-col">
+                        <div class="card-main-box col-full">
+                            <div class="card-img-box">
+                                <!--                                <img src="images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                            </div>
+                            <div class="card-text-box">
+                                <ul class="card-text-top font-card">
+                                    <li><span>Model:</span> F-35 Lightning II</li>
+                                    <li><span>Type:</span> fighter-bomber</li>
+                                    <li><span>Length:</span> 15.57</li>
+                                    <li><span>Wingspan:</span> 10.67</li>
+                                    <li><span>Height:</span> 4.38</li>
+                                    <li><span>Origin:</span> USA</li>
+                                    <li><span>Crew:</span> 1</li>
+                                    <li><span>Max speed:</span> 1930 km/h</li>
+                                    <li><span>Flying dist:</span> 2200km</li>
+                                    <li><span>Price:</span> 84300000$</li>
+                                    <li>
+                                        <hr class="card-text-hr col-full">
+                                    </li>
+                                </ul>
+                                <div class="card-text-bottom-box">
+                                    <ul class="card-text-bottom-left">
+                                        <li class="card-text-user"> username</li>
+                                        <li class="card-id"> id: 123456</li>
+                                        <li class="card-text-time"> 18.02.2021 17:34:09</li>
+                                    </ul>
+
+                                    <input id="like-check" type="checkbox">
+                                    <label for="like-check"></label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-hashtags col-full">
+                            #first #second#third #lkerngerihglergeirhgeruhgelruihgeruigheurhgleiheiurgeiurgherighri
+                        </div>
+                    </div>
+
+                    <div class="card-buttons-col">
+                        <button onclick="document.location='edit.html'" class="card-edit-button"> </button>
+                        <button  class=" card-delete-button"></button>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-main-col">
+                        <div class="card-main-box col-full">
+                            <div class="card-img-box">
+                                <!--                                <img src="images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                            </div>
+                            <div class="card-text-box">
+                                <ul class="card-text-top font-card">
+                                    <li><span>Model:</span> F-35 Lightning II</li>
+                                    <li><span>Type:</span> fighter-bomber</li>
+                                    <li><span>Length:</span> 15.57</li>
+                                    <li><span>Wingspan:</span> 10.67</li>
+                                    <li><span>Height:</span> 4.38</li>
+                                    <li><span>Origin:</span> USA</li>
+                                    <li><span>Crew:</span> 1</li>
+                                    <li><span>Max speed:</span> 1930 km/h</li>
+                                    <li><span>Flying dist:</span> 2200km</li>
+                                    <li><span>Price:</span> 84300000$</li>
+                                    <li>
+                                        <hr class="card-text-hr col-full">
+                                    </li>
+                                </ul>
+                                <div class="card-text-bottom-box">
+                                    <ul class="card-text-bottom-left">
+                                        <li class="card-text-user"> username</li>
+                                        <li class="card-id"> id: 123456</li>
+                                        <li class="card-text-time"> 18.02.2021 17:34:09</li>
+                                    </ul>
+
+                                    <input id="like-check" type="checkbox">
+                                    <label for="like-check"></label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-hashtags col-full">
+                            #first #second#third #lkerngerihglergeirhgeruhgelruihgeruigheurhgleiheiurgeiurgherighri
+                        </div>
+                    </div>
+
+                    <div class="card-buttons-col">
+                        <button onclick="document.location='edit.html'" class="card-edit-button"> </button>
+                        <button  class=" card-delete-button"></button>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-main-col">
+                        <div class="card-main-box col-full">
+                            <div class="card-img-box">
+                                <!--                                <img src="images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                            </div>
+                            <div class="card-text-box">
+                                <ul class="card-text-top font-card">
+                                    <li><span>Model:</span> F-35 Lightning II</li>
+                                    <li><span>Type:</span> fighter-bomber</li>
+                                    <li><span>Length:</span> 15.57</li>
+                                    <li><span>Wingspan:</span> 10.67</li>
+                                    <li><span>Height:</span> 4.38</li>
+                                    <li><span>Origin:</span> USA</li>
+                                    <li><span>Crew:</span> 1</li>
+                                    <li><span>Max speed:</span> 1930 km/h</li>
+                                    <li><span>Flying dist:</span> 2200km</li>
+                                    <li><span>Price:</span> 84300000$</li>
+                                    <li>
+                                        <hr class="card-text-hr col-full">
+                                    </li>
+                                </ul>
+                                <div class="card-text-bottom-box">
+                                    <ul class="card-text-bottom-left">
+                                        <li class="card-text-user"> username</li>
+                                        <li class="card-id"> id: 123456</li>
+                                        <li class="card-text-time"> 18.02.2021 17:34:09</li>
+                                    </ul>
+
+                                    <input id="like-check" type="checkbox">
+                                    <label for="like-check"></label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-hashtags col-full">
+                            #first #second#third #lkerngerihglergeirhgeruhgelruihgeruigheurhgleiheiurgeiurgherighri
+                        </div>
+                    </div>
+
+                    <div class="card-buttons-col">
+                        <button onclick="document.location='edit.html'" class="card-edit-button"> </button>
+                        <button  class=" card-delete-button"></button>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-main-col">
+                        <div class="card-main-box col-full">
+                            <div class="card-img-box">
+                                <!--                                <img src="images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                            </div>
+                            <div class="card-text-box">
+                                <ul class="card-text-top font-card">
+                                    <li><span>Model:</span> F-35 Lightning II</li>
+                                    <li><span>Type:</span> fighter-bomber</li>
+                                    <li><span>Length:</span> 15.57</li>
+                                    <li><span>Wingspan:</span> 10.67</li>
+                                    <li><span>Height:</span> 4.38</li>
+                                    <li><span>Origin:</span> USA</li>
+                                    <li><span>Crew:</span> 1</li>
+                                    <li><span>Max speed:</span> 1930 km/h</li>
+                                    <li><span>Flying dist:</span> 2200km</li>
+                                    <li><span>Price:</span> 84300000$</li>
+                                    <li>
+                                        <hr class="card-text-hr col-full">
+                                    </li>
+                                </ul>
+                                <div class="card-text-bottom-box">
+                                    <ul class="card-text-bottom-left">
+                                        <li class="card-text-user"> username</li>
+                                        <li class="card-id"> id: 123456</li>
+                                        <li class="card-text-time"> 18.02.2021 17:34:09</li>
+                                    </ul>
+
+                                    <input id="like-check" type="checkbox">
+                                    <label for="like-check"></label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-hashtags col-full">
+                            #first #second#third #lkerngerihglergeirhgeruhgelruihgeruigheurhgleiheiurgeiurgherighri
+                        </div>
+                    </div>
+
+                    <div class="card-buttons-col">
+                        <button onclick="document.location='edit.html'" class="card-edit-button"> </button>
+                        <button  class=" card-delete-button"></button>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-main-col">
+                        <div class="card-main-box col-full">
+                            <div class="card-img-box">
+                                <!--                                <img src="images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                            </div>
+                            <div class="card-text-box">
+                                <ul class="card-text-top font-card">
+                                    <li><span>Model:</span> F-35 Lightning II</li>
+                                    <li><span>Type:</span> fighter-bomber</li>
+                                    <li><span>Length:</span> 15.57</li>
+                                    <li><span>Wingspan:</span> 10.67</li>
+                                    <li><span>Height:</span> 4.38</li>
+                                    <li><span>Origin:</span> USA</li>
+                                    <li><span>Crew:</span> 1</li>
+                                    <li><span>Max speed:</span> 1930 km/h</li>
+                                    <li><span>Flying dist:</span> 2200km</li>
+                                    <li><span>Price:</span> 84300000$</li>
+                                    <li>
+                                        <hr class="card-text-hr col-full">
+                                    </li>
+                                </ul>
+                                <div class="card-text-bottom-box">
+                                    <ul class="card-text-bottom-left">
+                                        <li class="card-text-user"> username</li>
+                                        <li class="card-id"> id: 123456</li>
+                                        <li class="card-text-time"> 18.02.2021 17:34:09</li>
+                                    </ul>
+
+                                    <input id="like-check" type="checkbox">
+                                    <label for="like-check"></label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-hashtags col-full">
+                            #first #second#third #lkerngerihglergeirhgeruhgelruihgeruigheurhgleiheiurgeiurgherighri
+                        </div>
+                    </div>
+
+                    <div class="card-buttons-col">
+                        <button onclick="document.location='edit.html'" class="card-edit-button"> </button>
+                        <button  class=" card-delete-button"></button>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-main-col">
+                        <div class="card-main-box col-full">
+                            <div class="card-img-box">
+                                <!--                                <img src="images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                            </div>
+                            <div class="card-text-box">
+                                <ul class="card-text-top font-card">
+                                    <li><span>Model:</span> F-35 Lightning II</li>
+                                    <li><span>Type:</span> fighter-bomber</li>
+                                    <li><span>Length:</span> 15.57</li>
+                                    <li><span>Wingspan:</span> 10.67</li>
+                                    <li><span>Height:</span> 4.38</li>
+                                    <li><span>Origin:</span> USA</li>
+                                    <li><span>Crew:</span> 1</li>
+                                    <li><span>Max speed:</span> 1930 km/h</li>
+                                    <li><span>Flying dist:</span> 2200km</li>
+                                    <li><span>Price:</span> 84300000$</li>
+                                    <li>
+                                        <hr class="card-text-hr col-full">
+                                    </li>
+                                </ul>
+                                <div class="card-text-bottom-box">
+                                    <ul class="card-text-bottom-left">
+                                        <li class="card-text-user"> username</li>
+                                        <li class="card-id"> id: 123456</li>
+                                        <li class="card-text-time"> 18.02.2021 17:34:09</li>
+                                    </ul>
+
+                                    <input id="like-check" type="checkbox">
+                                    <label for="like-check"></label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-hashtags col-full">
+                            #first #second#third #lkerngerihglergeirhgeruhgelruihgeruigheurhgleiheiurgeiurgherighri
+                        </div>
+                    </div>
+
+                    <div class="card-buttons-col">
+                        <button onclick="document.location='edit.html'" class="card-edit-button"> </button>
+                        <button  class=" card-delete-button"></button>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-main-col">
+                        <div class="card-main-box col-full">
+                            <div class="card-img-box">
+                                <!--                                <img src="images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                            </div>
+                            <div class="card-text-box">
+                                <ul class="card-text-top font-card">
+                                    <li><span>Model:</span> F-35 Lightning II</li>
+                                    <li><span>Type:</span> fighter-bomber</li>
+                                    <li><span>Length:</span> 15.57</li>
+                                    <li><span>Wingspan:</span> 10.67</li>
+                                    <li><span>Height:</span> 4.38</li>
+                                    <li><span>Origin:</span> USA</li>
+                                    <li><span>Crew:</span> 1</li>
+                                    <li><span>Max speed:</span> 1930 km/h</li>
+                                    <li><span>Flying dist:</span> 2200km</li>
+                                    <li><span>Price:</span> 84300000$</li>
+                                    <li>
+                                        <hr class="card-text-hr col-full">
+                                    </li>
+                                </ul>
+                                <div class="card-text-bottom-box">
+                                    <ul class="card-text-bottom-left">
+                                        <li class="card-text-user"> username</li>
+                                        <li class="card-id"> id: 123456</li>
+                                        <li class="card-text-time"> 18.02.2021 17:34:09</li>
+                                    </ul>
+
+                                    <input id="like-check" type="checkbox">
+                                    <label for="like-check"></label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-hashtags col-full">
+                            #first #second#third #lkerngerihglergeirhgeruhgelruihgeruigheurhgleiheiurgeiurgherighri
+                        </div>
+                    </div>
+
+                    <div class="card-buttons-col">
+                        <button onclick="document.location='edit.html'" class="card-edit-button"> </button>
+                        <button  class=" card-delete-button"></button>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-main-col">
+                        <div class="card-main-box col-full">
+                            <div class="card-img-box">
+                                <!--                                <img src="images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                            </div>
+                            <div class="card-text-box">
+                                <ul class="card-text-top font-card">
+                                    <li><span>Model:</span> F-35 Lightning II</li>
+                                    <li><span>Type:</span> fighter-bomber</li>
+                                    <li><span>Length:</span> 15.57</li>
+                                    <li><span>Wingspan:</span> 10.67</li>
+                                    <li><span>Height:</span> 4.38</li>
+                                    <li><span>Origin:</span> USA</li>
+                                    <li><span>Crew:</span> 1</li>
+                                    <li><span>Max speed:</span> 1930 km/h</li>
+                                    <li><span>Flying dist:</span> 2200km</li>
+                                    <li><span>Price:</span> 84300000$</li>
+                                    <li>
+                                        <hr class="card-text-hr col-full">
+                                    </li>
+                                </ul>
+                                <div class="card-text-bottom-box">
+                                    <ul class="card-text-bottom-left">
+                                        <li class="card-text-user"> username</li>
+                                        <li class="card-id"> id: 123456</li>
+                                        <li class="card-text-time"> 18.02.2021 17:34:09</li>
+                                    </ul>
+
+                                    <input id="like-check" type="checkbox">
+                                    <label for="like-check"></label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-hashtags col-full">
+                            #first #second#third #lkerngerihglergeirhgeruhgelruihgeruigheurhgleiheiurgeiurgherighri
+                        </div>
+                    </div>
+
+                    <div class="card-buttons-col">
+                        <button onclick="document.location='edit.html'" class="card-edit-button"> </button>
+                        <button  class=" card-delete-button"></button>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-main-col">
+                        <div class="card-main-box col-full">
+                            <div class="card-img-box">
+                                <!--                                <img src="images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                            </div>
+                            <div class="card-text-box">
+                                <ul class="card-text-top font-card">
+                                    <li><span>Model:</span> F-35 Lightning II</li>
+                                    <li><span>Type:</span> fighter-bomber</li>
+                                    <li><span>Length:</span> 15.57</li>
+                                    <li><span>Wingspan:</span> 10.67</li>
+                                    <li><span>Height:</span> 4.38</li>
+                                    <li><span>Origin:</span> USA</li>
+                                    <li><span>Crew:</span> 1</li>
+                                    <li><span>Max speed:</span> 1930 km/h</li>
+                                    <li><span>Flying dist:</span> 2200km</li>
+                                    <li><span>Price:</span> 84300000$</li>
+                                    <li>
+                                        <hr class="card-text-hr col-full">
+                                    </li>
+                                </ul>
+                                <div class="card-text-bottom-box">
+                                    <ul class="card-text-bottom-left">
+                                        <li class="card-text-user"> username</li>
+                                        <li class="card-id"> id: 123456</li>
+                                        <li class="card-text-time"> 18.02.2021 17:34:09</li>
+                                    </ul>
+
+                                    <input id="like-check" type="checkbox">
+                                    <label for="like-check"></label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-hashtags col-full">
+                            #first #second#third #lkerngerihglergeirhgeruhgelruihgeruigheurhgleiheiurgeiurgherighri
+                        </div>
+                    </div>
+
+                    <div class="card-buttons-col">
+                        <button onclick="document.location='edit.html'" class="card-edit-button"> </button>
+                        <button  class=" card-delete-button"></button>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-main-col">
+                        <div class="card-main-box col-full">
+                            <div class="card-img-box">
+                                <!--                                <img src="images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                            </div>
+                            <div class="card-text-box">
+                                <ul class="card-text-top font-card">
+                                    <li><span>Model:</span> F-35 Lightning II</li>
+                                    <li><span>Type:</span> fighter-bomber</li>
+                                    <li><span>Length:</span> 15.57</li>
+                                    <li><span>Wingspan:</span> 10.67</li>
+                                    <li><span>Height:</span> 4.38</li>
+                                    <li><span>Origin:</span> USA</li>
+                                    <li><span>Crew:</span> 1</li>
+                                    <li><span>Max speed:</span> 1930 km/h</li>
+                                    <li><span>Flying dist:</span> 2200km</li>
+                                    <li><span>Price:</span> 84300000$</li>
+                                    <li>
+                                        <hr class="card-text-hr col-full">
+                                    </li>
+                                </ul>
+                                <div class="card-text-bottom-box">
+                                    <ul class="card-text-bottom-left">
+                                        <li class="card-text-user"> username</li>
+                                        <li class="card-id"> id: 123456</li>
+                                        <li class="card-text-time"> 18.02.2021 17:34:09</li>
+                                    </ul>
+
+                                    <input id="like-check" type="checkbox">
+                                    <label for="like-check"></label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-hashtags col-full">
+                            #first #second#third #lkerngerihglergeirhgeruhgelruihgeruigheurhgleiheiurgeiurgherighri
+                        </div>
+                    </div>
+
+                    <div class="card-buttons-col">
+                        <button onclick="document.location='edit.html'" class="card-edit-button"> </button>
+                        <button  class=" card-delete-button"></button>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-main-col">
+                        <div class="card-main-box col-full">
+                            <div class="card-img-box">
+                                <!--                                <img src="images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                            </div>
+                            <div class="card-text-box">
+                                <ul class="card-text-top font-card">
+                                    <li><span>Model:</span> F-35 Lightning II</li>
+                                    <li><span>Type:</span> fighter-bomber</li>
+                                    <li><span>Length:</span> 15.57</li>
+                                    <li><span>Wingspan:</span> 10.67</li>
+                                    <li><span>Height:</span> 4.38</li>
+                                    <li><span>Origin:</span> USA</li>
+                                    <li><span>Crew:</span> 1</li>
+                                    <li><span>Max speed:</span> 1930 km/h</li>
+                                    <li><span>Flying dist:</span> 2200km</li>
+                                    <li><span>Price:</span> 84300000$</li>
+                                    <li>
+                                        <hr class="card-text-hr col-full">
+                                    </li>
+                                </ul>
+                                <div class="card-text-bottom-box">
+                                    <ul class="card-text-bottom-left">
+                                        <li class="card-text-user"> username</li>
+                                        <li class="card-id"> id: 123456</li>
+                                        <li class="card-text-time"> 18.02.2021 17:34:09</li>
+                                    </ul>
+
+                                    <input id="like-check" type="checkbox">
+                                    <label for="like-check"></label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-hashtags col-full">
+                            #first #second#third #lkerngerihglergeirhgeruhgelruihgeruigheurhgleiheiurgeiurgherighri
+                        </div>
+                    </div>
+
+                    <div class="card-buttons-col">
+                        <button onclick="document.location='edit.html'" class="card-edit-button"> </button>
+                        <button  class=" card-delete-button"></button>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-main-col">
+                        <div class="card-main-box col-full">
+                            <div class="card-img-box">
+                                <!--                                <img src="images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                            </div>
+                            <div class="card-text-box">
+                                <ul class="card-text-top font-card">
+                                    <li><span>Model:</span> F-35 Lightning II</li>
+                                    <li><span>Type:</span> fighter-bomber</li>
+                                    <li><span>Length:</span> 15.57</li>
+                                    <li><span>Wingspan:</span> 10.67</li>
+                                    <li><span>Height:</span> 4.38</li>
+                                    <li><span>Origin:</span> USA</li>
+                                    <li><span>Crew:</span> 1</li>
+                                    <li><span>Max speed:</span> 1930 km/h</li>
+                                    <li><span>Flying dist:</span> 2200km</li>
+                                    <li><span>Price:</span> 84300000$</li>
+                                    <li>
+                                        <hr class="card-text-hr col-full">
+                                    </li>
+                                </ul>
+                                <div class="card-text-bottom-box">
+                                    <ul class="card-text-bottom-left">
+                                        <li class="card-text-user"> username</li>
+                                        <li class="card-id"> id: 123456</li>
+                                        <li class="card-text-time"> 18.02.2021 17:34:09</li>
+                                    </ul>
+
+                                    <input id="like-check" type="checkbox">
+                                    <label for="like-check"></label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-hashtags col-full">
+                            #first #second#third #lkerngerihglergeirhgeruhgelruihgeruigheurhgleiheiurgeiurgherighri
+                        </div>
+                    </div>
+
+                    <div class="card-buttons-col">
+                        <button onclick="document.location='edit.html'" class="card-edit-button"> </button>
+                        <button  class=" card-delete-button"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="more-button-box">
+                <button class="more-button">
+                    <div class="fa fa-refresh"></div>
+                    LOAD MORE
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+<footer>
+    <ul class="footer-ul font-footer">
+        <li class="footer-li-1">
+            <img class="img-logo" src="images/logo-white.png" alt="logo">
+        </li>
+        <li class="footer-li-2">Michael</li>
+        <li class="footer-li-3">2k9g</li>
+        <li class="footer-li-4">mdokuchaevp@gmail.com</li>
+        <li class="footer-li-5">18.02.2021</li>
+    </ul>
+</footer>
+
+</body>
+</html>
