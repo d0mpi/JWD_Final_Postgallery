@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>About</title>
+    <title>About us</title>
     <link rel="stylesheet" type="text/css" href="css/index-styles.css">
     <link rel="stylesheet" type="text/css" href="css/about-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
+    <script src="js/scripts.js"></script>
 </head>
 <body>
 <header>
@@ -18,7 +19,7 @@
                     <img class="img-logo" src="images/logo-white.png" alt="header-logo">
                 </a>
             </div>
-            <div class="header-menu">
+            <nav class="header-menu">
                 <div class="menu-col ">
                     <a href="index.html" class="menu-href ">
                         <div></div>
@@ -30,21 +31,23 @@
                         ABOUT</a>
                 </div>
                 <div class="menu-col">
-                    <a href="contact.html" class="menu-href ">
+                    <a href="contact.html" class="menu-href">
                         <div></div>
                         CONTACT US</a>
                 </div>
-            </div>
+                <div class="menu-col">
+                    <a href="error.html" class="menu-href">
+                        <div></div>
+                        ERROR</a>
+                </div>
+            </nav>
         </div>
-        <div class="header-add-col">
-            <button class="header-add-button">
-                ADD POST
-            </button>
-        </div>
+
         <div class="header-log-col">
             <div class="header-username-col"> UserName</div>
-            <a class="header-button" href="sign.html"> LOG IN </a>
-            <a class="header-button" href=""> LOG OUT </a>
+
+            <button class="header-button" onclick="document.location='sign.html'"> SIGN IN</button>
+            <!--            <a class="header-button" href=""> SIGN OUT </a>-->
         </div>
     </div>
 </header>
@@ -52,13 +55,167 @@
 <main>
     <div class="main-container">
         <div class="main-col">
+            <div class="part">
+                <div class="col-half">
+                    <div class="col-full title-left-text"> Welcome to</div>
+                    <div class="img-box col-full">
+                        <img src="images/logo-blue.png" alt="" class="title-logo">
+                    </div>
+                </div>
+                <div class="title-right-text col-half">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                </div>
+            </div>
 
-            
+            <div class="part back-blur">
+                <div class="feature-block col-33">
+                    <div class="circle-info col-full">
+                        <div class="fa-edit"></div>
+                    </div>
+                    <h3>Edit</h3>
+                    <div class="col-full feature-left-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                    </div>
 
-            <div class="push"></div>
+                </div>
+
+                <div class="feature-block-center col-33">
+                    <div class="col-full feature-center-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                    </div>
+                    <h3>Delete</h3>
+                    <div class="circle-info col-full">
+                        <div class="fa-delete"></div>
+                    </div>
+                </div>
+                <div class="feature-block col-33">
+                    <div class="circle-info col-full">
+                        <div class="fa-like"></div>
+                    </div>
+
+                    <h3>Like!</h3>
+                    <div class="col-full feature-right-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                    </div>
+                </div>
+            </div>
+            <div class="part">
+
+                <div class="size-images-block">
+                    <div class="size-title col-half">
+                        Sizeeeeee
+                    </div>
+                    <div class="size-image col-half">
+                        <img src="images/size-1.png" alt="">
+                    </div>
+                </div>
+                <div class="size-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                </div>
+            </div>
+            <div class="part back-blur">
+                <div class="contact-img col-half">
+                    <img alt="" src="images/contact-us.png">
+                </div>
+                <div class="col-half">
+                    <div class="contact-title col-full">
+                        Contact ussss
+                    </div>
+                    <div class="contact-text col-full">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore
+                        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore
+                        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                    </div>
+                </div>
+            </div>
+            <div class="part">
+                <div class="col-half">
+                    <div class="col-full post-title">Post structure</div>
+                    <div class="col-full size-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore
+                        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore
+                        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                    </div>
+                </div>
+                <div class="post-img col-half">
+                    <img alt="" src="images/post.png">
+                </div>
+            </div>
+            <div class="part back-blur">
+                <div class="sign-img col-25">
+                    <img alt="" src="images/sign.png">
+                </div>
+                <div class="col-half">
+                    <div class="col-full contact-title">Sign & Registration</div>
+                    <div class="sign-text col-full">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore
+                        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore
+                        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                    </div>
+                </div>
+                <div class="sign-img col-25">
+                    <img alt="" src="images/register.png">
+                </div>
+
+            </div>
+
+            <div class="part">
+                <div class="col-full post-title">FILTER </div>
+                <hr class="col-full">
+                <div class="filter-block col-33">
+                    <div class="circle-info col-full">
+                        <div class="fa-user"></div>
+                    </div>
+                    <h3>Author</h3>
+                    <div class="col-full filter-left-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                    </div>
+
+                </div>
+
+                <div class="filter-block-center col-33">
+                    <div class="col-full filter-center-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                    </div>
+                    <h3>Date</h3>
+                    <div class="circle-info col-full">
+                        <div class="fa-date"></div>
+                    </div>
+                </div>
+                <div class="filter-block col-33">
+                    <div class="circle-info col-full">
+                        <div class="fa-hash"></div>
+                    </div>
+
+                    <h3>Hashtag</h3>
+                    <div class="col-full filter-right-text" >
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </main>
 
 <footer>

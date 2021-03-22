@@ -1,0 +1,43 @@
+GET  https://api.opendota.com/api/scenarios/laneRoles?lane_role=1&hero_id=1
+
+Query Params
+lane_role 1
+hero_id 1
+
+[
+    {
+        "hero_id": 1,
+        "lane_role": 1,
+        "time": 900,
+        "games": "577",
+        "wins": "282"
+    },
+    {
+        "hero_id": 1,
+        "lane_role": 1,
+        "time": 1800,
+        "games": "20293",
+        "wins": "8241"
+    },
+    {
+        "hero_id": 1,
+        "lane_role": 1,
+        "time": 2700,
+        "games": "63493",
+        "wins": "31295"
+    },
+    {
+        "hero_id": 1,
+        "lane_role": 1,
+        "time": 3600,
+        "games": "23091",
+        "wins": "13317"
+    },
+    {
+        "hero_id": 1,
+        "lane_role": 1,
+        "time": 5400,
+        "games": "3856",
+        "wins": "2080"
+    }
+]

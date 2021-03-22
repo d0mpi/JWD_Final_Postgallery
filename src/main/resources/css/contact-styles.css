@@ -2,7 +2,7 @@ body {
     font-family: Star Wars, fantasy;
     display: block;
     justify-content: center;
-    background: url("images/bg-02.jpg") no-repeat center;
+    background: url("../images/bg-02.jpg") no-repeat center;
     background-size: cover;
     background-attachment: fixed;
     /*background: #f4f4f4;*/
