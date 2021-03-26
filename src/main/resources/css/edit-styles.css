@@ -91,25 +91,15 @@ body:before {
     justify-content: center;
     align-items: center;
 
-    border-width: 1px;
-    border-style: dashed;
+    border-width: 0;
+    border-style: solid;
     border-radius: 10px;
-    background: url("../images/MIG-15.jpg") center no-repeat;
-    background-size: cover;
+
+    overflow: hidden;
 }
 
-.drag-and-drop p{
-    display: none;
-}
-.drag-and-drop:hover p{
-    display: block;
-}
 
-.drag-and-drop:hover {
-    background: #c4dfff;
-    border-width: 2px;
-    border-style: dashed;
-}
+
 
 .mb-20 {
     margin-bottom: 20px;
@@ -235,4 +225,14 @@ h3 {
     border: 1px solid #c6c6c6;
     outline: none;
     width: 400px;
+}
+
+
+.add-img{
+    width: auto;
+    border-radius: 10px;
+    height: auto;
+
+    max-width: 400px;
+    max-height: 400px;
 }

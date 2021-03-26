@@ -8,5 +8,5 @@ function pasteValuesToForm(form,post){
     form.origin.value = post.origin === " - " ? "" : post.origin;
     form.speed.value = post.speed === " - " ? "" : post.speed;
     form.dist.value = post.dist === " - " ? "" : post.dist;
-    form.hashtags.value = post.hashtags;
+    form.hashtags.value = post.hashtags === "" ? [] : post.hashtags.join(' ');
 }

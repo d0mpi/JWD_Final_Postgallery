@@ -7,13 +7,15 @@ function buildAndAddPostArrayToDOM(posts = []){
         postEl.id = post.id;
         let date = new Date(post.createdAt);
         let hashtags = "";
+
+        // console.log("Type " + typeof post.hashtags + " " +  "\"" + post.hashtags +  "\" " + post.hashtags.length);
         post.hashtags.forEach((str) => (hashtags += "#" + String(str) + " "));
 
         postEl.innerHTML =
             `         <div class="card-main-col">
                         <div class="card-main-box col-full">
                             <div class="card-img-box">
-<!--                                <img src="../images/MIG-15.jpg" alt="samolet" class="card-img">-->
+                                <img src="${post.photoLink}" alt="samolet" class="card-img">
                             </div>
                             <div class="card-text-box">
                                 <ul class="card-text-top font-card">

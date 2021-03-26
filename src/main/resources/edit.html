@@ -10,7 +10,9 @@
     <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
     <script src="js/viewEdit.js" defer></script>
     <script src="js/modelPosts.js" defer></script>
+    <script src="js/modelRegistration.js" defer></script>
     <script src="js/controllerEdit.js" defer></script>
+
 </head>
 <body>
 <header>
@@ -53,7 +55,7 @@
             <div class="header-username-col"> UserName</div>
 
             <button class="header-button hide" onclick="document.location='sign.html'"> SIGN IN</button>
-            <button class="header-button " href=""> SIGN OUT</button>
+            <button class="header-button " > SIGN OUT</button>
         </div>
     </div>
 </header>
@@ -70,11 +72,11 @@
                         <div class="img-box col-full">
                             <div class="edit-label"> Image</div>
                             <div class="drag-and-drop">
-                                Drag and drop
+                                <img src="" alt="" class="add-img"  id="add_img">
                             </div>
                         </div>
                         <div class="col-full file-load-box">
-                            <input type="file" name="file" class="input-file">
+                            <input type="file" id="dropbox" name="file" class="input-file">
                         </div>
 
                     </div>

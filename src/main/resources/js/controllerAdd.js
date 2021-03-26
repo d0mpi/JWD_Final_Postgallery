@@ -1,11 +1,14 @@
 let addForm = document.forms.add;
 let submitBtn = document.querySelector(".add-btn");
+let dropbox = document.getElementById("dropbox");
+let image = document.getElementById("add_img");
+let box = document.querySelector(".drag-and-drop");
+let fileName;
 
 submitBtn.addEventListener('click', handleAddSubmit);
 
 function handleAddSubmit(event) {
-
-    for (let i = 1; i < addForm.length; i++) {
+    for (let i = 0; i < addForm.length; i++) {
         if (!addForm[i].checkValidity()) {
             return;
         }
@@ -22,18 +25,29 @@ function handleAddSubmit(event) {
     post.origin = addForm.origin.value === "" ? " - " : addForm.origin.value;
     post.speed = addForm.speed.value === "" ? " - " : addForm.speed.value;
     post.dist = addForm.dist.value === "" ? " - " : addForm.dist.value;
-
-    post.hashtags = addForm.hashtags.value.split(' ');
+    post.hashtags = addForm.hashtags.value==="" ? [] : addForm.hashtags.value.split(' ');
     post.likes = [];
     post.author = "admin";
     post.createdAt = new Date();
     post.id = postArray.getLastId()+1;
-    post.photoLink = "";
+    post.photoLink = "images/planes/"+fileName;
 
     postArray.add(post);
 
     alert("Post was created successfully");
 }
+
+
+function onFileLoad(event) {
+    fileName = dropbox.files.item(0).name;
+    console.log(fileName);
+    image.setAttribute("src","images/planes/"+fileName);
+    box.style.borderStyle = "none";
+}
+dropbox.addEventListener('change',onFileLoad);
+
+
+
 
 
 

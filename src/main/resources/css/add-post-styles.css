@@ -76,13 +76,11 @@ body:before {
     border-width: 1px;
     border-style: dashed;
     border-radius: 10px;
+
+    overflow: hidden;
 }
 
-.drag-and-drop:hover {
-    background: #c4dfff;
-    border-width: 2px;
-    border-style: dashed;
-}
+
 
 .mb-20 {
     margin-bottom: 20px;
@@ -192,6 +190,14 @@ h3 {
     outline: 0;
     transition: all .3s ease 0s;
     border-radius: 20px;
+}
+.add-img{
+    width: auto;
+    border-radius: 10px;
+    height: auto;
+
+    max-width: 400px;
+    max-height: 400px;
 }
 
 .add-btn-box {
