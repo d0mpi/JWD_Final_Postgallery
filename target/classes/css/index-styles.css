@@ -46,8 +46,9 @@ body {
     font-family: Star Wars, fantasy;
     display: block;
     justify-content: center;
+    background: url("../images/bg-04.jpg") no-repeat center;
     background-size: cover;
-    background: url("images/MIG-15.jpg") no-repeat fixed center;
+    background-attachment: fixed;
 
     font-size: 14px;
     line-height: 1;
@@ -83,6 +84,8 @@ header {
     color: white;
     padding: 0 30px;
     box-shadow: 0 6px 4px -4px rgba(0, 0, 0, .2);
+
+    z-index: 1000;
 
     min-width: 500px;
 }
@@ -565,7 +568,7 @@ header {
     align-items: center;
     margin-right: 17px;
 
-    background: url("images/MIG-15.jpg") no-repeat center;
+    background: url("../images/MIG-15.jpg") no-repeat center;
     background-size: cover;
 }
 
@@ -839,10 +842,6 @@ footer {
     .header-username-col {
         display: none;
     }
-
-    .filter-fieldset {
-        margin-top: 50px;
-    }
 }
 
 @media (max-width: 700px) {
@@ -943,5 +942,9 @@ footer {
 .col-33 {
     flex: 0 0 auto;
     width: 33.333%;
+}
+.col-25 {
+    flex: 0 0 auto;
+    width: 25%;
 }
 

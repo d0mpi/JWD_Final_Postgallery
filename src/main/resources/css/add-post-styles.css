@@ -64,16 +64,6 @@ body:before {
 
 }
 
-.img-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-
-    width: 100%;
-    height: 505px;
-
-}
 
 .drag-and-drop {
     width: 400px;
@@ -111,7 +101,6 @@ body:before {
 }
 
 
-
 .input-text {
     padding: 0 20px;
     border-radius: 3px;
@@ -124,7 +113,7 @@ body:before {
     margin-bottom: 20px;
 }
 
-input:invalid{
+input:invalid {
     border: 1px solid #a21313;
 }
 
@@ -214,4 +203,28 @@ h3 {
 
 .col-66 {
     max-width: 1100px;
+}
+
+.file-load-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 100%;
+    margin-bottom: 30px;
+    height: auto;
+}
+
+.input-file {
+    border-radius: 3px;
+    border: 1px solid #c6c6c6;
+    outline: none;
+    width: 400px;
 }

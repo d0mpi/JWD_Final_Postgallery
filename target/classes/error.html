@@ -18,9 +18,9 @@
                     <img class="img-logo" src="images/logo-white.png" alt="header-logo">
                 </a>
             </div>
-            <div class="header-menu">
+            <nav class="header-menu">
                 <div class="menu-col ">
-                    <a href="index.html" class="menu-href ">
+                    <a href="index.html" class="menu-href">
                         <div></div>
                         HOME</a>
                 </div>
@@ -30,17 +30,23 @@
                         ABOUT</a>
                 </div>
                 <div class="menu-col">
-                    <a href="contact.html" class="menu-href ">
+                    <a href="contact.html" class="menu-href">
                         <div></div>
                         CONTACT US</a>
                 </div>
-            </div>
+                <div class="menu-col">
+                    <a href="error.html" class="menu-href menu-href-active">
+                        <div></div>
+                        ERROR</a>
+                </div>
+            </nav>
         </div>
 
         <div class="header-log-col">
             <div class="header-username-col"> UserName</div>
-            <a class="header-button" href="sign.html"> LOG IN </a>
-            <a class="header-button" href=""> LOG OUT </a>
+
+            <button class="header-button" onclick="document.location='sign.html'"> SIGN IN </button>
+            <!--            <a class="header-button" href=""> SIGN OUT </a>-->
         </div>
     </div>
 </header>

@@ -11,6 +11,13 @@ body {
     color: #373737;
     height: 100%;
 }
+input:invalid{
+    border: 1px solid #a21313;
+}
+
+input:valid {
+    border: 1px solid #a2a0a0;
+}
 
 body:before {
     content: "";

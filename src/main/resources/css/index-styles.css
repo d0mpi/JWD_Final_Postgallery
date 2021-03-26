@@ -215,6 +215,10 @@ header {
     font-weight: 500;
 }
 
+.hide{
+    display: none;
+}
+
 .header-button:hover {
     background: #2ee59d;
     color: white;
@@ -371,7 +375,7 @@ header {
 
     .main-container {
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
     }
 
     .filter-col {
@@ -842,10 +846,6 @@ footer {
     .header-username-col {
         display: none;
     }
-
-    .filter-fieldset {
-        margin-top: 50px;
-    }
 }
 
 @media (max-width: 700px) {
@@ -952,3 +952,21 @@ footer {
     width: 25%;
 }
 
+.filter-button{
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 3px;
+    align-items: center;
+    margin-top: 5px;
+
+    background: white;
+
+    outline: none;
+    cursor: pointer;
+
+    width: 100px;
+    height: 25px;
+
+    border-style: solid;
+    border-width: 0;
+}
