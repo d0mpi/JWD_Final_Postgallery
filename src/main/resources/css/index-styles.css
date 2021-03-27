@@ -30,7 +30,7 @@ a {
 }
 
 a:hover:before {
-    color: #2EE59D;
+    color: #81d742;
 }
 
 img {
@@ -73,7 +73,7 @@ body:before {
 
 
 button:hover:before {
-    color: #2EE59D;
+    color: #81d742;
 }
 
 header {
@@ -148,7 +148,7 @@ header {
 }
 
 .header-add-button:hover {
-    background: #2EE59D;
+    background: #81d742;
     color: white;
     transform: scale(.95);
 }
@@ -215,12 +215,10 @@ header {
     font-weight: 500;
 }
 
-.hide {
-    display: none;
-}
+
 
 .header-button:hover {
-    background: #2ee59d;
+    background: #81d742;
     color: white;
     transform: scale(.95);
 }
@@ -520,6 +518,7 @@ header {
 
 
 .card-box {
+    min-width: 695px;
     display: flex;
     width: auto;
     background: none;
@@ -679,14 +678,14 @@ header {
 }
 
 
-#like-check[type = checkbox] {
+.like-check[type = checkbox] {
     display: none;
 }
 
-#like-check + label {
+.like-check + label {
     width: 40px;
     height: 40px;
-    display: flex;
+
     justify-content: center;
     align-items: center;
     border-radius: 50%;
@@ -694,11 +693,11 @@ header {
     cursor: pointer;
 }
 
-#like-check + label:hover {
+.like-check + label:hover {
     transform: scale(.95);
 }
 
-#like-check + label:after {
+.like-check + label:after {
     content: "\f004";
     font-size: 35px;
     font-family: FontAwesome, serif;
@@ -706,15 +705,15 @@ header {
     transition: .3s ease-in-out;
 }
 
-#like-check:checked + label {
+.like-check:checked + label {
     transform: scale(1.1);
 }
 
-#like-check:checked + label:hover {
+.like-check:checked + label:hover {
     transform: scale(1.05);
 }
 
-#like-check:checked + label:after {
+.like-check:checked + label:after {
     content: "\f004";
     font-size: 35px;
     font-family: FontAwesome, serif;
@@ -809,12 +808,24 @@ footer {
         transition: none;
     }
 
+    .header-flex-box{
+        flex-direction: column;
+        height: auto;
+    }
+    header{
+        height: 200px;
+    }
+
     .header-button {
         display: none;
     }
 
     .main-container {
         margin-top: 60px;
+    }
+
+    .filter-col{
+        margin-top: 140px;
     }
 
 }
@@ -982,4 +993,8 @@ footer {
 
     border-style: solid;
     border-width: 0;
+}
+
+.hide {
+    display: none;
 }

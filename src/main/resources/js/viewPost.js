@@ -1,5 +1,6 @@
 let postContainer = document.querySelector(".main-box-inline-block");
 
+
 function buildAndAddPostArrayToDOM(posts = []){
     for(let post of posts){
         const postEl = document.createElement('div');
@@ -7,8 +8,17 @@ function buildAndAddPostArrayToDOM(posts = []){
         postEl.id = post.id;
         let date = new Date(post.createdAt);
         let hashtags = "";
+        let likeID = "like-check-"+post.id;
+        let hide="hide";
+        let likeHide = "hide";
+        let checked = "";
+        if(registeredUsersArray.isUserRegistered()) {
+            likeHide = "flex";
+            if(postArray.isLikedByUser(post.id,registeredUsersArray.getRegisteredUser().username)) {
+                checked = "checked";
+            }
+        }
 
-        // console.log("Type " + typeof post.hashtags + " " +  "\"" + post.hashtags +  "\" " + post.hashtags.length);
         post.hashtags.forEach((str) => (hashtags += "#" + String(str) + " "));
 
         postEl.innerHTML =
@@ -40,8 +50,8 @@ function buildAndAddPostArrayToDOM(posts = []){
                                         <li class="card-text-time"> ${date.toLocaleString()}</li>
                                     </ul>
 
-                                    <input id="like-check" type="checkbox">
-                                    <label for="like-check"></label>
+                                    <input id="${likeID}" class="like-check ${likeHide}" type="checkbox" ${checked} >
+                                    <label for="like-check" class="like-label ${likeHide}"></label>
                                 </div>
 
                             </div>
@@ -52,8 +62,8 @@ function buildAndAddPostArrayToDOM(posts = []){
                         </div>
                     </div>
 
-                    <div class="card-buttons-col">
-                        <button   class="card-edit-button"> </button>
+                    <div class="card-buttons-col ${hide}">
+                        <button  class="card-edit-button"> </button>
                         <button  class="card-delete-button" ></button>
                     </div>`;
 

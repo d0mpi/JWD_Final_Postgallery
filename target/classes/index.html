@@ -10,6 +10,7 @@
 
     <script src="js/viewPost.js" defer></script>
     <script src="js/modelPosts.js" defer></script>
+    <script src="js/modelRegistration.js" defer></script>
     <script src="js/controllerFeed.js" defer></script>
 </head>
 <body>
@@ -52,8 +53,8 @@
         <div class="header-log-col">
             <div class="header-username-col"> UserName</div>
 
-            <button class="header-button" onclick="document.location='sign.html'"> SIGN IN </button>
-            <!--            <a class="header-button" href=""> SIGN OUT </a>-->
+            <button class="header-button " onclick="document.location='sign.html'"> SIGN IN </button>
+            <button class="header-button hide"> SIGN OUT</button>
         </div>
     </div>
 </header>
@@ -61,35 +62,38 @@
 <main>
     <div class="main-container">
         <div class="filter-col">
-            <form class="filter-fieldset">
+            <form class="filter-fieldset" name="filter">
                 <div class="filter-head"> Filter by</div>
                 <ul class="filter-ul">
                     <li>
                         <label class="filter-label">
                             <div>
-                                <input type="checkbox" class="filter-checkbox">
+                                <input name="filter_date_checkbox" type="checkbox" class="filter-checkbox">
                                 <span>Date</span>
                             </div>
-                            <input name="filter-input-date" type="date" class="filter-input">
+                            <input name="filter_date_text" value='2021-03-26' type="date" class="filter-input">
                         </label>
                     </li>
                     <li>
                         <label class="filter-label">
                             <div>
-                                <input  type="checkbox" class="filter-checkbox">
+                                <input name="filter_author_checkbox" type="checkbox" class="filter-checkbox">
                                 <span>Author</span>
                             </div>
-                            <input name="filter-input-author" type="text" class="filter-input" placeholder="Username">
+                            <input name="filter_author_text" type="text" class="filter-input" placeholder="Username">
                         </label>
                     </li>
                     <li>
                         <label class="filter-label">
                             <div>
-                                <input  type="checkbox" class="filter-checkbox" placeholder="Hashtag">
+                                <input name="filter_hashtags_checkbox" type="checkbox" class="filter-checkbox" placeholder="Hashtag">
                                 <span>Hashtag</span>
                             </div>
-                            <input name="filter-input-hashtag" type="text" class="filter-input" placeholder="Hashtag">
+                            <input name="filter_hashtags_text" type="text" class="filter-input" placeholder="Hashtag">
                         </label>
+                    </li>
+                    <li>
+                        <button type="button" id="filter_btn" class="filter-button">filter</button>
                     </li>
                 </ul>
             </form>
@@ -115,10 +119,10 @@
         <li class="footer-li-1">
             <img class="img-logo" src="images/logo-white.png" alt="logo">
         </li>
-        <li class="footer-li-2">Michael</li>
+        <li class="footer-li-2">Michael Dokuchaev</li>
         <li class="footer-li-3">2k9g</li>
         <li class="footer-li-4">mdokuchaevp@gmail.com</li>
-        <li class="footer-li-5">18.02.2021</li>
+        <li class="footer-li-5">25.03.2021</li>
     </ul>
 </footer>
 

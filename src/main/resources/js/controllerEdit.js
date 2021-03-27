@@ -1,3 +1,8 @@
+if(registeredUsersArray.getRegisteredUser() == null){
+    console.log("You are not registered user. Sign in to enter this page!!!");
+    window.location.href="index.html";
+}
+
 let editForm = document.forms.edit;
 let submitBtn = document.querySelector(".edit-btn");
 let editingPostID = JSON.parse(localStorage.getItem("editPostID"));

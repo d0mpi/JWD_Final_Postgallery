@@ -6,6 +6,8 @@
     <link rel="stylesheet" type="text/css" href="css/sign-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="fonts/fonts.css">
+    <script src="js/modelRegistration.js" defer></script>
+    <script src="js/controllerSign.js" defer></script>
 </head>
 <body>
 <div class="sign-in-box">
@@ -15,7 +17,7 @@
     <div class="text-top-row">
         <h3> Sign In</h3>
     </div>
-    <form method="post" class="form-row">
+    <form method="post" class="form-row" name="sign_form">
 
         <div class="form-group">
             <div class="form-under">Username</div>
@@ -28,7 +30,7 @@
             <input class="form-input" type="password" id="password" placeholder="Type your password">
         </div>
         <a class="text-forgot">Forgot password ?</a>
-        <input type="submit" value="Sign in" class="sign-in-btn">
+        <button type="submit" class="sign-in-btn">Sign in</button>
         <div class="text-span"> Or Sign Up Using</div>
 
         <div class="social-login">

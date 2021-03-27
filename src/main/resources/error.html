@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
     <script src="js/modelRegistration.js" defer></script>
+    <script src="js/viewHeaderButtons.js" defer></script>
 </head>
 <body>
 <header>
@@ -43,11 +44,16 @@
             </nav>
         </div>
 
-        <div class="header-log-col">
-            <div class="header-username-col"> UserName</div>
+        <div class="header-add-col">
+            <button onclick="document.location='add-post.html'" class="header-add-button hide" id="add_btn">
+                ADD POST
+            </button>
+        </div>
 
-            <button class="header-button" onclick="document.location='sign.html'"> SIGN IN </button>
-            <button class="header-button hide" href=""> SIGN OUT</button>
+        <div class="header-log-col">
+            <div class="header-username-col hide" id="header_username"> UserName</div>
+            <button class="header-button" onclick="document.location='sign.html'" id="sign_in_btn"> SIGN IN </button>
+            <button class="header-button" id="sign_out_btn"> SIGN OUT</button>
         </div>
     </div>
 </header>

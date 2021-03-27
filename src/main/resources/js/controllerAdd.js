@@ -1,3 +1,8 @@
+if(registeredUsersArray.getRegisteredUser() == null){
+    console.log("You are not registered user. Sign in to enter this page!!!");
+    window.location.href="index.html";
+}
+
 let addForm = document.forms.add;
 let submitBtn = document.querySelector(".add-btn");
 let dropbox = document.getElementById("dropbox");
@@ -27,7 +32,7 @@ function handleAddSubmit(event) {
     post.dist = addForm.dist.value === "" ? " - " : addForm.dist.value;
     post.hashtags = addForm.hashtags.value==="" ? [] : addForm.hashtags.value.split(' ');
     post.likes = [];
-    post.author = "admin";
+    post.author = registeredUsersArray.getRegisteredUser().username;
     post.createdAt = new Date();
     post.id = postArray.getLastId()+1;
     post.photoLink = "images/planes/"+fileName;

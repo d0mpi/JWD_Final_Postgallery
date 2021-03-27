@@ -48,6 +48,27 @@ function handleEdit(event) {
 
 
 /**
+ *  Листнер кнопок лайка
+ */
+[...document.querySelectorAll('.like-label')].forEach(function (item) {
+    item.addEventListener('click', likeButtonListener);
+});
+function likeButtonListener(event){
+    let input = event.target.previousSibling.previousSibling;
+    let postID = input.id.toString().slice(11);
+
+    postArray.likePost(postID,registeredUsersArray.getRegisteredUser().username);
+
+    if(postArray.isLikedByUser(postID,registeredUsersArray.getRegisteredUser().username)) {
+        input.checked = true;
+    } else {
+        input.checked = false;
+    }
+}
+
+
+
+/**
  *  Листнер кнопки фильтра
  */
 function handleFilterSubmit(event) {
@@ -98,9 +119,15 @@ function handleMorePosts() {
     [...document.querySelectorAll('.card-edit-button')].forEach(function (item) {
         item.addEventListener('click', handleEdit);
     });
+    [...document.querySelectorAll('.like-label')].forEach(function (item) {
+        item.addEventListener('click', likeButtonListener);
+    });
 }
 
 moreBtn.addEventListener('click', handleMorePosts);
+
+
+
 
 
 

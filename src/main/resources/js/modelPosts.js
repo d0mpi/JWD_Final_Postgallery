@@ -21,9 +21,9 @@ class PostCollection {
             dist: 2200,
             price: '84.300.000',
             createdAt: new Date(),
-            author: 'Иванов Иван',
+            author: 'admin',
             photoLink: 'images/planes/F-35A.jpg',
-            hashtags: ["F35", "USA","Lockheed_Martin", "Lightning"],
+            hashtags: ["F35", "USA", "Lockheed_Martin", "Lightning"],
             likes: []
         },
         {
@@ -39,10 +39,10 @@ class PostCollection {
             dist: 5500,
             price: '35.000.000',
             createdAt: new Date(),
-            author: 'Иванов Иван',
+            author: 'admin',
             photoLink: 'images/planes/SU-57.jpg',
-            hashtags: ["Russia", "stealth", "Sukhoi","Felon"],
-            likes: []
+            hashtags: ["Russia", "stealth", "Sukhoi", "Felon"],
+            likes: ["admin"]
         },
         {
             id: '3',
@@ -57,9 +57,9 @@ class PostCollection {
             dist: 2960,
             price: '146.200.000',
             createdAt: new Date(),
-            author: 'Иванов Иван',
+            author: 'admin',
             photoLink: 'images/planes/F-22.jpg',
-            hashtags: ["USA", "fighter" ,"Lockheed_Martin", "Raptor"],
+            hashtags: ["USA", "fighter", "Lockheed_Martin", "Raptor"],
             likes: []
         },
         {
@@ -75,10 +75,10 @@ class PostCollection {
             dist: 11500,
             price: '300.000.000',
             createdAt: new Date(),
-            author: 'Иванов Иван',
+            author: 'admin',
             photoLink: 'images/planes/An-124-100.jpg',
-            hashtags: ["Russia","USSR", "Ruslan", "Condor", "Antonov"],
-            likes: []
+            hashtags: ["Russia", "USSR", "Ruslan", "Condor", "Antonov"],
+            likes: ["admin"]
         },
         {
             id: '5',
@@ -93,9 +93,9 @@ class PostCollection {
             dist: 11100,
             price: '2.100.000.000',
             createdAt: new Date(),
-            author: 'Иванов Иван',
+            author: 'admin',
             photoLink: 'images/planes/B-2.jpg',
-            hashtags: ["Spirit", "Northrop", "USA","stealth"],
+            hashtags: ["Spirit", "Northrop", "USA", "stealth"],
             likes: []
         },
         {
@@ -111,7 +111,7 @@ class PostCollection {
             dist: 12300,
             price: '600.000.000',
             createdAt: new Date(),
-            author: 'Иванов Иван',
+            author: 'admin',
             photoLink: 'images/planes/Tu-160.jpg',
             hashtags: ["USSR", "Russia", "Blackjack", "Tupolev"],
             likes: []
@@ -129,7 +129,7 @@ class PostCollection {
             dist: "740 (max: 4647)",
             price: '18.800.000',
             createdAt: new Date(),
-            author: 'Иванов Иван',
+            author: 'admin',
             photoLink: 'images/planes/A-10.jpg',
             hashtags: ["USA", "Thunderbolt", "Warthog", "Fairchild_Republic"],
             likes: []
@@ -147,7 +147,7 @@ class PostCollection {
             dist: 2708,
             price: '80.000.000',
             createdAt: new Date(),
-            author: 'Иванов Иван',
+            author: 'admin',
             photoLink: 'images/planes/E-2.jpg',
             hashtags: ["USA", "Hawkeye", "Grumman"],
             likes: []
@@ -165,10 +165,10 @@ class PostCollection {
             dist: 2346,
             price: '101.000.000',
             createdAt: new Date(),
-            author: 'Иванов Иван',
+            author: 'admin',
             photoLink: 'images/planes/EA-18G.jpg',
             hashtags: ["USA", "Growler", "Boeing"],
-            likes: []
+            likes: ["admin"]
         },
         {
             id: '10',
@@ -183,7 +183,7 @@ class PostCollection {
             dist: 7870,
             price: '145.000.000',
             createdAt: new Date(),
-            author: 'Иванов Иван',
+            author: 'admin',
             photoLink: 'images/planes/A400M.jpg',
             hashtags: ["EU", "Atlas", "Airbus"],
             likes: []
@@ -201,7 +201,7 @@ class PostCollection {
             dist: 8000,
             price: '208.300.000',
             createdAt: new Date(),
-            author: 'Иванов Иван',
+            author: 'admin',
             photoLink: 'images/planes/P-1.jpg',
             hashtags: ["Japan", "Kawasaki", "maritime_force"],
             likes: []
@@ -237,6 +237,20 @@ class PostCollection {
         return post;
     }
 
+    isLikedByUser(id, username) {
+        return this.get(id).likes.includes(String(username));
+    }
+
+    likePost(id, username) {
+        if (this.isLikedByUser(id, username)) {
+            console.log("index " + this.get(id).likes.indexOf(String(username)));
+            this.get(id).likes.splice(this.get(id).likes.indexOf(String(username)),1);
+        } else {
+            this.get(id).likes.push(String(username));
+        }
+        this.save();
+    }
+
     getPostArray() {
         return this.#postList;
     }
@@ -269,16 +283,16 @@ class PostCollection {
                     if (post.hashtags.indexOf(filterClass.hashtags) === -1)
                         fit = false;
                 }
-                if(filterClass.date != null) {
+                if (filterClass.date != null) {
                     let filterDate = new Date(filterClass.date);
                     // console.log(" " + new Date(post.createdAt.slice(0,10)));
                     let postDate = new Date(post.createdAt);
                     // console.log(filterDate + " " + postDate);
-                    if(filterDate.getFullYear() !== postDate.getFullYear())
+                    if (filterDate.getFullYear() !== postDate.getFullYear())
                         fit = false;
-                    else if(filterDate.getMonth() !== postDate.getMonth())
+                    else if (filterDate.getMonth() !== postDate.getMonth())
                         fit = false;
-                    else if(filterDate.getDate() !== postDate.getDate())
+                    else if (filterDate.getDate() !== postDate.getDate())
                         fit = false;
                 }
                 return fit;
@@ -374,8 +388,6 @@ class PostCollection {
         return localStorage.setItem("postList", JSON.stringify(array));
     }
 }
-
-
 
 
 let postArray = new PostCollection(PostCollection.getPostArrayFromLocale());

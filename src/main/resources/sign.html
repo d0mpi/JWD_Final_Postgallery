@@ -17,20 +17,20 @@
     <div class="text-top-row">
         <h3> Sign In</h3>
     </div>
-    <form method="post" class="form-row">
+    <form method="post" class="form-row" name="sign_form">
 
         <div class="form-group">
             <div class="form-under">Username</div>
             <label class="form-label" for="username"> </label>
-            <input class="form-input" type="text" id="username" placeholder="Type your username">
+            <input class="form-input" name="username" type="text" pattern="[a-zA-Z0-9]{1,40}" id="username" placeholder="Type your username" required>
         </div>
         <div class="form-group">
             <div class="form-under">Password</div>
             <label for="password"></label>
-            <input class="form-input" type="password" id="password" placeholder="Type your password">
+            <input class="form-input" name="password" pattern="[A-za-z0-9]{1,40}" type="password" id="password" placeholder="Type your password" required>
         </div>
         <a class="text-forgot">Forgot password ?</a>
-        <input type="submit" value="Sign in" class="sign-in-btn">
+        <button type="button" id="sign_btn" class="sign-in-btn">Sign in</button>
         <div class="text-span"> Or Sign Up Using</div>
 
         <div class="social-login">

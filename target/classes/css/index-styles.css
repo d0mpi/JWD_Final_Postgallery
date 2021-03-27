@@ -215,6 +215,10 @@ header {
     font-weight: 500;
 }
 
+.hide {
+    display: none;
+}
+
 .header-button:hover {
     background: #2ee59d;
     color: white;
@@ -362,7 +366,7 @@ header {
     text-align: center;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1050px) {
     header {
         box-shadow: none;
         border-style: solid;
@@ -371,7 +375,7 @@ header {
 
     .main-container {
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
     }
 
     .filter-col {
@@ -495,7 +499,7 @@ header {
 
 
     .main-box-inline-block {
-        width: 1400px;
+        width: 1450px;
     }
 
     .more-button-box {
@@ -503,7 +507,7 @@ header {
     }
 }
 
-@media (max-width: 1710px) {
+@media (max-width: 1760px) {
 
     .main-box-inline-block {
         width: 700px;
@@ -517,7 +521,7 @@ header {
 
 .card-box {
     display: flex;
-    width: 650px;
+    width: auto;
     background: none;
     float: left;
     margin: 0 0 30px 30px;
@@ -527,14 +531,14 @@ header {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    width: 610px;
+    width: 650px;
     background: none;
 }
 
 .card-buttons-col {
     display: flex;
     flex-direction: column;
-    min-width: 50px;
+    width: auto;
     margin-left: 5px;
     background: none;
 }
@@ -559,23 +563,28 @@ header {
 }
 
 .card-img-box {
-    min-width: 335px;
+    min-width: 385px;
     height: 335px;
     display: flex;
     border-width: 0;
     border-style: solid;
-    border-radius: 10px;
+
     align-items: center;
     margin-right: 17px;
-
-    background: url("../images/MIG-15.jpg") no-repeat center;
+    justify-content: center;
     background-size: cover;
+
+
 }
 
 .card-img {
-    width: 335px;
     border-radius: 10px;
+    height: auto;
 
+    width: auto;
+
+    max-width: 385px;
+    max-height: 335px;
 }
 
 .card-text-top {
@@ -777,7 +786,7 @@ footer {
     }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 760px) {
     .footer-li-2 {
         display: none;
     }
@@ -844,7 +853,7 @@ footer {
     }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 760px) {
     * {
         transition: none;
     }
@@ -865,7 +874,7 @@ footer {
     .card-buttons-col {
         display: flex;
         flex-direction: column;
-        width: 60px;
+        width: auto;
         margin-left: 5px;
         background: none;
     }
@@ -875,7 +884,14 @@ footer {
     }
 
     .card-img-box {
-        margin-bottom: 17px;
+        margin:0 0 17px 0;
+        max-width: 335px;
+        min-width: 335px;
+
+    }
+
+    .card-img{
+        max-width: 335px;
     }
 
     .card-text-box {
@@ -943,8 +959,27 @@ footer {
     flex: 0 0 auto;
     width: 33.333%;
 }
+
 .col-25 {
     flex: 0 0 auto;
     width: 25%;
 }
 
+.filter-button {
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 3px;
+    align-items: center;
+    margin-top: 5px;
+
+    background: white;
+
+    outline: none;
+    cursor: pointer;
+
+    width: 100px;
+    height: 25px;
+
+    border-style: solid;
+    border-width: 0;
+}
