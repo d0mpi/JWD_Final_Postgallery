@@ -91,6 +91,13 @@ header {
     min-width: 500px;
 }
 
+.header-right{
+    display: flex;
+    height: inherit;
+    width: 100%;
+    justify-content: space-between;
+    margin: 1px;
+}
 .header-flex-box {
     display: flex;
     height: inherit;
@@ -128,6 +135,7 @@ header {
     display: flex;
     margin: 0 20px;
     justify-content: center;
+    flex-grow: 2;
 }
 
 .header-add-button:before {
@@ -380,7 +388,7 @@ header {
     .filter-col {
         display: flex;
         justify-content: center;
-        margin-top: 0;
+        margin-top: 60px;
         width: 100%;
     }
 
@@ -442,6 +450,34 @@ header {
         flex-direction: row;
     }
 
+    .header-add-col{
+        flex-grow: unset;
+    }
+    .header-right{
+        justify-content: center;
+    }
+
+    * {
+        transition: none;
+    }
+
+    .header-flex-box{
+        flex-direction: column;
+        height: auto;
+        justify-content: center;
+        display: block;
+    }
+    header{
+        height: auto;
+    }
+
+    .header-button {
+        display: none;
+    }
+
+    .main-container {
+        margin-top: 60px;
+    }
 }
 
 
@@ -465,6 +501,7 @@ header {
 .main-box-inline-block {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
 .push {
@@ -769,7 +806,7 @@ footer {
 @media (max-width: 1760px) {
 
     .main-box-inline-block {
-        width: 700px;
+        width: 100%;
     }
 
     .more-button-box {
@@ -777,6 +814,7 @@ footer {
     }
     .card-box {
         width: 420px;
+        min-width: 420px;
         margin: 0 0 30px 30px;
     }
 
@@ -843,45 +881,8 @@ footer {
     }
 }
 
-@media (max-width: 1050px) {
-    * {
-        transition: none;
-    }
-
-    .header-flex-box{
-        flex-direction: column;
-        height: auto;
-    }
-    header{
-        height: 200px;
-    }
-
-    .header-button {
-        display: none;
-    }
-
-    .main-container {
-        margin-top: 60px;
-    }
-
-    .filter-col{
-        margin-top: 140px;
-    }
-
-}
 
 @media (max-width: 850px) {
-    header {
-        height: auto;
-    }
-
-    .menu-href
-    .header-flex-box {
-        height: auto;
-        flex-direction: row;
-        justify-content: center;
-        display: block;
-    }
 
     .header-button {
         margin-bottom: 20px;
@@ -902,12 +903,10 @@ footer {
     .header-username-col {
         display: none;
     }
+
 }
 
 @media (max-width: 760px) {
-    * {
-        transition: none;
-    }
 
     .card-box {
         width: 420px;

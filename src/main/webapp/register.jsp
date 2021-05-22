@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="css/register-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="fonts/fonts.css">
+    <jsp:include page="WEB-INF/title-logo.jsp"/>
+
     <script src="js/modelRegistration.js" defer></script>
     <script src="js/controllerRegistration.js" defer></script>
 </head>
@@ -34,12 +36,14 @@
         <div class="form-group">
             <div class="form-under">Username</div>
             <label class="form-label" for="username"> </label>
-            <input class="form-input" type="text" id="username" name="username" placeholder="Type username" pattern="[a-zA-Z0-9]{1,40}" required>
+            <input class="form-input" type="text" id="username" name="username" placeholder="Type username"
+                   pattern="[a-zA-Z0-9]{1,40}" required>
         </div>
         <div class="form-group">
             <div class="form-under">Password</div>
             <label for="password"></label>
-            <input class="form-input" name="password" pattern="[A-za-z0-9]{1,40}" type="password" id="password" placeholder="Type password" required>
+            <input class="form-input" name="password" pattern="[A-za-z0-9]{1,40}" type="password" id="password"
+                   placeholder="Type password" required>
         </div>
         <button type="button" id="register_btn" class="register-btn">Create account</button>
         <div class="text-span"> Or Sign Up Using</div>

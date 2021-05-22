@@ -16,56 +16,14 @@
     <link rel="stylesheet" type="text/css" href="css/add-post-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
+    <jsp:include page="WEB-INF/title-logo.jsp"/>
     <script src="js/modelPosts.js" defer></script>
     <script src="js/modelRegistration.js" defer></script>
     <script src="js/controllerAdd.js" defer></script>
     <script src="js/viewHeaderButtons.js" defer></script>
 </head>
 <body>
-<header>
-    <div class="header-flex-box">
-        <div class="header-left">
-            <div class="header-logo-col">
-                <a class="header-logo-ref" href="index.jsp">
-                    <img class="img-logo" src="images/logo-white.png" alt="header-logo">
-                </a>
-            </div>
-            <nav class="header-menu">
-                <div class="menu-col ">
-                    <a href="index.jsp" class="menu-href">
-                        <div></div>
-                        HOME</a>
-                </div>
-                <div class="menu-col">
-                    <a href="about.jsp" class="menu-href">
-                        <div></div>
-                        ABOUT</a>
-                </div>
-                <div class="menu-col">
-                    <a href="contact.jsp" class="menu-href">
-                        <div></div>
-                        CONTACT US</a>
-                </div>
-                <div class="menu-col">
-                    <a href="error.jsp" class="menu-href">
-                        <div></div>
-                        ERROR</a>
-                </div>
-            </nav>
-        </div>
-        <div class="header-add-col">
-            <button onclick="document.location='add-post.jsp'" class="header-add-button hide" id="add_btn">
-                ADD POST
-            </button>
-        </div>
-
-        <div class="header-log-col">
-            <div class="header-username-col hide" id="header_username"> UserName</div>
-            <button class="header-button" onclick="document.location='sign.jsp'" id="sign_in_btn"> SIGN IN </button>
-            <button class="header-button" id="sign_out_btn"> SIGN OUT</button>
-        </div>
-    </div>
-</header>
+<jsp:include page="WEB-INF/header.jsp"/>
 
 <main>
     <div class="main-container">
@@ -79,7 +37,7 @@
                         <div class="img-box col-full">
                             <div class="add-label"> Image</div>
                             <div class="drag-and-drop">
-                                <img src="" alt="" class="add-img"  id="add_img">
+                                <img src="" alt="" class="add-img" id="add_img">
                             </div>
                         </div>
                         <div class="col-full file-load-box">
@@ -197,17 +155,7 @@
     </div>
 </main>
 
-<footer>
-    <ul class="footer-ul font-footer">
-        <li class="footer-li-1">
-            <img class="img-logo" src="images/logo-white.png" alt="logo">
-        </li>
-        <li class="footer-li-2">Michael Dokuchaev</li>
-        <li class="footer-li-3">2k9g</li>
-        <li class="footer-li-4">mdokuchaevp@gmail.com</li>
-        <li class="footer-li-5">18.02.2021</li>
-    </ul>
-</footer>
+<jsp:include page="WEB-INF/footer.jsp"/>
 
 
 </body>

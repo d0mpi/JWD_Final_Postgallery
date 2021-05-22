@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="css/sign-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="fonts/fonts.css">
+    <jsp:include page="WEB-INF/title-logo.jsp"/>
+
     <script src="js/modelRegistration.js" defer></script>
     <script src="js/controllerSign.js" defer></script>
 </head>
@@ -30,12 +32,14 @@
         <div class="form-group">
             <div class="form-under">Username</div>
             <label class="form-label" for="username"> </label>
-            <input class="form-input" name="username" type="text" pattern="[a-zA-Z0-9]{1,40}" id="username" placeholder="Type your username" required>
+            <input class="form-input" name="username" type="text" pattern="[a-zA-Z0-9]{1,40}" id="username"
+                   placeholder="Type your username" required>
         </div>
         <div class="form-group">
             <div class="form-under">Password</div>
             <label for="password"></label>
-            <input class="form-input" name="password" pattern="[A-za-z0-9]{1,40}" type="password" id="password" placeholder="Type your password" required>
+            <input class="form-input" name="password" pattern="[A-za-z0-9]{1,40}" type="password" id="password"
+                   placeholder="Type your password" required>
         </div>
         <a class="text-forgot">Forgot password ?</a>
         <button type="button" id="sign_btn" class="sign-in-btn">Sign in</button>
