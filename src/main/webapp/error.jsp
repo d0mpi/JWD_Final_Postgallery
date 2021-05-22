@@ -1,0 +1,96 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: mdoku
+  Date: 22.05.2021
+  Time: 13:26
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Error</title>
+    <link rel="stylesheet" type="text/css" href="css/index-styles.css">
+    <link rel="stylesheet" type="text/css" href="css/error-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
+    <script src="js/modelRegistration.js" defer></script>
+    <script src="js/viewHeaderButtons.js" defer></script>
+</head>
+<body>
+<header>
+    <div class="header-flex-box">
+        <div class="header-left">
+            <div class="header-logo-col">
+                <a class="header-logo-ref" href="../index.jsp">
+                    <img class="img-logo" src="images/logo-white.png" alt="header-logo">
+                </a>
+            </div>
+            <nav class="header-menu">
+                <div class="menu-col ">
+                    <a href="../index.jsp" class="menu-href">
+                        <div></div>
+                        HOME</a>
+                </div>
+                <div class="menu-col">
+                    <a href="../about.jsp" class="menu-href">
+                        <div></div>
+                        ABOUT</a>
+                </div>
+                <div class="menu-col">
+                    <a href="../contact.jsp" class="menu-href">
+                        <div></div>
+                        CONTACT US</a>
+                </div>
+                <div class="menu-col">
+                    <a href="../error.jsp" class="menu-href menu-href-active">
+                        <div></div>
+                        ERROR</a>
+                </div>
+            </nav>
+        </div>
+
+        <div class="header-add-col">
+            <button onclick="document.location='add-post.jsp'" class="header-add-button hide" id="add_btn">
+                ADD POST
+            </button>
+        </div>
+
+        <div class="header-log-col">
+            <div class="header-username-col hide" id="header_username"> UserName</div>
+            <button class="header-button" onclick="document.location='sign.jsp'" id="sign_in_btn"> SIGN IN </button>
+            <button class="header-button" id="sign_out_btn"> SIGN OUT</button>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="main-container">
+        <div class="main-col">
+            <div class="error-text-box">
+                <div class="error-number">404 </div>
+                <div class="error-text"> Oooops :( The page you are looking for was not found.</div>
+
+            </div>
+            <div class="push"></div>
+        </div>
+    </div>
+
+</main>
+
+<footer>
+    <ul class="footer-ul font-footer">
+        <li class="footer-li-1">
+            <img class="img-logo" src="images/logo-white.png" alt="logo">
+        </li>
+        <li class="footer-li-2">Michael Dokuchaev</li>
+        <li class="footer-li-3">2k9g</li>
+        <li class="footer-li-4">mdokuchaevp@gmail.com</li>
+        <li class="footer-li-5">18.02.2021</li>
+    </ul>
+</footer>
+
+</body>
+</html>

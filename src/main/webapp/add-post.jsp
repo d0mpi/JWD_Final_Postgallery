@@ -1,0 +1,215 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: mdoku
+  Date: 22.05.2021
+  Time: 13:45
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add post</title>
+    <link rel="stylesheet" type="text/css" href="css/index-styles.css">
+    <link rel="stylesheet" type="text/css" href="css/add-post-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
+    <script src="js/modelPosts.js" defer></script>
+    <script src="js/modelRegistration.js" defer></script>
+    <script src="js/controllerAdd.js" defer></script>
+    <script src="js/viewHeaderButtons.js" defer></script>
+</head>
+<body>
+<header>
+    <div class="header-flex-box">
+        <div class="header-left">
+            <div class="header-logo-col">
+                <a class="header-logo-ref" href="index.jsp">
+                    <img class="img-logo" src="images/logo-white.png" alt="header-logo">
+                </a>
+            </div>
+            <nav class="header-menu">
+                <div class="menu-col ">
+                    <a href="index.jsp" class="menu-href">
+                        <div></div>
+                        HOME</a>
+                </div>
+                <div class="menu-col">
+                    <a href="about.jsp" class="menu-href">
+                        <div></div>
+                        ABOUT</a>
+                </div>
+                <div class="menu-col">
+                    <a href="contact.jsp" class="menu-href">
+                        <div></div>
+                        CONTACT US</a>
+                </div>
+                <div class="menu-col">
+                    <a href="error.jsp" class="menu-href">
+                        <div></div>
+                        ERROR</a>
+                </div>
+            </nav>
+        </div>
+        <div class="header-add-col">
+            <button onclick="document.location='add-post.jsp'" class="header-add-button hide" id="add_btn">
+                ADD POST
+            </button>
+        </div>
+
+        <div class="header-log-col">
+            <div class="header-username-col hide" id="header_username"> UserName</div>
+            <button class="header-button" onclick="document.location='sign.jsp'" id="sign_in_btn"> SIGN IN </button>
+            <button class="header-button" id="sign_out_btn"> SIGN OUT</button>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="main-container">
+        <div class="main-col">
+            <div class="col-66">
+                <form name="add" method="post" class="add-main-box">
+                    <div class="col-full add-title">
+                        <h3>Information</h3>
+                    </div>
+                    <div class="col-half" style="height: 504px">
+                        <div class="img-box col-full">
+                            <div class="add-label"> Image</div>
+                            <div class="drag-and-drop">
+                                <img src="" alt="" class="add-img"  id="add_img">
+                            </div>
+                        </div>
+                        <div class="col-full file-load-box">
+                            <input type="file" name="file" id="dropbox" class="input-file"
+                                   accept="image/jpeg,image/png,image/jpg" required>
+                        </div>
+                    </div>
+                    <div class="col-half">
+                        <div class="add-text-box">
+                            <div class="add-form">
+                                <div class="row">
+                                    <div class="col-full">
+                                        <div class="input-box">
+                                            <label title="This field is mandatory" for="add-model" class="add-label">
+                                                Model*</label>
+                                            <input id="add-model" name="model" type="text" class="input-text" required
+                                                   maxlength="100">
+                                        </div>
+                                    </div>
+                                    <div class="col-33">
+                                        <div class="input-box">
+                                            <label for="add-height" class="add-label"> Height(m)</label>
+                                            <input id="add-height" name="height" type="text" class="input-text"
+                                                   pattern="[0-9]+([\.,][0-9]+)?">
+                                        </div>
+                                    </div>
+                                    <div class="col-33">
+                                        <div class="input-box">
+                                            <label for="add-length" class="add-label"> Length(m)</label>
+                                            <input id="add-length" type="text" name="lengthInput" class="input-text"
+                                                   pattern="[0-9]+([\.,][0-9]+)?">
+                                        </div>
+                                    </div>
+                                    <div class="col-33">
+                                        <div class="input-box">
+                                            <label for="add-wingspan" class="add-label"> Wingspan(m)</label>
+                                            <input id="add-wingspan" type="text" name="wingspan" class="input-text"
+                                                   pattern="[0-9]+([\.,][0-9]+)?">
+                                        </div>
+                                    </div>
+                                    <div class="col-half">
+                                        <div class="input-box">
+                                            <label for="add-type" class="add-label"> Type</label>
+                                            <select id="add-type" name="type" class="input-text">
+                                                <option>fighter</option>
+                                                <option>transport</option>
+                                                <option>maritime patrol</option>
+                                                <option>bomber</option>
+                                                <option>attack</option>
+                                                <option>reconnaissance</option>
+                                                <option>multirole</option>
+                                                <option>airborne early warning</option>
+                                                <option>experimental</option>
+                                                <option>electronic warfare</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-half">
+                                        <div class="input-box">
+                                            <label for="add-crew" class="add-label"> Crew</label>
+                                            <input id="add-crew" type="number" name="crew" class="input-text" min="0"
+                                                   max="100" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="col-half">
+                                        <div class="input-box">
+                                            <label for="price" class="add-label" title="This field is mandatory"> Price
+                                                ($)</label>
+                                            <input id="price" type="text" name="price" class="input-text" required
+                                                   pattern="[0-9]+([\.,][0-9]+)*">
+                                        </div>
+                                    </div>
+                                    <div class="col-half">
+                                        <div class="input-box">
+                                            <label for="add-origin" class="add-label"> Origin</label>
+                                            <input id="add-origin" type="text" name="origin" class="input-text"
+                                                   maxlength="100">
+                                        </div>
+                                    </div>
+                                    <div class="col-half">
+                                        <div class="input-box">
+                                            <label for="add-speed" class="add-label"> Maximum speed (km/h)</label>
+                                            <input id="add-speed" type="text" name="speed" class="input-text"
+                                                   pattern="[0-9]+([\.,][0-9]+)?" maxlength="20">
+                                        </div>
+                                    </div>
+                                    <div class="col-half">
+                                        <div class="input-box">
+                                            <label for="add-distance" class="add-label"> Flying distance(km)</label>
+                                            <input id="add-distance" type="text" name="dist" class="input-text"
+                                                   pattern="[0-9]+([\.,][0-9]+)?" maxlength="20">
+                                        </div>
+                                    </div>
+                                    <div class="col-full">
+                                        <div class="input-box">
+                                            <label for="add-hashtags" class="add-label"> Hashtags</label>
+                                            <input id="add-hashtags" type="text" name="hashtags" class="input-text"
+                                                   maxlength="100">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-full add-btn-box">
+                        <button id="addButton" type="submit" class="add-btn">
+                            Send
+                        </button>
+                    </div>
+                </form>
+                <div class="push"></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <ul class="footer-ul font-footer">
+        <li class="footer-li-1">
+            <img class="img-logo" src="images/logo-white.png" alt="logo">
+        </li>
+        <li class="footer-li-2">Michael Dokuchaev</li>
+        <li class="footer-li-3">2k9g</li>
+        <li class="footer-li-4">mdokuchaevp@gmail.com</li>
+        <li class="footer-li-5">18.02.2021</li>
+    </ul>
+</footer>
+
+
+</body>
+
+</html>
