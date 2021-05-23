@@ -4,6 +4,8 @@ body {
     background: url("../images/bg-01.jpg") no-repeat center;
     background-size: cover;
     background-attachment: fixed;
+    background-color: #0b2852;
+
     /*background: #f4f4f4;*/
     font-size: 14px;
     line-height: 1;

@@ -1,5 +1,6 @@
 body {
     background: url("../images/bg-04.jpg") no-repeat center;
+    background-color: #0b2852;
     background-size: cover;
     background-attachment: fixed;
 }

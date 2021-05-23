@@ -36,7 +36,7 @@
                     UP! - is a convenient gallery or feed of posts about military aircraft.
                     The web application was developed by Michael Dokuchaev,
                     a BSU student of the 2nd year of the 9th group. Here you can
-                    find images and descriptions of military aircraft around the world published by other users.
+                    find images and descriptions of military aircraft from all corners of the world published by other users.
                 </div>
             </div>
             <div class="part back-blur">
