@@ -18,28 +18,28 @@
     <div class="header-flex-box">
         <div class="header-left">
             <div class="header-logo-col">
-                <a class="header-logo-ref" href="../index.jsp">
+                <a class="header-logo-ref" href="${pageContext.request.contextPath}/home">
                     <img class="img-logo" src="../images/logo-white.png" alt="header-logo">
                 </a>
             </div>
             <nav class="header-menu">
                 <div class="menu-col ">
-                    <a href="${pageContext.request.contextPath}/home" id="header-index.jsp-btn" class="menu-href">
+                    <a href="${pageContext.request.contextPath}/home" id="header-home-btn" class="menu-href">
                         <div></div>
                         HOME</a>
                 </div>
                 <div class="menu-col">
-                    <a href="${pageContext.request.contextPath}/about" id="header-about.jsp-btn" class="menu-href ">
+                    <a href="${pageContext.request.contextPath}/about" id="header-about-btn" class="menu-href ">
                         <div></div>
                         ABOUT</a>
                 </div>
                 <div class="menu-col">
-                    <a href="${pageContext.request.contextPath}/contact" id="header-contact.jsp-btn" class="menu-href">
+                    <a href="${pageContext.request.contextPath}/contact" id="header-contact-btn" class="menu-href">
                         <div></div>
                         CONTACT US</a>
                 </div>
                 <div class="menu-col">
-                    <a href="${pageContext.request.contextPath}/error" id="header-error.jsp-btn" class="menu-href">
+                    <a href="${pageContext.request.contextPath}/error" id="header-error-btn" class="menu-href">
                         <div></div>
                         ERROR</a>
                 </div>
@@ -59,18 +59,33 @@
             <div class="header-log-col">
                 <c:if test="${sessionScope.logged != null}">
                     <c:if test="${sessionScope.logged == true}">
-                        <div class="header-username-col" id="header_username"> UserName</div>
-                        <button class="header-button" id="sign_out_btn"> SIGN OUT</button>
+                        <div class="header-username-col" id="header_username"> User: ${sessionScope.login}</div>
+                        <form name="log1" action="${pageContext.request.contextPath}/home"
+                              method="post">
+                            <button name="sign-out" type="submit" title="" class="header-button" id="sign_out_btn"
+                                    value=""> SIGN
+                                OUT
+                            </button>
+                        </form>
                     </c:if>
                 </c:if>
                 <c:if test="${sessionScope.logged != null}">
                     <c:if test="${sessionScope.logged == false}">
-                        <button class="header-button" onclick="document.location='/sign'" id="sign_in_btn"> SIGN IN
-                        </button>
+                        <form name="log2" action="${pageContext.request.contextPath}/sign"
+                              method="get">
+                            <button name="sign-in" type="submit" title="" value="" class="header-button"
+                                    id="sign_in_btn1"> SIGN IN
+                            </button>
+                        </form>
                     </c:if>
                 </c:if>
                 <c:if test="${sessionScope.logged == null}">
-                    <button class="header-button" onclick="document.location='/sign'" id="sign_in_btn"> SIGN IN </button>
+                    <form name="log3" action="${pageContext.request.contextPath}/sign"
+                          method="get">
+                        <button name="sign-in" type="submit" title="" value="" class="header-button" id="sign_in_btn2">
+                            SIGN IN
+                        </button>
+                    </form>
                 </c:if>
             </div>
         </div>

@@ -13,11 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "registration", value = "/registration")
-public class RegistrationServlet extends HttpServlet {
+@WebServlet(name = "sign", value = "/sign")
+public class SignInServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("register.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("sign.jsp");
         requestDispatcher.forward(req,resp);
     }
 
@@ -25,17 +25,18 @@ public class RegistrationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("username");
         String password = req.getParameter("password");
-
         MySqlUserDaoImpl userDao = MySqlUserDaoImpl.getInstance();
         User user;
-
-        if(userDao.isLoginPresented(login)) {
-            resp.sendRedirect("/registration");
+        if(!userDao.isLoginPresented(login)) {
+            resp.sendRedirect("/sign");
             return;
+        } else {
+            user = userDao.getUserByLogin(login);
+            if (!user.getPassword().equals(password)) {
+                resp.sendRedirect("/sign");
+                return;
+            }
         }
-
-        user = new User(login,password);
-        userDao.create(user);
         req.getSession().setAttribute("logged", true);
         req.getSession().setAttribute("login", login);
 

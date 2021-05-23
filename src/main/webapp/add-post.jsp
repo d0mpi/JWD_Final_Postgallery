@@ -29,7 +29,7 @@
     <div class="main-container">
         <div class="main-col">
             <div class="col-66">
-                <form name="add" method="post" class="add-main-box">
+                <form name="add" method="post" action="${pageContext.request.contextPath}/add-post" class="add-main-box">
                     <div class="col-full add-title">
                         <h3>Information</h3>
                     </div>
@@ -81,7 +81,7 @@
                                     <div class="col-half">
                                         <div class="input-box">
                                             <label for="add-type" class="add-label"> Type</label>
-                                            <select id="add-type" name="type" class="input-text">
+                                            <select id="add-type" name="type" type="text" class="input-text">
                                                 <option>fighter</option>
                                                 <option>transport</option>
                                                 <option>maritime patrol</option>
@@ -133,18 +133,17 @@
                                     </div>
                                     <div class="col-full">
                                         <div class="input-box">
-                                            <label for="add-hashtags" class="add-label"> Hashtags</label>
+                                            <label for="add-hashtags" class="add-label"> Hashtags(?, ?, ? ...)</label>
                                             <input id="add-hashtags" type="text" name="hashtags" class="input-text"
                                                    maxlength="100">
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-full add-btn-box">
-                        <button id="addButton" type="submit" class="add-btn">
+                        <button id="addButton" type="submit"  class="add-btn">
                             Send
                         </button>
                     </div>

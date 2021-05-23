@@ -16,19 +16,18 @@
     <link rel="stylesheet" href="fonts/fonts.css">
     <jsp:include page="WEB-INF/title-logo.jsp"/>
 
-    <script src="js/modelRegistration.js" defer></script>
-    <script src="js/controllerSign.js" defer></script>
+    <%--    <script src="js/modelRegistration.js" defer></script>--%>
+    <%--    <script src="js/controllerSign.js" defer></script>--%>
 </head>
 <body>
 <div class="sign-in-box">
-    <div class="logo-row">
+    <a class="logo-row" href="${pageContext.request.contextPath}/home">
         <img src="images/logo-white.png" alt="logo">
-    </div>
+    </a>
     <div class="text-top-row">
         <h3> Sign In</h3>
     </div>
-    <form method="post" class="form-row" name="sign_form">
-
+    <form class="form-row" method="post" action="${pageContext.request.contextPath}/sign" name="sign_form">
         <div class="form-group">
             <div class="form-under">Username</div>
             <label class="form-label" for="username"> </label>
@@ -42,7 +41,7 @@
                    placeholder="Type your password" required>
         </div>
         <a class="text-forgot">Forgot password ?</a>
-        <button type="button" id="sign_btn" class="sign-in-btn">Sign in</button>
+        <button name="sign" type="submit" id="sign_btn" class="sign-in-btn" value="">Sign in</button>
         <div class="text-span"> Or Sign Up Using</div>
 
         <div class="social-login">
@@ -53,8 +52,10 @@
             <a href="#" class="google">
             </a>
         </div>
+    </form>
+    <form method="get" action="${pageContext.request.contextPath}/registration" name="sign_form">
         <div class="text-create-row">
-            <a class="a-create" href="register.jsp">Create your Account</a>
+            <button name="register" class="a-create">Create your Account</button>
         </div>
     </form>
 </div>

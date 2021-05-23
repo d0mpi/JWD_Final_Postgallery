@@ -34,8 +34,8 @@ public class ConnectorDB {
 
     public static Connection getConnection() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
             ResourceBundle resource = ResourceBundle.getBundle("database");
+            Class.forName(resource.getString("db.driver"));
             String url = resource.getString("db.url");
             String user = resource.getString("db.user");
             String pass = resource.getString("db.password");

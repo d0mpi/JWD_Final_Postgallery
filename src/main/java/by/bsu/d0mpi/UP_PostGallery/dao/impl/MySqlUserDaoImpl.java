@@ -24,7 +24,7 @@ public class MySqlUserDaoImpl extends AbstractDao<Integer, User> implements User
     private static final String SQL_DELETE_USER_BY_ID =
             "DELETE FROM users WHERE id = ?";
     private static final String SQL_SELECT_BY_LOGIN =
-            "SELECT id FROM users WHERE login = ?";
+            "SELECT * FROM users WHERE login = ?";
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static volatile MySqlUserDaoImpl instance;
@@ -142,5 +142,23 @@ public class MySqlUserDaoImpl extends AbstractDao<Integer, User> implements User
             LOGGER.error("DB connection error", throwables);
         }
         return false;
+    }
+
+    public User getUserByLogin(String login) {
+        User user = null;
+        try (PreparedStatement statement = ConnectorDB.getConnection().prepareStatement(SQL_SELECT_BY_LOGIN)) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int id = resultSet.getInt(1);
+                String u_login = resultSet.getString(2);
+                String password = resultSet.getString(3);
+                user = new User(id,u_login,password);
+            }
+            return user;
+        } catch (SQLException throwables) {
+            LOGGER.error("DB connection error", throwables);
+        }
+        return user;
     }
 }

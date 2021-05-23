@@ -264,4 +264,6 @@ h3 {
 
 .a-create {
     font-family: Poppins-Regular, sans-serif;
+    border-width: 0;
+    border-style: solid;
 }

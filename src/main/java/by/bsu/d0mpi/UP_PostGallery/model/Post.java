@@ -3,8 +3,7 @@ package by.bsu.d0mpi.UP_PostGallery.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Date;
-import java.util.LinkedList;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -21,9 +20,34 @@ public class Post {
     private Float speed;
     private Float distance;
     private Integer price;
-    private Date createdAt;
+    private LocalDate createdAt;
     private String author;
     private String photoLink;
     private List<String> hashtags;
     private List<String> likeAuthors;
+
+    public Post(String model, String type, Float length, Float wingspan, Float height, String origin, Integer crew, Float speed, Float distance, Integer price, LocalDate createdAt, String author, String photoLink, List<String> hashtags) {
+        this.model = model;
+        this.type = type;
+        this.length = length;
+        this.wingspan = wingspan;
+        this.height = height;
+        this.origin = origin;
+        this.crew = crew;
+        this.speed = speed;
+        this.distance = distance;
+        this.price = price;
+        this.createdAt = createdAt;
+        this.author = author;
+        this.photoLink = photoLink;
+        this.hashtags = hashtags;
+    }
+
+    public String getHashtagsAsString() {
+        StringBuilder str = new StringBuilder("");
+       for(String hashtag : hashtags){
+           str.append("#").append(hashtag).append(" ");
+       }
+       return str.toString();
+    }
 }

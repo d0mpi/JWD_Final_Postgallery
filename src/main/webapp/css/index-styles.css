@@ -517,7 +517,7 @@ header {
     border-style: solid;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 70%;
     min-width: 250px;
     border-width: 0;
 
@@ -574,6 +574,8 @@ header {
     margin-top: 5px;
     font-family: Barlow-Regular, sans-serif;
     color: black;
+    min-height: 10px;
+    margin-bottom: 10px;
 }
 
 .card-main-box {
@@ -727,14 +729,6 @@ header {
     font-family: FontAwesome, serif;
     color: #524f4e;
     transition: .3s ease-in-out;
-}
-
-.like-check:checked + label {
-    transform: scale(1.1);
-}
-
-.like-check:checked + label:hover {
-    transform: scale(1.05);
 }
 
 .like-check:checked + label:after {

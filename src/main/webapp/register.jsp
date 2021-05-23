@@ -16,23 +16,21 @@
     <link rel="stylesheet" href="fonts/fonts.css">
     <jsp:include page="WEB-INF/title-logo.jsp"/>
 
-    <script src="js/modelRegistration.js" defer></script>
-    <script src="js/controllerRegistration.js" defer></script>
+
 </head>
 <body>
 <div class="sign-in-box">
-    <div class="logo-row">
+    <a class="logo-row" href="${pageContext.request.contextPath}/home">
         <img src="images/logo-white.png" alt="logo">
-    </div>
+    </a>
     <div class="text-top-row">
         <h3> Register</h3>
     </div>
-    <form method="post" class="form-row" name="register_form">
-        <div class="form-group">
-            <div class="form-under">Email</div>
-            <label for="email"></label>
-            <input class="form-input" type="email" name="email" id="email" placeholder="Type your email" required>
-        </div>
+    <form class="form-row" method="post" action="${pageContext.request.contextPath}/registration" name="reg_form"><%--        <div class="form-group">--%>
+<%--            <div class="form-under">Email</div>--%>
+<%--            <label for="email"></label>--%>
+<%--            <input class="form-input" type="email" name="email" id="email" placeholder="Type your email" required>--%>
+<%--        </div>--%>
         <div class="form-group">
             <div class="form-under">Username</div>
             <label class="form-label" for="username"> </label>
@@ -45,7 +43,7 @@
             <input class="form-input" name="password" pattern="[A-za-z0-9]{1,40}" type="password" id="password"
                    placeholder="Type password" required>
         </div>
-        <button type="button" id="register_btn" class="register-btn">Create account</button>
+        <button type="submit" id="register_btn" class="register-btn">Create account</button>
         <div class="text-span"> Or Sign Up Using</div>
         <div class="social-login">
             <a href="#" class="facebook">
@@ -55,7 +53,6 @@
             <a href="#" class="google">
             </a>
         </div>
-
     </form>
 </div>
 </body>
