@@ -201,6 +201,7 @@ h3 {
 .sign-in-btn:hover {
     background: #81d742;
     transform: scale(0.95);
+
 }
 
 .text-forgot {
@@ -263,7 +264,13 @@ h3 {
 }
 
 .a-create {
+    color: #333333;
     font-family: Poppins-Regular, sans-serif;
     border-width: 0;
     border-style: solid;
+}
+
+.a-create:hover{
+    color: black;
+    transform: scale(.95);
 }

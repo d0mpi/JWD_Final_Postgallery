@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="css/index-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/home.js" ></script>
     <jsp:include page="WEB-INF/title-logo.jsp"/>
 </head>
 <body>
@@ -16,47 +18,47 @@
 <main>
     <div class="main-container">
         <div class="filter-col">
-            <form class="filter-fieldset" name="filter" method="post" action="${pageContext.request.contextPath}/filter">
+            <form class="filter-fieldset" name="filter" method="post">
                 <div class="filter-head"> Filter by</div>
                 <ul class="filter-ul">
                     <li>
                         <label class="filter-label">
                             <div>
-                                <input name="checkbox" value="filter_date_checkbox" type="checkbox" class="filter-checkbox">
+                                <input id="filter_date_check" name="checkbox" value="filter_date_checkbox" type="checkbox" class="filter-checkbox">
                                 <span>Date</span>
                             </div>
-                            <input name="filter_date_text" value='2021-05-23' type="date" class="filter-input" >
+                            <input id="filter_date" name="filter_date_text" value='2021-05-23' type="date" class="filter-input" >
                         </label>
                     </li>
                     <li>
                         <label class="filter-label">
                             <div>
-                                <input name="checkbox" value="filter_author_checkbox" type="checkbox" class="filter-checkbox">
+                                <input id="filter_author_check" name="checkbox" value="filter_author_checkbox" type="checkbox" class="filter-checkbox">
                                 <span>Author</span>
                             </div>
-                            <input name="filter_author_text" type="text" class="filter-input"
+                            <input id="filter_author" name="filter_author_text" type="text" class="filter-input"
                                    placeholder="Username">
                         </label>
                     </li>
                     <li>
                         <label class="filter-label">
                             <div>
-                                <input name="checkbox" value="filter_hashtags_checkbox" type="checkbox" class="filter-checkbox"
+                                <input name="checkbox" id="filter_hashtags_check" value="filter_hashtags_checkbox" type="checkbox" class="filter-checkbox"
                                        placeholder="Hashtag">
                                 <span>Hashtag</span>
                             </div>
-                            <input name="filter_hashtags_text" type="text" class="filter-input"
+                            <input id="filter_hashtag" name="filter_hashtags_text" type="text" class="filter-input"
                                    placeholder="Hashtag">
                         </label>
                     </li>
                     <li>
-                        <button type="submit" id="filter_btn" class="filter-button">filter</button>
+                        <button type="button" id="filter_btn" class="filter-button">filter</button>
                     </li>
                 </ul>
             </form>
         </div>
         <div class="main-col">
-            <div class="main-box-inline-block">
+            <div class="main-box-inline-block" id="post_container">
                 <c:forEach var="post" items="${requestScope.postList}">
                     <div class="card-box">
                         <div class="card-main-col">
@@ -91,7 +93,7 @@
                                             <c:if test="${sessionScope.logged == true}">
                                                 <form id="like-form${post.id}"
                                                       action="${pageContext.request.contextPath}/like" method="post">
-                                                    <input id="like-check${post.id}" class="like-check" type="checkbox" value="">
+                                                    <input id="like-check${post.id}" class="like-check" type="checkbox" ${post.likeAuthors.contains(post.author) ? "checked" : "unchecked"} value="">
                                                     <label for="like-check${post.id}" class="like-label"></label>
                                                 </form>
                                             </c:if>
@@ -115,9 +117,9 @@
                                             <button type="submit" name="edit" value="${post.id}"
                                                     class="card-edit-button" title=""></button>
                                         </form>
-                                        <form action="${pageContext.request.contextPath}/home" method="post"
+                                        <form  method="post"
                                               name="deleteForm${post.id}">
-                                            <button type="submit" name="delete" value="${post.id}"
+                                            <button type="button" name="delete" value="${post.id}"
                                                     class="card-delete-button" title=""></button>
                                         </form>
                                     </c:if>

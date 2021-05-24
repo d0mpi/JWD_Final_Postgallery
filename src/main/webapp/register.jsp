@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="css/register-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="fonts/fonts.css">
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/register.js"></script>
 
     <jsp:include page="WEB-INF/title-logo.jsp"/>
 
@@ -27,7 +29,7 @@
     <div class="text-top-row">
         <h3> Register</h3>
     </div>
-    <form class="form-row" method="post" action="${pageContext.request.contextPath}/registration" name="reg_form"><%--        <div class="form-group">--%>
+    <form class="form-row" method="post" name="reg_form"><%--        <div class="form-group">--%>
 <%--            <div class="form-under">Email</div>--%>
 <%--            <label for="email"></label>--%>
 <%--            <input class="form-input" type="email" name="email" id="email" placeholder="Type your email" required>--%>
@@ -44,7 +46,7 @@
             <input class="form-input" name="password" pattern="[A-za-z0-9]{1,40}" type="password" id="password"
                    placeholder="Type password" required>
         </div>
-        <button type="submit" id="register_btn" class="register-btn">Create account</button>
+        <button type="button" id="register_btn" class="register-btn">Create account</button>
         <div class="text-span"> Or Sign Up Using</div>
         <div class="social-login">
             <a href="#" class="facebook">
