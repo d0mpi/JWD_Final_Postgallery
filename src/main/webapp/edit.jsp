@@ -18,6 +18,8 @@
     <link rel="stylesheet" type="text/css" href="css/edit-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
+    <script src="js/jquery-3.6.0.min.js"></script>
+
     <jsp:include page="WEB-INF/title-logo.jsp"/>
 
     <script src="js/modelRegistration.js" defer></script>
@@ -167,9 +169,9 @@
                                     </div>
                                     <div class="col-full">
                                         <div class="input-box">
-                                            <label for="edit-hashtags" class="edit-label"> Hashtags(?, ?, ...)</label>
+                                            <label for="edit-hashtags" class="edit-label"> Hashtags (split by space)</label>
                                             <input id="edit-hashtags" type="text" name="hashtags" class="input-text"
-                                                   maxlength="200" value="${requestScope.postToEdit.hashtagsAsString}">
+                                                   maxlength="200" value="${requestScope.postToEdit.hashtagsAsSpaceString}">
                                         </div>
                                     </div>
 

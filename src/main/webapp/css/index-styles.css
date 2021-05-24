@@ -373,7 +373,7 @@ header {
     text-align: center;
 }
 
-@media (max-width: 1050px) {
+@media (max-width: 1200px) {
     header {
         box-shadow: none;
         border-style: solid;
@@ -388,8 +388,8 @@ header {
     .filter-col {
         display: flex;
         justify-content: center;
-        margin-top: 60px;
         width: 100%;
+        margin-top: 0;
     }
 
     .filter-fieldset {
@@ -406,6 +406,7 @@ header {
         border-radius: 0 0 10px 10px;
         border-style: solid;
         border-width: 0;
+        margin-top: 50px;
     }
 
     .filter-head {
@@ -471,9 +472,6 @@ header {
         height: auto;
     }
 
-    .header-button {
-        display: none;
-    }
 
     .main-container {
         margin-top: 60px;
@@ -533,7 +531,7 @@ header {
 
 @media (max-width: 2380px) {
     .main-box-inline-block {
-        width: 1450px;
+        width: 100%;
     }
 
     .more-button-box {
@@ -806,6 +804,10 @@ footer {
     .more-button-box {
         width: 600px;
     }
+}
+
+@media (max-width: 1050px) {
+
     .card-box {
         width: 420px;
         min-width: 420px;
@@ -878,24 +880,12 @@ footer {
 
 @media (max-width: 850px) {
 
-    .header-button {
-        margin-bottom: 20px;
-    }
+    /*.header-button {*/
+    /*    margin-bottom: 20px;*/
+    /*}*/
 
     .main-container {
         margin-top: 60px;
-    }
-
-    .header-username-col {
-        display: none;
-    }
-
-    .header-button {
-        display: none;
-    }
-
-    .header-username-col {
-        display: none;
     }
 
 }
@@ -908,7 +898,7 @@ footer {
     }
 
     .main-box-inline-block {
-        width: 450px;
+        width: 100%;
     }
 
     .card-main-col {

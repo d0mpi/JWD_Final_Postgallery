@@ -31,8 +31,6 @@ public class HomeServlet extends HttpServlet {
             req.getSession().removeAttribute("logged");
         }
 
-        req.setAttribute("postList", new ArrayList<>(postDao.findAll()));
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("index.jsp");
-        requestDispatcher.forward(req, resp);
+       resp.sendRedirect("/home");
     }
 }

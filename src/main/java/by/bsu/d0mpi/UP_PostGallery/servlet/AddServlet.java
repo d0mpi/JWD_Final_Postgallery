@@ -54,7 +54,7 @@ public class AddServlet extends HttpServlet {
         if( req.getParameter("hashtags") != null && !req.getParameter("hashtags").equals("")){
             hashtags = Arrays.stream(
                     req.getParameter("hashtags").
-                            split(",")).distinct().collect(Collectors.toList());
+                            split(" ")).distinct().collect(Collectors.toList());
         } else {
             hashtags = new ArrayList<>();
         }
@@ -62,7 +62,6 @@ public class AddServlet extends HttpServlet {
         Post post = new Post(model,type,length,wingspan,height,origin,crew,speed,distance,price,createdAt,author,photoLink,hashtags);
         postDao.create(post);
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/home");
-        requestDispatcher.forward(req, resp);
+        resp.sendRedirect("/home");
     }
 }

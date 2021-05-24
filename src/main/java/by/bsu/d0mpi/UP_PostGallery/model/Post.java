@@ -43,10 +43,18 @@ public class Post {
         this.hashtags = hashtags;
     }
 
-    public String getHashtagsAsString() {
+    public String getHashtagsAsHashString() {
         StringBuilder str = new StringBuilder("");
        for(String hashtag : hashtags){
            str.append("#").append(hashtag).append(" ");
+       }
+       return str.toString();
+    }
+
+    public String getHashtagsAsSpaceString() {
+        StringBuilder str = new StringBuilder("");
+       for(String hashtag : hashtags){
+           str.append(hashtag).append(" ");
        }
        return str.toString();
     }

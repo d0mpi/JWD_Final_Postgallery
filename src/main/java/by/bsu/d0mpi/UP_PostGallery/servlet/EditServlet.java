@@ -51,7 +51,7 @@ public class EditServlet extends HttpServlet {
         if (req.getParameter("hashtags") != null && !req.getParameter("hashtags").equals("")) {
             hashtags = Arrays.stream(
                     req.getParameter("hashtags").
-                            split(",")).distinct().collect(Collectors.toList());
+                            split(" ")).distinct().collect(Collectors.toList());
         } else {
             hashtags = new ArrayList<>();
         }
@@ -59,7 +59,6 @@ public class EditServlet extends HttpServlet {
         post.setHashtags(hashtags);
         postDao.update(post);
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/home");
-        requestDispatcher.forward(req, resp);
+        resp.sendRedirect("/home");
     }
 }
