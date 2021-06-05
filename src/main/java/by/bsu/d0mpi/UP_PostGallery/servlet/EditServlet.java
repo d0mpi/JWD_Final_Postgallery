@@ -23,6 +23,8 @@ public class EditServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         MySqlPostDaoImpl postDao = MySqlPostDaoImpl.getInstance();
         Post post = postDao.findEntityById(Integer.valueOf(req.getParameter("edit")));
+
+
         HttpSession httpSession = req.getSession();
         httpSession.setAttribute("lastEditId",post.getId());
         req.setAttribute("postToEdit", post);

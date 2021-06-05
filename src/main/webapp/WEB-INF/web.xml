@@ -7,4 +7,8 @@
         <error-code>404</error-code>
         <location>/error.jsp</location>
     </error-page>
+    <context-param>
+        <param-name>path_to_image</param-name>
+        <param-value>images/planes/</param-value>
+    </context-param>
 </web-app>

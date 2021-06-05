@@ -10,27 +10,9 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ConnectorDB {
-//    private static volatile ConnectorDB instance;
-//    @Getter
-//    private final Connection connection;
+
     private static final Logger LOGGER = LogManager.getLogger();
 
-//    private ConnectorDB(){
-//        connection = init();
-//    }
-//
-//    public static ConnectorDB getInstance() {
-//        ConnectorDB localInstance = instance;
-//        if (localInstance == null) {
-//            synchronized (ConnectorDB.class) {
-//                localInstance = instance;
-//                if (localInstance == null) {
-//                    instance = localInstance = new ConnectorDB();
-//                }
-//            }
-//        }
-//        return localInstance;
-//    }
 
     public static Connection getConnection() {
         try {

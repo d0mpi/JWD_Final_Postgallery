@@ -17,19 +17,19 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
     public static final String SQL_SELECT_ALL_POSTS = "SELECT * FROM posts";
     public static final String SQL_SELECT_POST_ID = "SELECT * FROM posts WHERE id = ?";
     private static final String SQL_UPDATE_POST =
-            "UPDATE posts SET model = ?, type = ?,length = ?, wingspan = ?, height = ?, origin = ?, crew = ?, speed = ?, distance = ?, price = ?, createdAt = ?, author = ?, photoLink = ? WHERE id = ?";
+            "UPDATE posts SET model = ?, type = ?,length = ?, wingspan = ?, height = ?, origin = ?, crew = ?, speed = ?, distance = ?, price = ?, createdAt = ?, users_id = ?, photoLink = ? WHERE id = ?";
     private static final String SQL_INSERT =
-            "INSERT INTO posts (model , type ,length , wingspan , height , origin , crew , speed , distance , price , createdAt, author, photoLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            "INSERT INTO posts (model , type ,length , wingspan , height , origin , crew , speed , distance , price , createdAt, users_id, photoLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     public static final String SQL_INSERT_HASHTAGS_WITH_POST_ID =
             "INSERT INTO hashtags (text, posts_id) VALUES (?, ?)";
     private static final String SQL_DELETE_LIKES_BY_POST_ID = "DELETE FROM likes WHERE posts_id = ?";
     private static final String SQL_DELETE_HASHTAGS_BY_POST_ID = "DELETE FROM hashtags WHERE posts_id = ?";
     private static final String SQL_DELETE_POST_BY_ID =
             "DELETE FROM posts WHERE id = ?";
-    private static final String SQL_DISABLE_LIKE_FROM_POST_BY_AUTHOR = "DELETE FROM likes WHERE posts_id = ? AND author = ?";
-    private static final String SQL_ENABLE_LIKE_FROM_POST_BY_AUTHOR = "INSERT INTO likes (author, posts_id) VALUES (?, ?)";
+    private static final String SQL_DISABLE_LIKE_FROM_POST_BY_AUTHOR = "DELETE FROM likes WHERE posts_id = ? AND users_id = ?";
+    private static final String SQL_ENABLE_LIKE_FROM_POST_BY_AUTHOR = "INSERT INTO likes (users_id, posts_id) VALUES (?, ?)";
     private static final String SQL_SELECT_HASHTAGS_BY_POST_ID = "select hashtags.text from posts JOIN hashtags WHERE posts.id = hashtags.posts_id AND posts.id = ?";
-    private static final String SQL_SELECT_LIKES_AUTHORS_BY_POST_ID = "select likes.author from posts JOIN likes WHERE posts.id = likes.posts_id AND posts.id = ?";
+    private static final String SQL_SELECT_LIKES_AUTHORS_BY_POST_ID = "select likes.users_id from posts JOIN likes WHERE posts.id = likes.posts_id AND posts.id = ?";
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static volatile MySqlPostDaoImpl instance;
@@ -66,7 +66,7 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
                 Float distance = rs.getFloat(10);
                 Integer price = rs.getInt(11);
                 LocalDate createdAt = rs.getDate(12).toLocalDate();
-                String author = rs.getString(13);
+                String author = MySqlUserDaoImpl.getInstance().findEntityById((rs.getInt(13))).getLogin();
                 String photoLink = rs.getString(14);
                 PreparedStatement statement2 = connection.prepareStatement(SQL_SELECT_HASHTAGS_BY_POST_ID);
                 statement2.setInt(1, id);
@@ -113,7 +113,7 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
                 Float distance = rs.getFloat(10);
                 Integer price = rs.getInt(11);
                 LocalDate createdAt = rs.getDate(12).toLocalDate();
-                String author = rs.getString(13);
+                String author = MySqlUserDaoImpl.getInstance().findEntityById((rs.getInt(13))).getLogin();
                 String photoLink = rs.getString(14);
                 PreparedStatement statement2 = connection.prepareStatement(SQL_SELECT_HASHTAGS_BY_POST_ID);
                 statement2.setInt(1, id);

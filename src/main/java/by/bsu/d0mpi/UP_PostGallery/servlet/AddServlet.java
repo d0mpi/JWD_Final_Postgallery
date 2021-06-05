@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 public class AddServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("add-post.jsp");
         requestDispatcher.forward(req, resp);
     }
@@ -49,9 +50,9 @@ public class AddServlet extends HttpServlet {
         ResourceBundle resource = ResourceBundle.getBundle("database");
         LocalDate createdAt = LocalDate.now();
         String author = (String) req.getSession().getAttribute("login");
-        String photoLink ="images/planes/" + req.getParameter("file");
+        String photoLink = getServletContext().getInitParameter("path_to_image") + req.getParameter("file");
         List<String> hashtags;
-        if( req.getParameter("hashtags") != null && !req.getParameter("hashtags").equals("")){
+        if (req.getParameter("hashtags") != null && !req.getParameter("hashtags").equals("")) {
             hashtags = Arrays.stream(
                     req.getParameter("hashtags").
                             split(" ")).distinct().collect(Collectors.toList());
@@ -59,7 +60,7 @@ public class AddServlet extends HttpServlet {
             hashtags = new ArrayList<>();
         }
 
-        Post post = new Post(model,type,length,wingspan,height,origin,crew,speed,distance,price,createdAt,author,photoLink,hashtags);
+        Post post = new Post(model, type, length, wingspan, height, origin, crew, speed, distance, price, createdAt, author, photoLink, hashtags);
         postDao.create(post);
 
         resp.sendRedirect("/home");
