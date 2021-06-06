@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements PostDao {
     public static final String SQL_SELECT_ALL_POSTS = "SELECT * FROM posts";
@@ -241,7 +240,7 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
     }
 
     @Override
-    public Post update(Post entity) {
+    public void update(Post entity) {
         try (Connection connection = ConnectorDB.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_POST);
              PreparedStatement statement1 = connection.prepareStatement(SQL_DELETE_HASHTAGS_BY_POST_ID);
@@ -273,7 +272,6 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         }
-        return entity;
     }
 
 }

@@ -38,6 +38,14 @@
                         <div></div>
                         CONTACT US</a>
                 </div>
+                <div class="menu-col">
+                    <label for="language-select"></label>
+                    <select id="language-select" class="language-select">
+                        <option>RU</option>
+                        <option>EN</option>
+                        <option>CH</option>
+                    </select>
+                </div>
             </nav>
         </div>
         <div class="header-right">

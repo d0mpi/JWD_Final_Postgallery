@@ -17,9 +17,9 @@
             <img class="img-logo" src="../../images/logo-white.png" alt="logo">
         </li>
         <li class="footer-li-2">Michael Dokuchaev</li>
-        <li class="footer-li-3">2k9g</li>
+        <li class="footer-li-3">---</li>
         <li class="footer-li-4">mdokuchaevp@gmail.com</li>
-        <li class="footer-li-5">24.05.2021</li>
+        <li class="footer-li-5">06.06.2021</li>
     </ul>
 </footer>
 </body>

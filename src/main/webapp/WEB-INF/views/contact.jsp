@@ -43,21 +43,15 @@
                                         <input id="contact-email" type="email" class="input-email" required>
                                     </div>
                                 </div>
-                                <div class="col-half mb-20">
+                                <div class="col-full mb-20">
                                     <div class="contact-input">
                                         <label for="contact-title" class="contact-label"> Subject*</label>
                                         <input id="contact-title" type="text" class="input-title" required>
                                     </div>
                                 </div>
-                                <div class="col-half mb-20">
-                                    <div class="contact-input">
-                                        <label for="contact-id" class="contact-label"> Id*</label>
-                                        <input id="contact-id" type="text" class="input-title" required>
-                                    </div>
-                                </div>
                                 <div class="col-full mb-20">
                                     <div class="contact-input">
-                                        <label for="contact-text" class="contact-label"> Text*</label>
+                                        <label for="contact-text" class="contact-label"> Your message*</label>
                                         <textarea id="contact-text" type="text" class="input-text" required> </textarea>
                                     </div>
                                 </div>
