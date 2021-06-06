@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class Post {
+public class Post implements DatabaseEntity{
     private int id;
     private String model;
     private String type;

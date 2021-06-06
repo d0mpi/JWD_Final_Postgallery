@@ -55,10 +55,11 @@ body:before{
 
 }
 .error-number:before{
-    content: "\f1e2";
+    content: var(--before-content, "\f1e2");
     font-family: FontAwesome, serif;
     font-size: 250px;
 }
+
 @media (max-width: 700px) {
     .error-number:before{
         display: none;

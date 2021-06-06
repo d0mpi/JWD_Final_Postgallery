@@ -7,11 +7,16 @@ import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements PostDao {
     public static final String SQL_SELECT_ALL_POSTS = "SELECT * FROM posts";
@@ -30,6 +35,7 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
     private static final String SQL_ENABLE_LIKE_FROM_POST_BY_AUTHOR = "INSERT INTO likes (users_id, posts_id) VALUES (?, ?)";
     private static final String SQL_SELECT_HASHTAGS_BY_POST_ID = "select hashtags.text from posts JOIN hashtags WHERE posts.id = hashtags.posts_id AND posts.id = ?";
     private static final String SQL_SELECT_LIKES_AUTHORS_BY_POST_ID = "select likes.users_id from posts JOIN likes WHERE posts.id = likes.posts_id AND posts.id = ?";
+
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static volatile MySqlPostDaoImpl instance;
@@ -235,7 +241,7 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
     }
 
     @Override
-    public void update(Post entity) {
+    public Post update(Post entity) {
         try (Connection connection = ConnectorDB.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_POST);
              PreparedStatement statement1 = connection.prepareStatement(SQL_DELETE_HASHTAGS_BY_POST_ID);
@@ -267,6 +273,7 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         }
+        return entity;
     }
 
 }

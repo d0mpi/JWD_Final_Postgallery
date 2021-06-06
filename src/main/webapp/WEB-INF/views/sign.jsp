@@ -11,21 +11,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign in</title>
-    <link rel="stylesheet" type="text/css" href="css/sign-styles.css">
+    <link rel="stylesheet" type="text/css" href="../../css/sign-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="fonts/fonts.css">
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/sign.js"></script>
+    <link rel="stylesheet" href="../../fonts/fonts.css">
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script src="../../js/sign.js"></script>
 
-    <jsp:include page="WEB-INF/title-logo.jsp"/>
-
-    <%--    <script src="js/modelRegistration.js" defer></script>--%>
-    <%--    <script src="js/controllerSign.js" defer></script>--%>
+    <jsp:include page="title-logo.jsp"/>
 </head>
 <body>
 <div class="sign-in-box">
     <a class="logo-row" href="${pageContext.request.contextPath}/home">
-        <img src="images/logo-white.png" alt="logo">
+        <img src="../../images/logo-white.png" alt="logo">
     </a>
     <div class="text-top-row">
         <h3> Sign In</h3>

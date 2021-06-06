@@ -14,13 +14,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Edit post</title>
-    <link rel="stylesheet" type="text/css" href="css/index-styles.css">
-    <link rel="stylesheet" type="text/css" href="css/edit-styles.css">
+    <link rel="stylesheet" type="text/css" href="../../css/index-styles.css">
+    <link rel="stylesheet" type="text/css" href="../../css/edit-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
-    <script src="js/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../fonts/fonts.css">
+    <script src="../../js/jquery-3.6.0.min.js"></script>
 
-    <jsp:include page="WEB-INF/title-logo.jsp"/>
+    <jsp:include page="title-logo.jsp"/>
 
     <script src="js/modelRegistration.js" defer></script>
     <%--    <script src="js/viewEdit.js" defer></script>--%>
@@ -29,7 +29,7 @@
     <script src="js/viewHeaderButtons.js" defer></script>
 </head>
 <body>
-<jsp:include page="WEB-INF/header.jsp"/>
+<jsp:include page="header.jsp"/>
 
 <main>
     <div class="main-container">
@@ -191,7 +191,7 @@
     </div>
 </main>
 
-<jsp:include page="WEB-INF/footer.jsp"/>
+<jsp:include page="footer.jsp"/>
 
 </body>
 </html>

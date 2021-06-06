@@ -18,7 +18,7 @@ public class HomeServlet extends HttpServlet {
         ArrayList<Post> postArrayList =  MySqlPostDaoImpl.getInstance().findAll();
         req.setAttribute("postList", postArrayList.subList(0, (Math.min(postArrayList.size(), 10))));
         req.getSession().setAttribute("currPageSize", Math.min(postArrayList.size(), 10));
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("index.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/views/index.jsp");
         requestDispatcher.forward(req, resp);
     }
 

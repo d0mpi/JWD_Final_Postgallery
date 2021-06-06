@@ -11,7 +11,7 @@
 <html>
 <head>
     <title>Title</title>
-    <script src="../js/headerActiveBtn.js" defer></script>
+    <script src="../../js/headerActiveBtn.js" defer></script>
 </head>
 <body>
 <header>
@@ -19,7 +19,7 @@
         <div class="header-left">
             <div class="header-logo-col">
                 <a class="header-logo-ref" href="${pageContext.request.contextPath}/home">
-                    <img class="img-logo" src="../images/logo-white.png" alt="header-logo">
+                    <img class="img-logo" src="../../images/logo-white.png" alt="header-logo">
                 </a>
             </div>
             <nav class="header-menu">
@@ -37,11 +37,6 @@
                     <a href="${pageContext.request.contextPath}/contact" id="header-contact-btn" class="menu-href">
                         <div></div>
                         CONTACT US</a>
-                </div>
-                <div class="menu-col">
-                    <a href="${pageContext.request.contextPath}/error" id="header-error-btn" class="menu-href">
-                        <div></div>
-                        ERROR</a>
                 </div>
             </nav>
         </div>

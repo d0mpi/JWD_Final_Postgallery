@@ -24,11 +24,10 @@ public class EditServlet extends HttpServlet {
         MySqlPostDaoImpl postDao = MySqlPostDaoImpl.getInstance();
         Post post = postDao.findEntityById(Integer.valueOf(req.getParameter("edit")));
 
-
         HttpSession httpSession = req.getSession();
         httpSession.setAttribute("lastEditId",post.getId());
         req.setAttribute("postToEdit", post);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("edit.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/views/edit.jsp");
         requestDispatcher.forward(req, resp);
     }
 

@@ -8,6 +8,8 @@ import by.bsu.d0mpi.UP_PostGallery.model.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -122,7 +124,7 @@ public class MySqlUserDaoImpl extends AbstractDao<Integer, User> implements User
     }
 
     @Override
-    public void update(User entity) {
+    public User update(User entity) {
         try (PreparedStatement statement = ConnectorDB.getConnection().prepareStatement(SQL_UPDATE_USER)) {
             statement.setString(1, entity.getLogin());
             statement.setString(2, entity.getPassword());
@@ -131,6 +133,7 @@ public class MySqlUserDaoImpl extends AbstractDao<Integer, User> implements User
         } catch (SQLException e) {
             LOGGER.error("DB connection error", e);
         }
+        return entity;
     }
 
     public boolean isLoginPresented(String login) {
@@ -153,7 +156,7 @@ public class MySqlUserDaoImpl extends AbstractDao<Integer, User> implements User
                 int id = resultSet.getInt(1);
                 String u_login = resultSet.getString(2);
                 String password = resultSet.getString(3);
-                user = new User(id,u_login,password);
+                user = new User(id, u_login, password);
             }
             return user;
         } catch (SQLException throwables) {

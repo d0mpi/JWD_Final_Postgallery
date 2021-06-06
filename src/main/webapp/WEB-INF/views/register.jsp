@@ -11,20 +11,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-    <link rel="stylesheet" type="text/css" href="css/register-styles.css">
+    <link rel="stylesheet" type="text/css" href="../../css/register-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="fonts/fonts.css">
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/register.js"></script>
+    <link rel="stylesheet" href="../../fonts/fonts.css">
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script src="../../js/register.js"></script>
 
-    <jsp:include page="WEB-INF/title-logo.jsp"/>
+    <jsp:include page="title-logo.jsp"/>
 
 
 </head>
 <body>
 <div class="sign-in-box">
     <a class="logo-row" href="${pageContext.request.contextPath}/home">
-        <img src="images/logo-white.png" alt="logo">
+        <img src="../../images/logo-white.png" alt="logo">
     </a>
     <div class="text-top-row">
         <h3> Register</h3>

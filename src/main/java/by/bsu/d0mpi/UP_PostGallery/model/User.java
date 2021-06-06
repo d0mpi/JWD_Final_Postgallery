@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class User {
+public class User implements DatabaseEntity{
     private int id;
     private String login;
     private String password;

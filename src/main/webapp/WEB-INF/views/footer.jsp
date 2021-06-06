@@ -14,7 +14,7 @@
 <footer>
     <ul class="footer-ul font-footer">
         <li class="footer-li-1">
-            <img class="img-logo" src="../images/logo-white.png" alt="logo">
+            <img class="img-logo" src="../../images/logo-white.png" alt="logo">
         </li>
         <li class="footer-li-2">Michael Dokuchaev</li>
         <li class="footer-li-3">2k9g</li>
