@@ -7,7 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="${cookie['language'].value}" scope="session"/>
+<fmt:setBundle basename="text"/>
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -37,11 +39,11 @@
             <div class="col-66">
                 <form name="edit" method="post" action="${pageContext.request.contextPath}/edit" class="edit-main-box">
                     <div class="col-full edit-title">
-                        <h3>Edit information</h3>
+                        <h3><fmt:message key="editLabel"/></h3>
                     </div>
                     <div class="col-half" style="height: 504px">
                         <div class="img-box col-full">
-                            <div class="edit-label"> Image:
+                            <div class="edit-label"><fmt:message key="editimage"/>:
                             </div>
                             <div class="drag-and-drop">
                                 <img src="${requestScope.postToEdit.photoLink}" alt="" class="add-img" id="add_img">
@@ -51,7 +53,7 @@
                             </div>
                         </div>
                         <div class="col-full file-load-box">
-<%--                            <input type="file" id="dropbox" name="file" class="input-file">--%>
+                            <%--                            <input type="file" id="dropbox" name="file" class="input-file">--%>
                         </div>
 
                     </div>
@@ -62,14 +64,14 @@
                                     <div class="col-full">
                                         <div class="input-box">
                                             <label title="This field is mandatory" for="edit-model" class="edit-label">
-                                                Model*</label>
+                                                <fmt:message key="postModel"/>*</label>
                                             <input id="edit-model" name="model" type="text" class="input-text" required
                                                    maxlength="100" value="${requestScope.postToEdit.model}">
                                         </div>
                                     </div>
                                     <div class="col-33">
                                         <div class="input-box">
-                                            <label for="edit-height" class="edit-label"> Height(m)</label>
+                                            <label for="edit-height" class="edit-label"> <fmt:message key="postHeight"/>(m)</label>
                                             <input id="edit-height" name="height" type="text" class="input-text"
                                                    pattern="[0-9]+([\.,][0-9]+)?"
                                                    value="${requestScope.postToEdit.height}">
@@ -77,7 +79,7 @@
                                     </div>
                                     <div class="col-33">
                                         <div class="input-box">
-                                            <label for="edit-length" class="edit-label"> Length(m)</label>
+                                            <label for="edit-length" class="edit-label"> <fmt:message key="postLength"/>(m)</label>
                                             <input id="edit-length" type="text" name="lengthInput" class="input-text"
                                                    pattern="[0-9]+([\.,][0-9]+)?"
                                                    value="${requestScope.postToEdit.length}">
@@ -85,7 +87,8 @@
                                     </div>
                                     <div class="col-33">
                                         <div class="input-box">
-                                            <label for="edit-wingspan" class="edit-label"> Wingspan(m)</label>
+                                            <label for="edit-wingspan" class="edit-label"> <fmt:message
+                                                    key="postWingspan"/>(m)</label>
                                             <input id="edit-wingspan" type="text" name="wingspan" class="input-text"
                                                    pattern="[0-9]+([\.,][0-9]+)?"
                                                    value="${requestScope.postToEdit.wingspan}">
@@ -93,7 +96,8 @@
                                     </div>
                                     <div class="col-half">
                                         <div class="input-box">
-                                            <label for="edit-type" class="edit-label"> Type</label>
+                                            <label for="edit-type" class="edit-label"> <fmt:message
+                                                    key="postType"/></label>
                                             <select id="edit-type" name="type" class="input-text">
                                                 <option ${requestScope.postToEdit.type.equals("fighter") ? "selected" : ""}>
                                                     fighter
@@ -130,14 +134,16 @@
                                     </div>
                                     <div class="col-half">
                                         <div class="input-box">
-                                            <label for="edit-crew" class="edit-label"> Crew</label>
+                                            <label for="edit-crew" class="edit-label"> <fmt:message
+                                                    key="postCrew"/></label>
                                             <input id="edit-crew" type="number" name="crew" class="input-text" min="0"
                                                    max="100" value="${requestScope.postToEdit.crew}">
                                         </div>
                                     </div>
                                     <div class="col-half">
                                         <div class="input-box">
-                                            <label for="price" class="edit-label" title="This field is mandatory"> Price
+                                            <label for="price" class="edit-label" title="This field is mandatory">
+                                                <fmt:message key="postPrice"/>
                                                 ($)</label>
                                             <input id="price" type="text" name="price" class="input-text" required
                                                    pattern="[0-9]+([\.,][0-9]+)*"
@@ -146,14 +152,16 @@
                                     </div>
                                     <div class="col-half">
                                         <div class="input-box">
-                                            <label for="edit-origin" class="edit-label"> Origin</label>
+                                            <label for="edit-origin" class="edit-label"> <fmt:message
+                                                    key="postOrigin"/></label>
                                             <input id="edit-origin" type="text" name="origin" class="input-text"
                                                    maxlength="100" value="${requestScope.postToEdit.origin}">
                                         </div>
                                     </div>
                                     <div class="col-half">
                                         <div class="input-box">
-                                            <label for="edit-speed" class="edit-label"> Maximum speed (km/h)</label>
+                                            <label for="edit-speed" class="edit-label"> <fmt:message
+                                                    key="postMaxSpeed"/> (km/h)</label>
                                             <input id="edit-speed" type="text" name="speed" class="input-text"
                                                    pattern="[0-9]+([\.,][0-9]+)?" maxlength="20"
                                                    value="${requestScope.postToEdit.speed}">
@@ -161,7 +169,8 @@
                                     </div>
                                     <div class="col-half">
                                         <div class="input-box">
-                                            <label for="edit-distance" class="edit-label"> Flying distance(km)</label>
+                                            <label for="edit-distance" class="edit-label"> <fmt:message
+                                                    key="postFlyingDist"/>(km)</label>
                                             <input id="edit-distance" type="text" name="dist" class="input-text"
                                                    pattern="[0-9]+([\.,][0-9]+)?" maxlength="20"
                                                    value="${requestScope.postToEdit.distance}">
@@ -169,12 +178,13 @@
                                     </div>
                                     <div class="col-full">
                                         <div class="input-box">
-                                            <label for="edit-hashtags" class="edit-label"> Hashtags (split by space)</label>
+                                            <label for="edit-hashtags" class="edit-label"> <fmt:message
+                                                    key="editHashtags"/></label>
                                             <input id="edit-hashtags" type="text" name="hashtags" class="input-text"
-                                                   maxlength="200" value="${requestScope.postToEdit.hashtagsAsSpaceString}">
+                                                   maxlength="200"
+                                                   value="${requestScope.postToEdit.hashtagsAsSpaceString}">
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

@@ -520,7 +520,7 @@ h3 {
 
 .filter-title {
     display: flex;
-
+    text-transform: uppercase;
     justify-content: center;
     align-items: center;
 

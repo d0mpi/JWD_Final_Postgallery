@@ -1,16 +1,12 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: mdoku
-  Date: 22.05.2021
-  Time: 14:06
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="${cookie['language'].value}" scope="session"/>
+<fmt:setBundle basename="text"/>
 <html>
 <head>
-    <title>Title</title>
+    <title>header</title>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
     <script src="../../js/headerActiveBtn.js" defer></script>
 </head>
 <body>
@@ -26,26 +22,34 @@
                 <div class="menu-col ">
                     <a href="${pageContext.request.contextPath}/home" id="header-home-btn" class="menu-href">
                         <div></div>
-                        HOME</a>
+                        <fmt:message key="headerHome"/> </a>
                 </div>
                 <div class="menu-col">
                     <a href="${pageContext.request.contextPath}/about" id="header-about-btn" class="menu-href ">
                         <div></div>
-                        ABOUT</a>
+                        <fmt:message key="headerAbout"/></a>
                 </div>
                 <div class="menu-col">
                     <a href="${pageContext.request.contextPath}/contact" id="header-contact-btn" class="menu-href">
                         <div></div>
-                        CONTACT US</a>
+                        <fmt:message key="headerContact"/></a>
                 </div>
-                <div class="menu-col">
+                <form class="menu-col" id="languageForm" method="post" action="${pageContext.request.contextPath}/home">
                     <label for="language-select"></label>
-                    <select id="language-select" class="language-select">
-                        <option>RU</option>
-                        <option>EN</option>
-                        <option>CH</option>
+                    <select id="language-select" name="language-select" class="language-select"
+                            onchange="document.getElementById('languageForm').submit()">
+                        <option <c:if test="${cookie['language'].value.equals('ru_BY')}"> selected </c:if>>
+                            RU
+                        </option>
+                        <option <c:if test="${cookie['language'].value.equals('en_US')}"> selected </c:if>
+                                <c:if test="${cookie['language'].value == null}"> selected </c:if>>
+                            EN
+                        </option>
+                        <option <c:if test="${cookie['language'].value.equals('zh_CN')}"> selected </c:if>>
+                            CN
+                        </option>
                     </select>
-                </div>
+                </form>
             </nav>
         </div>
         <div class="header-right">
@@ -53,7 +57,7 @@
                 <c:if test="${sessionScope.logged != null}">
                     <c:if test="${sessionScope.logged == true}">
                         <button onclick="document.location='/add-post'" class="header-add-button" id="add_btn">
-                            ADD POST
+                            <fmt:message key="headerAddBtn"/>
                         </button>
                     </c:if>
                 </c:if>
@@ -66,8 +70,8 @@
                         <form name="log1" action="${pageContext.request.contextPath}/home"
                               method="post">
                             <button name="sign-out" type="submit" title="" class="header-button" id="sign_out_btn"
-                                    value=""> SIGN
-                                OUT
+                                    value="">
+                                <fmt:message key="headerSignOutBtn"/>
                             </button>
                         </form>
                     </c:if>
@@ -77,7 +81,8 @@
                         <form name="log2" action="${pageContext.request.contextPath}/sign"
                               method="get">
                             <button name="sign-in" type="submit" title="" value="" class="header-button"
-                                    id="sign_in_btn1"> SIGN IN
+                                    id="sign_in_btn1">
+                                <fmt:message key="headerSignInBtn"/>
                             </button>
                         </form>
                     </c:if>
@@ -86,7 +91,7 @@
                     <form name="log3" action="${pageContext.request.contextPath}/sign"
                           method="get">
                         <button name="sign-in" type="submit" title="" value="" class="header-button" id="sign_in_btn2">
-                            SIGN IN
+                            <fmt:message key="headerSignInBtn"/>
                         </button>
                     </form>
                 </c:if>

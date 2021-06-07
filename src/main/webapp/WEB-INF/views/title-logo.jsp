@@ -9,10 +9,8 @@
 <html>
 <head>
     <link rel="shortcut icon" href="../../images/title-logo.png" type="image/png">
-    <title>UP! Post gallery.</title>
-
+    <title><fmt:message key="mainTitle"/></title>
 </head>
 <body>
-
 </body>
 </html>
