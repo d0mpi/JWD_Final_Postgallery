@@ -1,23 +1,18 @@
 package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 
-import by.bsu.d0mpi.UP_PostGallery.dao.AbstractDao;
-import by.bsu.d0mpi.UP_PostGallery.dao.pool.BasicConnectionPool;
-import by.bsu.d0mpi.UP_PostGallery.dao.pool.ConnectionPool;
+import by.bsu.d0mpi.UP_PostGallery.dao.PostDao;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
+import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MySqlPostDao extends AbstractDao<Integer, Post> {
+public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements PostDao {
     public static final String SQL_SELECT_ALL_POSTS = "SELECT * FROM posts";
     public static final String SQL_SELECT_POST_ID = "SELECT * FROM posts WHERE post_id = ?";
     private static final String SQL_UPDATE_POST =
@@ -42,17 +37,26 @@ public class MySqlPostDao extends AbstractDao<Integer, Post> {
 
     private static volatile MySqlPostDao instance;
 
+    protected MySqlPostDao(String tableName, String idColumn) {
+        super(tableName, idColumn);
+    }
+
     public static MySqlPostDao getInstance() {
         MySqlPostDao localInstance = instance;
         if (localInstance == null) {
             synchronized (MySqlPostDao.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new MySqlPostDao();
+                    instance = localInstance = new MySqlPostDao("posts","post_id");
                 }
             }
         }
         return localInstance;
+    }
+
+    @Override
+    protected Post mapResultSet(ResultSet resultSet) throws SQLException {
+        return null;
     }
 
     @Override
@@ -173,12 +177,13 @@ public class MySqlPostDao extends AbstractDao<Integer, Post> {
         return delete(entity.getId());
     }
 
-    public boolean disableLike(Integer id, String author) {
+    @Override
+    public boolean addLike(Integer postId, String author) {
         boolean disbled = false;
         try (Connection connection = BasicConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_DISABLE_LIKE_FROM_POST_BY_AUTHOR);
         ) {
-            statement.setInt(1, id);
+            statement.setInt(1, postId);
             statement.setString(2, author);
             statement.executeUpdate();
             disbled = true;
@@ -188,13 +193,14 @@ public class MySqlPostDao extends AbstractDao<Integer, Post> {
         return disbled;
     }
 
-    public boolean enableLike(Integer id, String author) {
+    @Override
+    public boolean removeLike(Integer postId, String author) {
         boolean enabled = false;
         try (Connection connection = BasicConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_ENABLE_LIKE_FROM_POST_BY_AUTHOR);
         ) {
             statement.setString(1, author);
-            statement.setInt(2, id);
+            statement.setInt(2, postId);
             statement.executeUpdate();
             enabled = true;
         } catch (SQLException e) {

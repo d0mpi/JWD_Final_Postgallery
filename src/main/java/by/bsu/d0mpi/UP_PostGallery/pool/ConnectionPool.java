@@ -1,4 +1,4 @@
-package by.bsu.d0mpi.UP_PostGallery.dao.pool;
+package by.bsu.d0mpi.UP_PostGallery.pool;
 
 import by.bsu.d0mpi.UP_PostGallery.exception.CouldNotInitConnectionPoolException;
 import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;

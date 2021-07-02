@@ -1,21 +1,18 @@
 package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 
-import by.bsu.d0mpi.UP_PostGallery.dao.AbstractDao;
-import by.bsu.d0mpi.UP_PostGallery.dao.pool.BasicConnectionPool;
+import by.bsu.d0mpi.UP_PostGallery.dao.UserDao;
 import by.bsu.d0mpi.UP_PostGallery.model.User;
+import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-public class MySqlUserDao extends AbstractDao<Integer, User> {
+public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements UserDao {
     public static final String SQL_SELECT_ALL_USERS = "SELECT * FROM users";
     public static final String SQL_SELECT_USER_ID =
             "SELECT * FROM users WHERE id=?";
-    private static final String SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD =
-            "SELECT id FROM users WHERE login = ? AND password=?";
     private static final String SQL_UPDATE_USER =
             "UPDATE users SET login = ?, password = ? WHERE id = ?";
     private static final String SQL_INSERT =
@@ -26,7 +23,11 @@ public class MySqlUserDao extends AbstractDao<Integer, User> {
             "SELECT * FROM users WHERE login = ?";
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static volatile MySqlUserDao instance;
+    private static MySqlUserDao instance;
+
+    private MySqlUserDao(String tableName, String idColumn) {
+        super(tableName, idColumn);
+    }
 
     public static MySqlUserDao getInstance() {
         MySqlUserDao localInstance = instance;
@@ -34,11 +35,16 @@ public class MySqlUserDao extends AbstractDao<Integer, User> {
             synchronized (MySqlUserDao.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new MySqlUserDao();
+                    instance = localInstance = new MySqlUserDao("users", "user_id");
                 }
             }
         }
         return localInstance;
+    }
+
+    @Override
+    protected User mapResultSet(ResultSet resultSet) throws SQLException {
+        return null;
     }
 
     @Override
@@ -132,6 +138,7 @@ public class MySqlUserDao extends AbstractDao<Integer, User> {
         }
     }
 
+    @Override
     public boolean isLoginPresented(String login) {
         try (PreparedStatement statement = BasicConnectionPool.getInstance().getConnection().prepareStatement(SQL_SELECT_BY_LOGIN)) {
             statement.setString(1, login);
@@ -143,6 +150,7 @@ public class MySqlUserDao extends AbstractDao<Integer, User> {
         return false;
     }
 
+    @Override
     public User getUserByLogin(String login) {
         User user = null;
         try (PreparedStatement statement = BasicConnectionPool.getInstance().getConnection().prepareStatement(SQL_SELECT_BY_LOGIN)) {

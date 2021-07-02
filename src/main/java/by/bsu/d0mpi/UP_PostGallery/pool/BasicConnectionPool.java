@@ -1,9 +1,6 @@
-package by.bsu.d0mpi.UP_PostGallery.dao.pool;
+package by.bsu.d0mpi.UP_PostGallery.pool;
 
-import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDao;
 import by.bsu.d0mpi.UP_PostGallery.exception.CouldNotInitConnectionPoolException;
-import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
-import lombok.Getter;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -11,8 +8,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class BasicConnectionPool implements ConnectionPool{
-    private List<Connection> connectionPool;
-    private final List<Connection> usedConnections = new ArrayList<>();
+    private List<ProxyConnection> connectionPool;
+    private final List<ProxyConnection> usedConnections = new ArrayList<>();
     private static final int INITIAL_POOL_SIZE = 10;
     private static int MAX_POOL_SIZE;
     private static  int MAX_TIME_OUT;
