@@ -1,6 +1,6 @@
 package by.bsu.d0mpi.UP_PostGallery.servlet;
 
-import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDaoImpl;
+import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +17,7 @@ public class DeleteServlet extends HttpServlet {
         req.getSession().setAttribute("currPageSize",(int)req.getSession().getAttribute("currPageSize") - 1);
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write("true");
-        MySqlPostDaoImpl postDao = MySqlPostDaoImpl.getInstance();
+        MySqlPostDao postDao = MySqlPostDao.getInstance();
         postDao.delete(Integer.valueOf(req.getParameter("id")));
         resp.getWriter().write("true");
     }

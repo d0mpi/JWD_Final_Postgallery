@@ -1,7 +1,6 @@
 package by.bsu.d0mpi.UP_PostGallery.servlet;
 
-import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDaoImpl;
-import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlUserDaoImpl;
+import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlUserDao;
 import by.bsu.d0mpi.UP_PostGallery.model.User;
 
 import javax.servlet.RequestDispatcher;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 @WebServlet(name = "registration", value = "/registration")
 public class RegistrationServlet extends HttpServlet {
@@ -32,7 +30,7 @@ public class RegistrationServlet extends HttpServlet {
         OutputStream outStream = resp.getOutputStream();
 
         String respType;
-        MySqlUserDaoImpl userDao = MySqlUserDaoImpl.getInstance();
+        MySqlUserDao userDao = MySqlUserDao.getInstance();
         User user;
 
         if (userDao.isLoginPresented(login)) {

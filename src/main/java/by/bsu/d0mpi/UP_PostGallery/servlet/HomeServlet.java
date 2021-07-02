@@ -1,5 +1,5 @@
 package by.bsu.d0mpi.UP_PostGallery.servlet;
-import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDaoImpl;
+import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDao;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 
 import javax.servlet.RequestDispatcher;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ArrayList<Post> postArrayList =  MySqlPostDaoImpl.getInstance().findAll();
+        ArrayList<Post> postArrayList =  MySqlPostDao.getInstance().findAll();
         req.setAttribute("postList", postArrayList.subList(0, (Math.min(postArrayList.size(), 10))));
         req.getSession().setAttribute("currPageSize", Math.min(postArrayList.size(), 10));
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/views/index.jsp");
@@ -24,7 +24,7 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        MySqlPostDaoImpl postDao = MySqlPostDaoImpl.getInstance();
+        MySqlPostDao postDao = MySqlPostDao.getInstance();
 
         if (req.getParameter("delete") != null) {
             postDao.delete(Integer.valueOf(req.getParameter("delete")));

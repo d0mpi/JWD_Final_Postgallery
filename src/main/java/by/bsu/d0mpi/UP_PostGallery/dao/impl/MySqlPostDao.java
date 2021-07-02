@@ -1,8 +1,8 @@
 package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.AbstractDao;
-import by.bsu.d0mpi.UP_PostGallery.dao.ConnectorDB;
-import by.bsu.d0mpi.UP_PostGallery.dao.PostDao;
+import by.bsu.d0mpi.UP_PostGallery.dao.pool.BasicConnectionPool;
+import by.bsu.d0mpi.UP_PostGallery.dao.pool.ConnectionPool;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,35 +17,38 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements PostDao {
+public class MySqlPostDao extends AbstractDao<Integer, Post> {
     public static final String SQL_SELECT_ALL_POSTS = "SELECT * FROM posts";
-    public static final String SQL_SELECT_POST_ID = "SELECT * FROM posts WHERE id = ?";
+    public static final String SQL_SELECT_POST_ID = "SELECT * FROM posts WHERE post_id = ?";
     private static final String SQL_UPDATE_POST =
-            "UPDATE posts SET model = ?, type = ?,length = ?, wingspan = ?, height = ?, origin = ?, crew = ?, speed = ?, distance = ?, price = ?, createdAt = ?, users_id = ?, photoLink = ? WHERE id = ?";
+            "UPDATE posts SET post_model = ?, post_type = ?,post_length = ?, post_wingspan = ?, post_height = ?," +
+                    " post_origin = ?, post_crew = ?, post_speed = ?, post_distance = ?, post_price = ?," +
+                    " post_create_date = ?, post_photo = ?, post_author_id = ? WHERE post_id = ?";
     private static final String SQL_INSERT =
-            "INSERT INTO posts (model , type ,length , wingspan , height , origin , crew , speed , distance , price , createdAt, users_id, photoLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            "INSERT INTO posts (post_model ,post_type, post_length, post_wingspan, post_height, post_origin, post_crew," +
+                    " post_speed, post_distance, post_price, post_create_date, post_photo, post_author_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     public static final String SQL_INSERT_HASHTAGS_WITH_POST_ID =
-            "INSERT INTO hashtags (text, posts_id) VALUES (?, ?)";
-    private static final String SQL_DELETE_LIKES_BY_POST_ID = "DELETE FROM likes WHERE posts_id = ?";
-    private static final String SQL_DELETE_HASHTAGS_BY_POST_ID = "DELETE FROM hashtags WHERE posts_id = ?";
+            "INSERT INTO hashtags (hashtag_text, hashtags_post_id) VALUES (?, ?)";
+    private static final String SQL_DELETE_LIKES_BY_POST_ID = "DELETE FROM likes WHERE likes_post_id = ?";
+    private static final String SQL_DELETE_HASHTAGS_BY_POST_ID = "DELETE FROM hashtags WHERE hashtags_post_id = ?";
     private static final String SQL_DELETE_POST_BY_ID =
-            "DELETE FROM posts WHERE id = ?";
-    private static final String SQL_DISABLE_LIKE_FROM_POST_BY_AUTHOR = "DELETE FROM likes WHERE posts_id = ? AND users_id = ?";
-    private static final String SQL_ENABLE_LIKE_FROM_POST_BY_AUTHOR = "INSERT INTO likes (users_id, posts_id) VALUES (?, ?)";
-    private static final String SQL_SELECT_HASHTAGS_BY_POST_ID = "select hashtags.text from posts JOIN hashtags WHERE posts.id = hashtags.posts_id AND posts.id = ?";
-    private static final String SQL_SELECT_LIKES_AUTHORS_BY_POST_ID = "select likes.users_id from posts JOIN likes WHERE posts.id = likes.posts_id AND posts.id = ?";
+            "DELETE FROM posts WHERE post_id = ?";
+    private static final String SQL_DISABLE_LIKE_FROM_POST_BY_AUTHOR = "DELETE FROM likes WHERE likes_post_id = ? AND likes_user_id = ?";
+    private static final String SQL_ENABLE_LIKE_FROM_POST_BY_AUTHOR = "INSERT INTO likes (likes_user_id, likes_post_id) VALUES (?, ?)";
+    private static final String SQL_SELECT_HASHTAGS_BY_POST_ID = "select hashtags.hashtag_text from posts JOIN hashtags WHERE posts.post_author_id = hashtags.hashtags_post_id AND posts.post_id = ?";
+    private static final String SQL_SELECT_LIKES_AUTHORS_BY_POST_ID = "select likes.likes_user_id from posts JOIN likes WHERE posts.post_author_id = likes.likes_post_id AND posts.post_id = ?";
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static volatile MySqlPostDaoImpl instance;
+    private static volatile MySqlPostDao instance;
 
-    public static MySqlPostDaoImpl getInstance() {
-        MySqlPostDaoImpl localInstance = instance;
+    public static MySqlPostDao getInstance() {
+        MySqlPostDao localInstance = instance;
         if (localInstance == null) {
-            synchronized (MySqlPostDaoImpl.class) {
+            synchronized (MySqlPostDao.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new MySqlPostDaoImpl();
+                    instance = localInstance = new MySqlPostDao();
                 }
             }
         }
@@ -55,7 +58,7 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
     @Override
     public ArrayList<Post> findAll() {
         ArrayList<Post> posts = new ArrayList<>();
-        try (Connection connection = ConnectorDB.getConnection();
+        try (Connection connection = BasicConnectionPool.getInstance().getConnection();
              Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(SQL_SELECT_ALL_POSTS);
             while (rs.next()) {
@@ -71,7 +74,7 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
                 Float distance = rs.getFloat(10);
                 Integer price = rs.getInt(11);
                 LocalDate createdAt = rs.getDate(12).toLocalDate();
-                String author = MySqlUserDaoImpl.getInstance().findEntityById((rs.getInt(13))).getLogin();
+                String author = MySqlUserDao.getInstance().findEntityById((rs.getInt(13))).getLogin();
                 String photoLink = rs.getString(14);
                 PreparedStatement statement2 = connection.prepareStatement(SQL_SELECT_HASHTAGS_BY_POST_ID);
                 statement2.setInt(1, id);
@@ -101,7 +104,7 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
     @Override
     public Post findEntityById(Integer id) {
         Post post = null;
-        try (Connection connection = ConnectorDB.getConnection();
+        try (Connection connection = BasicConnectionPool.getInstance().getConnection();
              PreparedStatement statement =
                      connection.prepareStatement(SQL_SELECT_POST_ID)) {
             statement.setInt(1, id);
@@ -118,7 +121,7 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
                 Float distance = rs.getFloat(10);
                 Integer price = rs.getInt(11);
                 LocalDate createdAt = rs.getDate(12).toLocalDate();
-                String author = MySqlUserDaoImpl.getInstance().findEntityById((rs.getInt(13))).getLogin();
+                String author = MySqlUserDao.getInstance().findEntityById((rs.getInt(13))).getLogin();
                 String photoLink = rs.getString(14);
                 PreparedStatement statement2 = connection.prepareStatement(SQL_SELECT_HASHTAGS_BY_POST_ID);
                 statement2.setInt(1, id);
@@ -148,7 +151,7 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
     @Override
     public boolean delete(Integer id) {
         boolean deleted = false;
-        try (Connection connection = ConnectorDB.getConnection();
+        try (Connection connection = BasicConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_DELETE_HASHTAGS_BY_POST_ID);
              PreparedStatement statement2 = connection.prepareStatement(SQL_DELETE_LIKES_BY_POST_ID);
              PreparedStatement statement3 = connection.prepareStatement(SQL_DELETE_POST_BY_ID)) {
@@ -172,7 +175,7 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
 
     public boolean disableLike(Integer id, String author) {
         boolean disbled = false;
-        try (Connection connection = ConnectorDB.getConnection();
+        try (Connection connection = BasicConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_DISABLE_LIKE_FROM_POST_BY_AUTHOR);
         ) {
             statement.setInt(1, id);
@@ -187,7 +190,7 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
 
     public boolean enableLike(Integer id, String author) {
         boolean enabled = false;
-        try (Connection connection = ConnectorDB.getConnection();
+        try (Connection connection = BasicConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_ENABLE_LIKE_FROM_POST_BY_AUTHOR);
         ) {
             statement.setString(1, author);
@@ -202,7 +205,7 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
 
     @Override
     public boolean create(Post entity) {
-        try (Connection connection = ConnectorDB.getConnection();
+        try (Connection connection = BasicConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
              PreparedStatement statement1 = connection.prepareStatement(SQL_INSERT_HASHTAGS_WITH_POST_ID)) {
             statement.setString(1, entity.getModel());
@@ -241,7 +244,7 @@ public class MySqlPostDaoImpl extends AbstractDao<Integer, Post> implements Post
 
     @Override
     public void update(Post entity) {
-        try (Connection connection = ConnectorDB.getConnection();
+        try (Connection connection = BasicConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_POST);
              PreparedStatement statement1 = connection.prepareStatement(SQL_DELETE_HASHTAGS_BY_POST_ID);
              PreparedStatement statement2 = connection.prepareStatement(SQL_INSERT_HASHTAGS_WITH_POST_ID)) {

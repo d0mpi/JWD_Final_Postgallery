@@ -1,6 +1,6 @@
 package by.bsu.d0mpi.UP_PostGallery.servlet;
 
-import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDaoImpl;
+import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDao;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 
 import javax.servlet.RequestDispatcher;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class EditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        MySqlPostDaoImpl postDao = MySqlPostDaoImpl.getInstance();
+        MySqlPostDao postDao = MySqlPostDao.getInstance();
         Post post = postDao.findEntityById(Integer.valueOf(req.getParameter("edit")));
 
         HttpSession httpSession = req.getSession();
@@ -33,7 +33,7 @@ public class EditServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        MySqlPostDaoImpl postDao = MySqlPostDaoImpl.getInstance();
+        MySqlPostDao postDao = MySqlPostDao.getInstance();
 
         Post post = postDao.findEntityById((Integer) req.getSession().getAttribute("lastEditId"));
 

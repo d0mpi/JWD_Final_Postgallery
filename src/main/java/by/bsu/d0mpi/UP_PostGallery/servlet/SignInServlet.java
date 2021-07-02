@@ -1,9 +1,7 @@
 package by.bsu.d0mpi.UP_PostGallery.servlet;
 
-import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDaoImpl;
-import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlUserDaoImpl;
+import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlUserDao;
 import by.bsu.d0mpi.UP_PostGallery.model.User;
-import com.google.gson.Gson;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 @WebServlet(name = "sign", value = "/sign")
 public class SignInServlet extends HttpServlet {
@@ -29,7 +26,7 @@ public class SignInServlet extends HttpServlet {
         String respType = "";
         String login = req.getParameter("username");
         String password = req.getParameter("password");
-        MySqlUserDaoImpl userDao = MySqlUserDaoImpl.getInstance();
+        MySqlUserDao userDao = MySqlUserDao.getInstance();
         User user;
         String json;
 

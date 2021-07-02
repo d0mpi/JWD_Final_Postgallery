@@ -36,7 +36,7 @@
                         </c:when>
                         <c:when test="${requestScope.status_code == 500}">
                             A 500 error occurs when something blows up with our code.<br>
-                            viewing this does not fix this problem.<br>
+                            Viewing this does not fix this problem.<br>
                             In fact you are likely pissed off at the moment.<br>
                             Take solace, top men are now aware.
                         </c:when>

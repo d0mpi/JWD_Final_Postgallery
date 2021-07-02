@@ -1,6 +1,6 @@
 package by.bsu.d0mpi.UP_PostGallery.servlet;
 
-import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDaoImpl;
+import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDao;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 
 import javax.servlet.ServletException;
@@ -20,7 +20,7 @@ public class MoreServlet extends HttpServlet {
         resp.setContentType("text/plain");
         String delete = "false";
         OutputStream outStream = resp.getOutputStream();
-        if (MySqlPostDaoImpl.getInstance().findAll().size() <= (int) req.getSession().getAttribute("currPageSize")) {
+        if (MySqlPostDao.getInstance().findAll().size() <= (int) req.getSession().getAttribute("currPageSize")) {
             delete = "true";
         }
         outStream.write(delete.getBytes(StandardCharsets.UTF_8));
@@ -32,7 +32,7 @@ public class MoreServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         int currSize = (int) req.getSession().getAttribute("currPageSize");
-        ArrayList<Post> postArrayList = MySqlPostDaoImpl.getInstance().findAll();
+        ArrayList<Post> postArrayList = MySqlPostDao.getInstance().findAll();
         int newSize = currSize;
         if (postArrayList.size() > currSize) {
             newSize = Math.min(postArrayList.size(), currSize + 10);

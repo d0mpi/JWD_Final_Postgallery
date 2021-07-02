@@ -1,6 +1,6 @@
 package by.bsu.d0mpi.UP_PostGallery.servlet;
 
-import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDaoImpl;
+import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDao;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 
 import javax.servlet.RequestDispatcher;
@@ -29,7 +29,7 @@ public class AddServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        MySqlPostDaoImpl postDao = MySqlPostDaoImpl.getInstance();
+        MySqlPostDao postDao = MySqlPostDao.getInstance();
 
         String model = req.getParameter("model");
         String type = req.getParameter("type");

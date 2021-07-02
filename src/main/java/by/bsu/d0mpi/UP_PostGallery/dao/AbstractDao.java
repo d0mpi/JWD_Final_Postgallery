@@ -17,4 +17,6 @@ public abstract class AbstractDao<K extends Number, T extends DatabaseEntity>{
     public abstract boolean create(T entity);
 
     public abstract void update(T entity);
+
+
 }

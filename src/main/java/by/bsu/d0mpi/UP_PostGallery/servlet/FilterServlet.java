@@ -1,10 +1,9 @@
 package by.bsu.d0mpi.UP_PostGallery.servlet;
 
-import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDaoImpl;
+import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDao;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import lombok.SneakyThrows;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,9 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,7 +24,7 @@ public class FilterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
-        MySqlPostDaoImpl postDao = MySqlPostDaoImpl.getInstance();
+        MySqlPostDao postDao = MySqlPostDao.getInstance();
         ArrayList<Post> postList = postDao.findAll();
         Stream<Post> postStream = postList.stream();
         ArrayList<String> filters = new ArrayList<>();
