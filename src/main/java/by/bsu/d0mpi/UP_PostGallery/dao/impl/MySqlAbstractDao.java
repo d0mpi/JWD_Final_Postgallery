@@ -6,10 +6,7 @@ import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,17 +30,12 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
         this.sqlDeleteById = String.format(SQL_DELETE_BY_ID, tableName, idColumn);
     }
 
-    private List<T> findPreparedEntities(String sql, Consumer<PreparedStatement> consumer) {
+    protected List<T> findPreparedEntities(String sql, Consumer<PreparedStatement> consumer) {
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
             consumer.accept(statement);
             ResultSet resultSet = statement.executeQuery();
-            List<T> entities = new ArrayList<>();
-            while (resultSet.next()) {
-                final T entity = mapResultSet(resultSet);
-                entities.add(entity);
-            }
-            return entities;
+            return mapResultSet(connection, resultSet);
         } catch (SQLException e) {
             LOGGER.error("Dao connection exception");
             e.printStackTrace();
@@ -51,28 +43,21 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
         }
     }
 
-    private List<T> findEntities(String sql) {
-        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
-             final PreparedStatement statement = connection.prepareStatement(sql)) {
-            ResultSet resultSet = statement.executeQuery();
-            List<T> entities = new ArrayList<>();
-            while (resultSet.next()) {
-                final T entity = mapResultSet(resultSet);
-                entities.add(entity);
-            }
-            return entities;
-        } catch (SQLException e) {
-            LOGGER.error("Dao connection exception");
-            e.printStackTrace();
-            return Collections.emptyList();
-        }
-    }
+    protected abstract List<T> mapResultSet(Connection connection, ResultSet resultSet) throws SQLException;
 
-    protected abstract T mapResultSet(ResultSet resultSet) throws SQLException;
+    protected abstract void setDefaultStatementArgs (PreparedStatement statement, T entity) throws SQLException;
 
     @Override
     public List<T> findAll() {
-        return findEntities(sqlFindAll);
+        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
+             final PreparedStatement statement = connection.prepareStatement(sqlFindAll)) {
+            ResultSet resultSet = statement.executeQuery();
+            return mapResultSet(connection, resultSet);
+        } catch (SQLException e) {
+            LOGGER.error("Dao connection exception");
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
 
     @Override
@@ -105,7 +90,7 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
         boolean deleted = false;
         try (Connection connection = BasicConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(sqlDeleteById)) {
-            statement.setInt(1, (Integer) entity.getId());
+            statement.setInt(1, entity.getId());
             statement.executeUpdate();
             deleted = true;
         } catch (SQLException e) {

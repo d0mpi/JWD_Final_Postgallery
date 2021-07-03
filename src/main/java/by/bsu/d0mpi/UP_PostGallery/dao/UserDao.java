@@ -6,5 +6,5 @@ public interface UserDao {
 
     boolean isLoginPresented(String login);
 
-    User getUserByLogin(String login);
+    User findUserByLogin(String login);
 }

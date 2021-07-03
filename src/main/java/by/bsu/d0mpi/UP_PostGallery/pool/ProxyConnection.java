@@ -1,16 +1,38 @@
 package by.bsu.d0mpi.UP_PostGallery.pool;
 
+import lombok.Getter;
+
 import java.sql.*;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-public class ProxyConnection implements Connection {
+public class ProxyConnection implements Connection, Comparable<ProxyConnection> {
 
+    @Getter
     private final Connection connection;
 
     ProxyConnection(Connection connection) {
         this.connection = connection;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProxyConnection that = (ProxyConnection) o;
+        return Objects.equals(connection, that.connection);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(connection);
+    }
+
+    @Override
+    public int compareTo(ProxyConnection o) {
+        return hashCode() - o.hashCode();
     }
 
     @Override
@@ -56,7 +78,6 @@ public class ProxyConnection implements Connection {
     @Override
     public void close() {
         BasicConnectionPool.getInstance().releaseConnection(this);
-//        connection.close();
     }
 
     void realClose() throws SQLException{

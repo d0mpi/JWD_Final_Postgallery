@@ -4,14 +4,13 @@ import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDao;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import lombok.SneakyThrows;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,26 +20,26 @@ public class FilterServlet extends HttpServlet {
 
     @SneakyThrows
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 
 
         MySqlPostDao postDao = MySqlPostDao.getInstance();
-        ArrayList<Post> postList = postDao.findAll();
+        List<Post> postList = postDao.findAll();
         Stream<Post> postStream = postList.stream();
         ArrayList<String> filters = new ArrayList<>();
-        if(req.getParameter("filter_author_checkbox").equals("true")) {
+        if (req.getParameter("filter_author_checkbox").equals("true")) {
             filters.add("filter_author_checkbox");
         }
-        if(req.getParameter("filter_date_checkbox").equals("true")) {
+        if (req.getParameter("filter_date_checkbox").equals("true")) {
             filters.add("filter_date_checkbox");
         }
-        if(req.getParameter("filter_hashtags_checkbox").equals("true")) {
+        if (req.getParameter("filter_hashtags_checkbox").equals("true")) {
             filters.add("filter_hashtags_checkbox");
         }
 
         System.out.println(filters);
 
-        if(filters.size() != 0) {
+        if (filters.size() != 0) {
             for (String filterName : filters) {
                 if (filterName.equals("filter_author_checkbox")) {
                     final String author = req.getParameter("filter_author_text");
@@ -48,22 +47,22 @@ public class FilterServlet extends HttpServlet {
                         postStream = postStream.filter(o -> o.getAuthor().equals(author));
                     }
                 }
-                if(filterName.equals("filter_hashtags_checkbox")){
+                if (filterName.equals("filter_hashtags_checkbox")) {
                     final String hashtag = req.getParameter("filter_hashtags_text");
-                    if(hashtag != null && !hashtag.equals("")){
+                    if (hashtag != null && !hashtag.equals("")) {
                         postStream = postStream.filter(o -> o.getHashtags().contains(hashtag));
                     }
                 }
-                if(filterName.equals("filter_date_checkbox")){
+                if (filterName.equals("filter_date_checkbox")) {
                     final LocalDate date = LocalDate.parse(req.getParameter("filter_date_text"));
                     System.out.println(date);
-                    if(date != null){
+                    if (date != null) {
                         postStream = postStream.filter(o -> o.getCreatedAt().isEqual(date));
                     }
                 }
             }
         }
-        postList = (ArrayList<Post>) postStream.collect(Collectors.toList());
+        postList = postStream.collect(Collectors.toList());
         resp.setContentType("text/html");
         StringBuilder stringBuilder = new StringBuilder();
         Boolean logged = (Boolean) req.getSession().getAttribute("logged");

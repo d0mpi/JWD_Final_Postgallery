@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "more", value = "/more")
 public class MoreServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/plain");
         String delete = "false";
         OutputStream outStream = resp.getOutputStream();
@@ -29,10 +29,10 @@ public class MoreServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html");
         int currSize = (int) req.getSession().getAttribute("currPageSize");
-        ArrayList<Post> postArrayList = MySqlPostDao.getInstance().findAll();
+        List<Post> postArrayList = MySqlPostDao.getInstance().findAll();
         int newSize = currSize;
         if (postArrayList.size() > currSize) {
             newSize = Math.min(postArrayList.size(), currSize + 10);
