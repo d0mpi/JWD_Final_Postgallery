@@ -1,6 +1,7 @@
 package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.PostDao;
+import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
 import org.apache.logging.log4j.LogManager;
@@ -32,7 +33,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
 
     private static volatile MySqlPostDao instance;
 
-    protected MySqlPostDao(String tableName, String idColumn) {
+    private MySqlPostDao(String tableName, String idColumn) {
         super(tableName, idColumn);
     }
 
@@ -65,8 +66,8 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             Float distance = rs.getFloat(10);
             Integer price = rs.getInt(11);
             LocalDate createdAt = rs.getDate(12).toLocalDate();
-            String author = MySqlUserDao.getInstance().findEntityById((rs.getInt(13))).getLogin();
-            String photoLink = rs.getString(14);
+            String photoLink = rs.getString(13);
+            String author = MySqlUserDao.getInstance().findEntityById((rs.getInt(14))).getLogin();
             PreparedStatement statement2 = connection.prepareStatement(SQL_SELECT_HASHTAGS_BY_POST_ID);
             statement2.setInt(1, id);
             ResultSet rsHash = statement2.executeQuery();
@@ -99,7 +100,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             statement.setString(2, author);
             statement.executeUpdate();
             disbled = true;
-        } catch (SQLException e) {
+        } catch (SQLException | DAOException e) {
             e.printStackTrace();
         }
         return disbled;
@@ -115,7 +116,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             statement.setInt(2, postId);
             statement.executeUpdate();
             enabled = true;
-        } catch (SQLException e) {
+        } catch (SQLException | DAOException e) {
             e.printStackTrace();
         }
         return enabled;
@@ -134,14 +135,15 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
         statement.setString(9, String.valueOf(entity.getDistance()));
         statement.setString(10, String.valueOf(entity.getPrice()));
         statement.setString(11, String.valueOf(entity.getCreatedAt()));
-        statement.setString(12, entity.getAuthor());
-        statement.setString(13, entity.getPhotoLink());
+        statement.setString(12, entity.getPhotoLink());
+        statement.setString(13, entity.getAuthor());
     }
 
     @Override
     public boolean create(Post entity) {
         try (Connection connection = BasicConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS); PreparedStatement statement1 = connection.prepareStatement(SQL_INSERT_HASHTAGS_WITH_POST_ID)) {
+             PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement statement1 = connection.prepareStatement(SQL_INSERT_HASHTAGS_WITH_POST_ID)) {
             setDefaultStatementArgs(statement, entity);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -157,7 +159,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
                 statement1.setInt(2, entity.getId());
                 statement1.executeUpdate();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | DAOException e) {
             LOGGER.error("DB connection error", e);
             return false;
         }
@@ -182,7 +184,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
                 statement2.setInt(2, entity.getId());
                 statement2.executeUpdate();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | DAOException e) {
             LOGGER.error("DB connection error", e);
         }
     }

@@ -1,6 +1,8 @@
 package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.UserDao;
+import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
+import by.bsu.d0mpi.UP_PostGallery.model.Role;
 import by.bsu.d0mpi.UP_PostGallery.model.User;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
 import org.apache.logging.log4j.LogManager;
@@ -12,11 +14,11 @@ import java.util.List;
 
 public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements UserDao {
     private static final String SQL_UPDATE_USER =
-            "UPDATE users SET login = ?, password = ? WHERE id = ?";
+            "UPDATE users SET user_login = ?, user_password = ?, user_role_id = ? WHERE user_id = ?";
     private static final String SQL_INSERT =
-            "INSERT INTO users (login, password) VALUES (?, ?)";
+            "INSERT INTO users (user_login, user_password, user_role_id) VALUES (?, ?, ?)";
     private static final String SQL_SELECT_BY_LOGIN =
-            "SELECT * FROM users WHERE login = ?";
+            "SELECT * FROM users WHERE user_login = ?";
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -46,7 +48,8 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
             int id = resultSet.getInt(1);
             String login = resultSet.getString(2);
             String password = resultSet.getString(3);
-            users.add(new User(id, login, password));
+            int roleID = resultSet.getInt(4);
+            users.add(new User(id, login, password, Role.getRoleById(roleID)));
         }
         return users;
     }
@@ -55,6 +58,7 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
     protected void setDefaultStatementArgs(PreparedStatement statement, User entity) throws SQLException {
         statement.setString(1, entity.getLogin());
         statement.setString(2, entity.getPassword());
+        statement.setInt(3, entity.getRole().getIndex());
     }
 
     @Override
@@ -71,7 +75,7 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
                 LOGGER.error("No autoincremented index after trying to add record into table user");
                 return false;
             }
-        } catch (SQLException e) {
+        } catch (SQLException | DAOException e) {
             LOGGER.error("DB connection error", e);
             return false;
         }
@@ -83,7 +87,7 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
             setDefaultStatementArgs(statement, entity);
             statement.setInt(3, entity.getId());
             statement.executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException | DAOException e) {
             LOGGER.error("DB connection error", e);
         }
     }
@@ -94,7 +98,7 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) return true;
-        } catch (SQLException e) {
+        } catch (SQLException | DAOException e) {
             LOGGER.error("DB connection error", e);
         }
         return false;
@@ -106,7 +110,6 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
             try {
                 statement.setString(1, login);
             } catch (SQLException e) {
-                LOGGER.error("DB connection error", e);
                 e.printStackTrace();
             }
         }).stream().findFirst().orElse(null);

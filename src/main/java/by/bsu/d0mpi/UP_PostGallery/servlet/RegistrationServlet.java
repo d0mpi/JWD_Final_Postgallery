@@ -1,6 +1,7 @@
 package by.bsu.d0mpi.UP_PostGallery.servlet;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlUserDao;
+import by.bsu.d0mpi.UP_PostGallery.model.Role;
 import by.bsu.d0mpi.UP_PostGallery.model.User;
 
 import javax.servlet.RequestDispatcher;
@@ -22,7 +23,7 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String login = req.getParameter("username");
         String password = req.getParameter("password");
         resp.setContentType("text/plain");
@@ -41,7 +42,7 @@ public class RegistrationServlet extends HttpServlet {
             return;
         }
 
-        user = new User(login, password);
+        user = new User(login, password, Role.DEFAULT);
         userDao.create(user);
         req.getSession().setAttribute("logged", true);
         req.getSession().setAttribute("login", login);

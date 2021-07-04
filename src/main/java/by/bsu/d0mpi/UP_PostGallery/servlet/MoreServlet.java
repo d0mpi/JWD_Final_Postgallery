@@ -1,6 +1,7 @@
 package by.bsu.d0mpi.UP_PostGallery.servlet;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDao;
+import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 
 import javax.servlet.ServletException;

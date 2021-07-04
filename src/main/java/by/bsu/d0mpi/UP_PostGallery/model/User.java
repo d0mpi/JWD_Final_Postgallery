@@ -9,9 +9,11 @@ public class User implements DatabaseEntity{
     private int id;
     private String login;
     private String password;
+    private Role role;
 
-    public User(String login, String password) {
+    public User(String login, String password, Role role) {
         this.login = login;
         this.password = password;
+        this.role = role;
     }
 }

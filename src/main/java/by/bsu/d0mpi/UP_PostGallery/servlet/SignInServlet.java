@@ -22,13 +22,12 @@ public class SignInServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String respType = "";
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String respType;
         String login = req.getParameter("username");
         String password = req.getParameter("password");
         MySqlUserDao userDao = MySqlUserDao.getInstance();
         User user;
-        String json;
 
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
@@ -42,7 +41,7 @@ public class SignInServlet extends HttpServlet {
             outStream.close();
             return;
         } else {
-            user = userDao.getUserByLogin(login);
+            user = userDao.findUserByLogin(login);
             if (!user.getPassword().equals(password)) {
                 respType = "Wrong password:( Try again.";
                 outStream.write(respType.getBytes(StandardCharsets.UTF_8));

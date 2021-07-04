@@ -1,6 +1,7 @@
 package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.Dao;
+import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
 import by.bsu.d0mpi.UP_PostGallery.model.DatabaseEntity;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
 import org.apache.logging.log4j.LogManager;
@@ -36,7 +37,7 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
             consumer.accept(statement);
             ResultSet resultSet = statement.executeQuery();
             return mapResultSet(connection, resultSet);
-        } catch (SQLException e) {
+        } catch (SQLException | DAOException e) {
             LOGGER.error("Dao connection exception");
             e.printStackTrace();
             return Collections.emptyList();
@@ -45,7 +46,7 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
 
     protected abstract List<T> mapResultSet(Connection connection, ResultSet resultSet) throws SQLException;
 
-    protected abstract void setDefaultStatementArgs (PreparedStatement statement, T entity) throws SQLException;
+    protected abstract void setDefaultStatementArgs(PreparedStatement statement, T entity) throws SQLException;
 
     @Override
     public List<T> findAll() {
@@ -53,7 +54,7 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
              final PreparedStatement statement = connection.prepareStatement(sqlFindAll)) {
             ResultSet resultSet = statement.executeQuery();
             return mapResultSet(connection, resultSet);
-        } catch (SQLException e) {
+        } catch (SQLException | DAOException e) {
             LOGGER.error("Dao connection exception");
             e.printStackTrace();
             return Collections.emptyList();
@@ -79,7 +80,7 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
             statement.setInt(1, (Integer) id);
             statement.executeUpdate();
             deleted = true;
-        } catch (SQLException e) {
+        } catch (SQLException | DAOException e) {
             e.printStackTrace();
         }
         return deleted;
@@ -93,7 +94,7 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
             statement.setInt(1, entity.getId());
             statement.executeUpdate();
             deleted = true;
-        } catch (SQLException e) {
+        } catch (SQLException | DAOException e) {
             e.printStackTrace();
         }
         return deleted;
