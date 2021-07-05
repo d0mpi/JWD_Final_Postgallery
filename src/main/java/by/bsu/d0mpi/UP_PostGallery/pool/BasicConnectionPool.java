@@ -105,8 +105,6 @@ public class BasicConnectionPool implements ConnectionPool {
         locker.lock();
         try {
             if (connection.isValid(config.DB_MAX_WAIT)) {
-//                connection.clearWarnings();
-//                connection.setAutoCommit(true);
                 usedConnections.remove(connection);
                 freeConnections.add(connection);
                 System.out.printf("Connection was returned into pool. Current pool size: %d used connections; %d free connection%n", usedConnections.size(), freeConnections.size());
