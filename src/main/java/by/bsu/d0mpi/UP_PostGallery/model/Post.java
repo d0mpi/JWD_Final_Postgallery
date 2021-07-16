@@ -1,15 +1,14 @@
 package by.bsu.d0mpi.UP_PostGallery.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@AllArgsConstructor
-public class Post implements DatabaseEntity{
-    private int id;
+public class Post extends DatabaseEntity {
     private String model;
     private String type;
     private Float length;
@@ -24,9 +23,11 @@ public class Post implements DatabaseEntity{
     private String author;
     private String photoLink;
     private List<String> hashtags;
-    private List<String> likeAuthors;
 
-    public Post(String model, String type, Float length, Float wingspan, Float height, String origin, Integer crew, Float speed, Float distance, Integer price, LocalDate createdAt, String author, String photoLink, List<String> hashtags) {
+    public Post(int id, String model, String type, Float length, Float wingspan, Float height, String origin,
+                Integer crew, Float speed, Float distance, Integer price, LocalDate createdAt, String author,
+                String photoLink, List<String> hashtags) {
+        super(id);
         this.model = model;
         this.type = type;
         this.length = length;
@@ -43,19 +44,24 @@ public class Post implements DatabaseEntity{
         this.hashtags = hashtags;
     }
 
+    public Post(String model, String type, Float length, Float wingspan, Float height, String origin, Integer crew,
+                Float speed, Float distance, Integer price, LocalDate createdAt, String author, String photoLink, List<String> hashtags) {
+        this(-1, model, type, length, wingspan, height, origin, crew, speed, distance, price, createdAt, author, photoLink, hashtags);
+    }
+
     public String getHashtagsAsHashString() {
-        StringBuilder str = new StringBuilder("");
-       for(String hashtag : hashtags){
-           str.append("#").append(hashtag).append(" ");
-       }
-       return str.toString();
+        StringBuilder str = new StringBuilder();
+        for (String hashtag : hashtags) {
+            str.append("#").append(hashtag).append(" ");
+        }
+        return str.toString();
     }
 
     public String getHashtagsAsSpaceString() {
-        StringBuilder str = new StringBuilder("");
-       for(String hashtag : hashtags){
-           str.append(hashtag).append(" ");
-       }
-       return str.toString();
+        StringBuilder str = new StringBuilder();
+        for (String hashtag : hashtags) {
+            str.append(hashtag).append(" ");
+        }
+        return str.toString();
     }
 }

@@ -2,6 +2,7 @@ package by.bsu.d0mpi.UP_PostGallery.servlet;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlUserDao;
 import by.bsu.d0mpi.UP_PostGallery.model.User;
+import by.bsu.d0mpi.UP_PostGallery.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,14 +27,14 @@ public class SignInServlet extends HttpServlet {
         String respType;
         String login = req.getParameter("username");
         String password = req.getParameter("password");
-        MySqlUserDao userDao = MySqlUserDao.getInstance();
+        UserService userService = UserService.simple();
         User user;
 
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
         OutputStream outStream = resp.getOutputStream();
 
-        if(!userDao.isLoginPresented(login)) {
+        if(!userService.isLoginPresented(login)) {
             respType = "No user with this login:( Try again.";
             outStream.write(respType.getBytes(StandardCharsets.UTF_8));
 
@@ -41,8 +42,8 @@ public class SignInServlet extends HttpServlet {
             outStream.close();
             return;
         } else {
-            user = userDao.findUserByLogin(login);
-            if (!user.getPassword().equals(password)) {
+            user = new User(login,password);
+            if (!userService.canLogIn(user)) {
                 respType = "Wrong password:( Try again.";
                 outStream.write(respType.getBytes(StandardCharsets.UTF_8));
                 outStream.flush();

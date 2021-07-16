@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements UserDao {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     private static final String SQL_UPDATE_USER =
             "UPDATE users SET user_login = ?, user_password = ?, user_role_id = ? WHERE user_id = ?";
-    private static final String SQL_INSERT =
+    private static final String SQL_INSERT_USER =
             "INSERT INTO users (user_login, user_password, user_role_id) VALUES (?, ?, ?)";
     private static final String SQL_SELECT_BY_LOGIN =
             "SELECT * FROM users WHERE user_login = ?";
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     private static MySqlUserDao instance;
 
@@ -48,8 +48,8 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
             int id = resultSet.getInt(1);
             String login = resultSet.getString(2);
             String password = resultSet.getString(3);
-            int roleID = resultSet.getInt(4);
-            users.add(new User(id, login, password, Role.getRoleById(roleID)));
+            Role role = Role.getRoleByOrdinalNumber(resultSet.getInt(4));
+            users.add(new User(id, login, password, role));
         }
         return users;
     }
@@ -58,12 +58,12 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
     protected void setDefaultStatementArgs(PreparedStatement statement, User entity) throws SQLException {
         statement.setString(1, entity.getLogin());
         statement.setString(2, entity.getPassword());
-        statement.setInt(3, entity.getRole().getIndex());
+        statement.setInt(3, entity.getRole().ordinal());
     }
 
     @Override
     public boolean create(User entity) {
-        try (PreparedStatement statement = BasicConnectionPool.getInstance().getConnection().prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = BasicConnectionPool.getInstance().getConnection().prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
             setDefaultStatementArgs(statement, entity);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -82,13 +82,15 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
     }
 
     @Override
-    public void update(User entity) {
+    public User update(User entity) {
         try (PreparedStatement statement = BasicConnectionPool.getInstance().getConnection().prepareStatement(SQL_UPDATE_USER)) {
             setDefaultStatementArgs(statement, entity);
-            statement.setInt(3, entity.getId());
+            statement.setInt(4, entity.getId());
             statement.executeUpdate();
+            return entity;
         } catch (SQLException | DAOException e) {
             LOGGER.error("DB connection error", e);
+            return entity;
         }
     }
 

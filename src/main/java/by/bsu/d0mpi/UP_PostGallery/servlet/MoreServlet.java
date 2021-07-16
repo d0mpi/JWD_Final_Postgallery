@@ -75,7 +75,7 @@ public class MoreServlet extends HttpServlet {
                             "                                        </ul>\n" + ((logged != null && logged) ?
                             "                                                <form id=\"like-form" + post.getId() + "\"\n" +
                                     "                                                      action=\"" + req.getContextPath() + "/like\" method=\"post\">\n" +
-                                    "                                                    <input id=\"like-check" + post.getId() + "\" class=\"like-check\" type=\"checkbox\"" + (post.getLikeAuthors().contains(post.getAuthor()) ? "checked" : "unchecked") + " value=\"\">\n" +
+                                    "                                                    <input id=\"like-check" + post.getId() + "\" class=\"like-check\" type=\"checkbox\"" + ("checked") + " value=\"\">\n" +
                                     "                                                    <label for=\"like-check" + post.getId() + "\" class=\"like-label\"></label>\n" +
                                     "                                                </form>\n" : "") +
                             "                                    </div>\n" +

@@ -1,4 +1,4 @@
-package by.bsu.d0mpi.UP_PostGallery.controller;
+package by.bsu.d0mpi.UP_PostGallery.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

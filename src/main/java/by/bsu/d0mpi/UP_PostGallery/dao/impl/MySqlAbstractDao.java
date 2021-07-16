@@ -101,11 +101,8 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
     }
 
     @Override
-    public boolean create(T entity) {
-        return false;
-    }
+    public abstract boolean create(T entity);
 
     @Override
-    public void update(T entity) {
-    }
+    public abstract T update(T entity);
 }

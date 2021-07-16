@@ -20,22 +20,24 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
                     " post_create_date = ?, post_photo = ?, post_author_id = ? WHERE post_id = ?";
     private static final String SQL_INSERT =
             "INSERT INTO posts (post_model ,post_type, post_length, post_wingspan, post_height, post_origin, post_crew," +
-                    " post_speed, post_distance, post_price, post_create_date, post_photo, post_author_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    " post_speed, post_distance, post_price, post_create_date, post_photo, post_author_id)" +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
     public static final String SQL_INSERT_HASHTAGS_WITH_POST_ID =
             "INSERT INTO hashtags (hashtag_text, hashtags_post_id) VALUES (?, ?)";
-    private static final String SQL_DELETE_HASHTAGS_BY_POST_ID = "DELETE FROM hashtags WHERE hashtags_post_id = ?";
-    private static final String SQL_DISABLE_LIKE_FROM_POST_BY_AUTHOR = "DELETE FROM likes WHERE likes_post_id = ? AND likes_user_id = ?";
-    private static final String SQL_ENABLE_LIKE_FROM_POST_BY_AUTHOR = "INSERT INTO likes (likes_user_id, likes_post_id) VALUES (?, ?)";
-    private static final String SQL_SELECT_HASHTAGS_BY_POST_ID = "select hashtags.hashtag_text from posts JOIN hashtags WHERE posts.post_author_id = hashtags.hashtags_post_id AND posts.post_id = ?";
-    private static final String SQL_SELECT_LIKES_AUTHORS_BY_POST_ID = "select likes.likes_user_id from posts JOIN likes WHERE posts.post_author_id = likes.likes_post_id AND posts.post_id = ?";
+    private static final String SQL_DELETE_HASHTAGS_BY_POST_ID =
+            "DELETE FROM hashtags WHERE hashtags_post_id = ?";
+    private static final String SQL_SELECT_HASHTAGS_BY_POST_ID =
+            "select hashtags.hashtag_text from posts JOIN hashtags WHERE posts.post_author_id = hashtags.hashtags_post_id AND posts.post_id = ?";
+
 
     private static final Logger LOGGER = LogManager.getLogger();
-
-    private static volatile MySqlPostDao instance;
 
     private MySqlPostDao(String tableName, String idColumn) {
         super(tableName, idColumn);
     }
+
+    private static volatile MySqlPostDao instance;
 
     public static MySqlPostDao getInstance() {
         MySqlPostDao localInstance = instance;
@@ -76,51 +78,13 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
                 hashtags.add(rsHash.getString(1));
             }
             statement2.close();
-            PreparedStatement statement3 = connection.prepareStatement(SQL_SELECT_LIKES_AUTHORS_BY_POST_ID);
-            statement3.setInt(1, id);
-            ResultSet rsLike = statement3.executeQuery();
-            List<String> likeList = new LinkedList<>();
-            while (rsLike.next()) {
-                likeList.add(rsLike.getString(1));
-            }
-            statement3.close();
-            posts.add(new Post(id, model, type, length, wingspan, height, origin, crew, speed, distance,
-                    price, createdAt, author, photoLink, hashtags, likeList));
+            posts.add(new Post(model, type, length, wingspan, height, origin, crew, speed, distance,
+                    price, createdAt, author, photoLink, hashtags));
         }
         return posts;
     }
 
-    @Override
-    public boolean addLike(Integer postId, String author) {
-        boolean disbled = false;
-        try (Connection connection = BasicConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_DISABLE_LIKE_FROM_POST_BY_AUTHOR)
-        ) {
-            statement.setInt(1, postId);
-            statement.setString(2, author);
-            statement.executeUpdate();
-            disbled = true;
-        } catch (SQLException | DAOException e) {
-            e.printStackTrace();
-        }
-        return disbled;
-    }
 
-    @Override
-    public boolean removeLike(Integer postId, String author) {
-        boolean enabled = false;
-        try (Connection connection = BasicConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_ENABLE_LIKE_FROM_POST_BY_AUTHOR)
-        ) {
-            statement.setString(1, author);
-            statement.setInt(2, postId);
-            statement.executeUpdate();
-            enabled = true;
-        } catch (SQLException | DAOException e) {
-            e.printStackTrace();
-        }
-        return enabled;
-    }
 
     @Override
     protected void setDefaultStatementArgs(PreparedStatement statement, Post entity) throws SQLException {
@@ -167,7 +131,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
     }
 
     @Override
-    public void update(Post entity) {
+    public Post update(Post entity) {
         try (Connection connection = BasicConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_POST);
              PreparedStatement statement1 = connection.prepareStatement(SQL_DELETE_HASHTAGS_BY_POST_ID);
@@ -178,14 +142,15 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
 
             statement1.setInt(1, entity.getId());
             statement1.executeUpdate();
-
             for (String hashtag : entity.getHashtags()) {
                 statement2.setString(1, hashtag);
                 statement2.setInt(2, entity.getId());
                 statement2.executeUpdate();
             }
+            return entity;
         } catch (SQLException | DAOException e) {
             LOGGER.error("DB connection error", e);
+            return entity;
         }
     }
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status = "ALL">
+    <Properties>
+        <property name="pattern_file">
+            %d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{5}- %msg%n
+        </property>
+    </Properties>
+    <Appenders>
+        <File name="TxtFile" fileName="logs/log.txt" bufferedIO="true">
+            <PatternLayout pattern="${pattern_file}"/>
+        </File>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{ABSOLUTE} %-5level %logger{1} - %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level = "info">
+            <AppenderRef ref = "TxtFile" />
+            <AppenderRef ref = "Console"/>
+        </Root>
+        <Root level = "debug">
+            <AppenderRef ref = "TxtFile" />
+            <AppenderRef ref = "Console"/>
+        </Root>
+        <Root level = "error">
+            <AppenderRef ref = "TxtFile" />
+            <AppenderRef ref = "Console"/>
+        </Root>
+        <Root level = "warn">
+            <AppenderRef ref = "TxtFile" />
+            <AppenderRef ref = "Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

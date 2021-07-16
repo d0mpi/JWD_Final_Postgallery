@@ -39,11 +39,10 @@ public class BasicConnectionPool implements ConnectionPool {
         return localInstance;
     }
 
-    BasicConnectionPool() {
+    private BasicConnectionPool() {
         config = PoolConfiguration.getInstance();
         freeConnections = new LinkedBlockingDeque<>();
         usedConnections = new ConcurrentSkipListSet<>();
-        this.init();
     }
 
     public void init() {

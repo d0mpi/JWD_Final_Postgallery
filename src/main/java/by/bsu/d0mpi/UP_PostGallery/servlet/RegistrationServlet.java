@@ -3,6 +3,8 @@ package by.bsu.d0mpi.UP_PostGallery.servlet;
 import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlUserDao;
 import by.bsu.d0mpi.UP_PostGallery.model.Role;
 import by.bsu.d0mpi.UP_PostGallery.model.User;
+import by.bsu.d0mpi.UP_PostGallery.service.UserService;
+import by.bsu.d0mpi.UP_PostGallery.service.impl.SimpleUserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,10 +33,10 @@ public class RegistrationServlet extends HttpServlet {
         OutputStream outStream = resp.getOutputStream();
 
         String respType;
-        MySqlUserDao userDao = MySqlUserDao.getInstance();
+        UserService userService = UserService.simple();
         User user;
 
-        if (userDao.isLoginPresented(login)) {
+        if (userService.isLoginPresented(login)) {
             respType = "User with this login already exists. Choose another login.";
             outStream.write(respType.getBytes(StandardCharsets.UTF_8));
             outStream.flush();
@@ -42,8 +44,8 @@ public class RegistrationServlet extends HttpServlet {
             return;
         }
 
-        user = new User(login, password, Role.DEFAULT);
-        userDao.create(user);
+        user = new User(login, password, Role.USER);
+        userService.createEntity(user);
         req.getSession().setAttribute("logged", true);
         req.getSession().setAttribute("login", login);
 

@@ -115,7 +115,7 @@
                                                 <form id="like-form${post.id}"
                                                       action="${pageContext.request.contextPath}/like" method="post">
                                                     <input id="like-check${post.id}" class="like-check"
-                                                           type="checkbox" ${post.likeAuthors.contains(post.author) ? "checked" : "unchecked"}
+                                                           type="checkbox" ${true ? "checked" : "unchecked"}
                                                            value="">
                                                     <label for="like-check${post.id}" class="like-label"></label>
                                                 </form>
