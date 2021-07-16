@@ -1,11 +1,19 @@
 package by.bsu.d0mpi.UP_PostGallery.model;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Role {
-    ADMINISTRATOR,
+    ADMIN,
     MODERATOR,
-    USER;
+    USER,
+    UNAUTHORIZED;
 
     public static Role getRoleByOrdinalNumber(int id) {
         return Role.values()[id];
+    }
+
+    public static List<Role> valuesAsList() {
+        return Arrays.asList(values());
     }
 }

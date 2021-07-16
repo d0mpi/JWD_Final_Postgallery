@@ -9,10 +9,9 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 public class SimpleLikeService implements LikeService {
+    private final LikeDao likeDao = LikeDao.MySQL();
     private static final Logger LOGGER = LogManager.getLogger();
     private static volatile SimpleLikeService instance;
-    private final LikeDao likeDao = LikeDao.MySQL();
-
 
     public static SimpleLikeService getInstance() {
         SimpleLikeService localInstance = instance;
