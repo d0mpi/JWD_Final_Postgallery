@@ -10,7 +10,7 @@ public enum Role {
     UNAUTHORIZED;
 
     public static Role getRoleByOrdinalNumber(int id) {
-        return Role.values()[id];
+        return Role.values()[id - 1];
     }
 
     public static List<Role> valuesAsList() {

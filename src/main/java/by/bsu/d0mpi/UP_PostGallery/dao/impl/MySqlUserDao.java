@@ -5,12 +5,14 @@ import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
 import by.bsu.d0mpi.UP_PostGallery.model.Role;
 import by.bsu.d0mpi.UP_PostGallery.model.User;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
+import by.bsu.d0mpi.UP_PostGallery.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements UserDao {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -63,7 +65,8 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
 
     @Override
     public boolean create(User entity) {
-        try (PreparedStatement statement = BasicConnectionPool.getInstance().getConnection().prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
+        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
+             final PreparedStatement statement = connection.prepareStatement(SQL_INSERT_USER,Statement.RETURN_GENERATED_KEYS)) {
             setDefaultStatementArgs(statement, entity);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -96,24 +99,17 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
 
     @Override
     public boolean isLoginPresented(String login) {
-        try (PreparedStatement statement = BasicConnectionPool.getInstance().getConnection().prepareStatement(SQL_SELECT_BY_LOGIN)) {
-            statement.setString(1, login);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) return true;
-        } catch (SQLException | DAOException e) {
-            LOGGER.error("DB connection error", e);
-        }
-        return false;
+        return findUserByLogin(login).isPresent();
     }
 
     @Override
-    public User findUserByLogin(String login) {
+    public Optional<User> findUserByLogin(String login) {
         return findPreparedEntities(SQL_SELECT_BY_LOGIN, statement -> {
             try {
                 statement.setString(1, login);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }).stream().findFirst().orElse(null);
+        }).stream().findFirst();
     }
 }

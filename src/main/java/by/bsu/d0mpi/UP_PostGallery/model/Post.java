@@ -2,12 +2,14 @@ package by.bsu.d0mpi.UP_PostGallery.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@ToString(callSuper = true)
 public class Post extends DatabaseEntity {
     private String model;
     private String type;
@@ -64,4 +66,5 @@ public class Post extends DatabaseEntity {
         }
         return str.toString();
     }
+
 }

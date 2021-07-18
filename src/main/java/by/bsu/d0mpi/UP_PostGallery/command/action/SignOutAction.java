@@ -1,22 +1,25 @@
-package by.bsu.d0mpi.UP_PostGallery.command.page;
+package by.bsu.d0mpi.UP_PostGallery.command.action;
 
 import by.bsu.d0mpi.UP_PostGallery.command.Command;
 import by.bsu.d0mpi.UP_PostGallery.command.CommandRequest;
 import by.bsu.d0mpi.UP_PostGallery.command.CommandResponse;
+import by.bsu.d0mpi.UP_PostGallery.command.SimpleCommandResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ShowSignInPage implements Command {
-    private static final Logger LOGGER = LogManager.getLogger();
-    private static volatile ShowSignInPage instance;
+import javax.servlet.http.HttpSession;
 
-    public static ShowSignInPage getInstance() {
-        ShowSignInPage localInstance = instance;
+public class SignOutAction implements Command {
+    private static final Logger LOGGER = LogManager.getLogger();
+    private static volatile SignOutAction instance;
+
+    public static SignOutAction getInstance() {
+        SignOutAction localInstance = instance;
         if (localInstance == null) {
-            synchronized (ShowSignInPage.class) {
+            synchronized (SignOutAction.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new ShowSignInPage();
+                    instance = localInstance = new SignOutAction();
                 }
             }
         }
@@ -25,6 +28,7 @@ public class ShowSignInPage implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        return null;
+        request.invalidateCurrentSession();
+        return new SimpleCommandResponse("/controller?command=main_page", true);
     }
 }

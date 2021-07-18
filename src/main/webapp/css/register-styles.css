@@ -264,3 +264,11 @@ h3 {
 .a-create {
     font-family: Poppins-Regular, sans-serif;
 }
+
+.registration-error{
+    font-family: Poppins-Regular, sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+    color: #e20505;
+    text-align: center;
+}

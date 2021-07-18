@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
 
 import static at.favre.lib.crypto.bcrypt.BCrypt.MIN_COST;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -75,13 +76,17 @@ public class SimpleUserService implements UserService {
     @Override
     public boolean canLogIn(User user) {
         final byte[] enteredPassword = user.getPassword().getBytes(UTF_8);
-        final User persistedUser = this.findUserByLogin(user.getLogin());
+        final User persistedUser = this.findUserByLogin(user.getLogin()).orElse(null);
+        if (persistedUser == null) {
+            return false;
+        }
         final byte[] encryptedPasswordFromDb = persistedUser.getPassword().getBytes(UTF_8);
         return verifier.verify(enteredPassword, encryptedPasswordFromDb).verified;
+
     }
 
     @Override
-    public User findUserByLogin(String login) {
+    public Optional<User> findUserByLogin(String login) {
         return userDao.findUserByLogin(login);
     }
 

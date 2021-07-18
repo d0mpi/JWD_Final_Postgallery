@@ -1,9 +1,6 @@
 package by.bsu.d0mpi.UP_PostGallery.filter;
 
-import by.bsu.d0mpi.UP_PostGallery.command.AppCommand;
-import by.bsu.d0mpi.UP_PostGallery.command.Command;
-import by.bsu.d0mpi.UP_PostGallery.command.page.ShowMainPage;
-import by.bsu.d0mpi.UP_PostGallery.command.page.ShowSignInPage;
+import by.bsu.d0mpi.UP_PostGallery.command.CommandType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class HandsomeUriFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static Map<String, AppCommand> uriCommandStorage;
+    private static Map<String, CommandType> uriCommandStorage;
 
 
     @Override

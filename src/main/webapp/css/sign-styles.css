@@ -78,7 +78,7 @@ h3 {
 
 .sign-in-box {
     width: 500px;
-    height: 670px;
+    height: auto;
     padding: 0 50px;
     display: flex;
     background: #ffffffcf;
@@ -268,9 +268,18 @@ h3 {
     font-family: Poppins-Regular, sans-serif;
     border-width: 0;
     border-style: solid;
+    padding: 20px;
 }
 
 .a-create:hover{
     color: black;
     transform: scale(.95);
+}
+
+.sign-error{
+    font-family: Poppins-Regular, sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #e20505;
+    text-align: center;
 }

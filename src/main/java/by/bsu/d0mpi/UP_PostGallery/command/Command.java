@@ -4,7 +4,7 @@ public interface Command {
     CommandResponse execute(CommandRequest request);
 
     static Command withName(String name) {
-        return AppCommand.of(name)
+        return CommandType.of(name)
                 .getCommand();
     }
 }

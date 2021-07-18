@@ -78,7 +78,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
                 hashtags.add(rsHash.getString(1));
             }
             statement2.close();
-            posts.add(new Post(model, type, length, wingspan, height, origin, crew, speed, distance,
+            posts.add(new Post(id, model, type, length, wingspan, height, origin, crew, speed, distance,
                     price, createdAt, author, photoLink, hashtags));
         }
         return posts;

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${cookie['language'].value}" scope="session"/>
@@ -14,27 +14,30 @@
     <div class="header-flex-box">
         <div class="header-left">
             <div class="header-logo-col">
-                <a class="header-logo-ref" href="${pageContext.request.contextPath}/home">
+                <a class="header-logo-ref" href="${pageContext.request.contextPath}/controller?command=main_page">
                     <img class="img-logo" src="../../images/logo-white.png" alt="header-logo">
                 </a>
             </div>
             <nav class="header-menu">
                 <div class="menu-col ">
-                    <a href="${pageContext.request.contextPath}/home" id="header-home-btn" class="menu-href">
+                    <a href="${pageContext.request.contextPath}/controller?command=main_page" id="header-home-btn"
+                       class="menu-href">
                         <div></div>
                         <fmt:message key="headerHome"/> </a>
                 </div>
                 <div class="menu-col">
-                    <a href="${pageContext.request.contextPath}/about" id="header-about-btn" class="menu-href ">
+                    <a href="${pageContext.request.contextPath}/controller?command=about_page" id="header-about-btn"
+                       class="menu-href ">
                         <div></div>
                         <fmt:message key="headerAbout"/></a>
                 </div>
                 <div class="menu-col">
-                    <a href="${pageContext.request.contextPath}/contact" id="header-contact-btn" class="menu-href">
+                    <a href="${pageContext.request.contextPath}/controller?command=contact_page" id="header-contact-btn"
+                       class="menu-href">
                         <div></div>
                         <fmt:message key="headerContact"/></a>
                 </div>
-                <form class="menu-col" id="languageForm" method="post" action="${pageContext.request.contextPath}/home">
+                <form class="menu-col" id="languageForm" method="post" action="${pageContext.request.contextPath}/controller?command=main_page">
                     <label for="language-select"></label>
                     <select id="language-select" name="language-select" class="language-select"
                             onchange="document.getElementById('languageForm').submit()">
@@ -54,46 +57,25 @@
         </div>
         <div class="header-right">
             <div class="header-add-col">
-                <c:if test="${sessionScope.logged != null}">
-                    <c:if test="${sessionScope.logged == true}">
-                        <button onclick="document.location='/add-post'" class="header-add-button" id="add_btn">
-                            <fmt:message key="headerAddBtn"/>
-                        </button>
+                <c:if test="${sessionScope.user_name != null}">
+                <button onclick="document.location='/controller?command=post_add_page'"
+                        class="header-add-button" id="add_btn">
+                        <fmt:message key="headerAddBtn"/>
                     </c:if>
-                </c:if>
             </div>
 
             <div class="header-log-col">
-                <c:if test="${sessionScope.logged != null}">
-                    <c:if test="${sessionScope.logged == true}">
-                        <div class="header-username-col" id="header_username"> User: ${sessionScope.login}</div>
-                        <form name="log1" action="${pageContext.request.contextPath}/home"
-                              method="post">
-                            <button name="sign-out" type="submit" title="" class="header-button" id="sign_out_btn"
-                                    value="">
-                                <fmt:message key="headerSignOutBtn"/>
-                            </button>
-                        </form>
-                    </c:if>
-                </c:if>
-                <c:if test="${sessionScope.logged != null}">
-                    <c:if test="${sessionScope.logged == false}">
-                        <form name="log2" action="${pageContext.request.contextPath}/sign"
-                              method="get">
-                            <button name="sign-in" type="submit" title="" value="" class="header-button"
-                                    id="sign_in_btn1">
-                                <fmt:message key="headerSignInBtn"/>
-                            </button>
-                        </form>
-                    </c:if>
-                </c:if>
-                <c:if test="${sessionScope.logged == null}">
-                    <form name="log3" action="${pageContext.request.contextPath}/sign"
-                          method="get">
-                        <button name="sign-in" type="submit" title="" value="" class="header-button" id="sign_in_btn2">
-                            <fmt:message key="headerSignInBtn"/>
-                        </button>
+                <c:if test="${sessionScope.user_name != null}">
+                    <div class="header-username-col" id="header_username"> User: ${sessionScope.user_name}</div>
+                    <form name="log1" action="${pageContext.request.contextPath}/controller?command=sign_out"
+                          method="post">
+                        <input name="sign-out" type="submit" title="" class="header-button" id="sign_out_btn"
+                               value="<fmt:message key="headerSignOutBtn"/>"/>
                     </form>
+                </c:if>
+                <c:if test="${sessionScope.user_name == null}">
+                    <a href="${pageContext.request.contextPath}/controller?command=login_page" type="submit"
+                       class="header-button" id="sign_in_btn1"><fmt:message key="headerSignInBtn"/></a>
                 </c:if>
             </div>
         </div>
