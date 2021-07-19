@@ -37,7 +37,8 @@
                         <div></div>
                         <fmt:message key="headerContact"/></a>
                 </div>
-                <form class="menu-col" id="languageForm" method="post" action="${pageContext.request.contextPath}/controller?command=main_page">
+                <form class="menu-col" id="languageForm" method="post"
+                      action="${pageContext.request.contextPath}/controller?command=main_page">
                     <label for="language-select"></label>
                     <select id="language-select" name="language-select" class="language-select"
                             onchange="document.getElementById('languageForm').submit()">
@@ -58,10 +59,11 @@
         <div class="header-right">
             <div class="header-add-col">
                 <c:if test="${sessionScope.user_name != null}">
-                <button onclick="document.location='/controller?command=post_add_page'"
-                        class="header-add-button" id="add_btn">
-                        <fmt:message key="headerAddBtn"/>
-                    </c:if>
+                    <a href="${pageContext.request.contextPath}/controller?command=post_add_page"
+                       class="header-add-button" id="add_btn">
+                        <i class="fas fa-plus-circle"></i>
+                        <fmt:message key="headerAddBtn"/> </a>
+                </c:if>
             </div>
 
             <div class="header-log-col">

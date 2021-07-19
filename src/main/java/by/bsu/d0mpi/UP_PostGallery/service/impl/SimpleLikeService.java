@@ -56,4 +56,9 @@ public class SimpleLikeService implements LikeService {
     public Like editEntity(Like entity) {
         return likeDao.update(entity);
     }
+
+    @Override
+    public void delete(Integer postId, String login) {
+        likeDao.delete(postId, login);
+    }
 }

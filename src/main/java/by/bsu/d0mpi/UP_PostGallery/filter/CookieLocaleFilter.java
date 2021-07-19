@@ -10,7 +10,8 @@ import java.io.IOException;
 @WebFilter(filterName = "CookieLocaleFilter", urlPatterns = {"/*"})
 public class CookieLocaleFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) {
+    public void init(FilterConfig filterConfig) throws ServletException {
+        Filter.super.init(filterConfig);
     }
 
     @Override

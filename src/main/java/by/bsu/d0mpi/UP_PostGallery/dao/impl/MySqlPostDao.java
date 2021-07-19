@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,18 +18,20 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
     private static final String SQL_UPDATE_POST =
             "UPDATE posts SET post_model = ?, post_type = ?,post_length = ?, post_wingspan = ?, post_height = ?," +
                     " post_origin = ?, post_crew = ?, post_speed = ?, post_distance = ?, post_price = ?," +
-                    " post_create_date = ?, post_photo = ?, post_author_id = ? WHERE post_id = ?";
+                    " post_create_date = ?, post_photo = ?, post_author = ? WHERE post_id = ?";
     private static final String SQL_INSERT =
             "INSERT INTO posts (post_model ,post_type, post_length, post_wingspan, post_height, post_origin, post_crew," +
-                    " post_speed, post_distance, post_price, post_create_date, post_photo, post_author_id)" +
+                    " post_speed, post_distance, post_price, post_create_date, post_photo, post_author)" +
                     " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_SELECT_POST_ID_LIST_BY_AUTHOR =
+            "SELECT * FROM posts WHERE posts.post_author = ?";
 
     public static final String SQL_INSERT_HASHTAGS_WITH_POST_ID =
             "INSERT INTO hashtags (hashtag_text, hashtags_post_id) VALUES (?, ?)";
     private static final String SQL_DELETE_HASHTAGS_BY_POST_ID =
             "DELETE FROM hashtags WHERE hashtags_post_id = ?";
     private static final String SQL_SELECT_HASHTAGS_BY_POST_ID =
-            "select hashtags.hashtag_text from posts JOIN hashtags WHERE posts.post_author_id = hashtags.hashtags_post_id AND posts.post_id = ?";
+            "select hashtags.hashtag_text from posts JOIN hashtags WHERE posts.post_id = hashtags.hashtags_post_id AND posts.post_id = ?";
 
 
     private static final Logger LOGGER = LogManager.getLogger();
@@ -69,7 +72,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             Integer price = rs.getInt(11);
             LocalDate createdAt = rs.getDate(12).toLocalDate();
             String photoLink = rs.getString(13);
-            String author = MySqlUserDao.getInstance().findEntityById((rs.getInt(14))).getLogin();
+            String author = rs.getString(14);
             PreparedStatement statement2 = connection.prepareStatement(SQL_SELECT_HASHTAGS_BY_POST_ID);
             statement2.setInt(1, id);
             ResultSet rsHash = statement2.executeQuery();
@@ -83,7 +86,6 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
         }
         return posts;
     }
-
 
 
     @Override
@@ -105,9 +107,9 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
 
     @Override
     public boolean create(Post entity) {
-        try (Connection connection = BasicConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement statement1 = connection.prepareStatement(SQL_INSERT_HASHTAGS_WITH_POST_ID)) {
+        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
+             final PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+             final PreparedStatement statement1 = connection.prepareStatement(SQL_INSERT_HASHTAGS_WITH_POST_ID)) {
             setDefaultStatementArgs(statement, entity);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -132,10 +134,10 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
 
     @Override
     public Post update(Post entity) {
-        try (Connection connection = BasicConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_POST);
-             PreparedStatement statement1 = connection.prepareStatement(SQL_DELETE_HASHTAGS_BY_POST_ID);
-             PreparedStatement statement2 = connection.prepareStatement(SQL_INSERT_HASHTAGS_WITH_POST_ID)) {
+        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
+             final PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_POST);
+             final PreparedStatement statement1 = connection.prepareStatement(SQL_DELETE_HASHTAGS_BY_POST_ID);
+             final PreparedStatement statement2 = connection.prepareStatement(SQL_INSERT_HASHTAGS_WITH_POST_ID)) {
             setDefaultStatementArgs(statement, entity);
             statement.setInt(14, entity.getId());
             statement.executeUpdate();
@@ -154,4 +156,17 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
         }
     }
 
+    @Override
+    public List<Post> getPostsByAuthorLogin(String login) {
+        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
+             final PreparedStatement statement = connection.prepareStatement(SQL_SELECT_POST_ID_LIST_BY_AUTHOR)
+        ) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+            return mapResultSet(connection, resultSet);
+        } catch (SQLException | DAOException e) {
+            LOGGER.error("DB connection error", e);
+            return Collections.emptyList();
+        }
+    }
 }

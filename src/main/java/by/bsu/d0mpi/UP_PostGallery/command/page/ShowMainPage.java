@@ -11,7 +11,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ShowMainPage implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -32,8 +36,30 @@ public class ShowMainPage implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        List<Post> postArrayList = PostService.simple().findAll();
-        request.setAttribute("postList", postArrayList);
+        List<Post> postList = PostService.simple().findAll();
+
+        if (request.hasParameter("filter_author_text") && request.hasParameter("filter_hashtags_text") &&
+                request.hasParameter("filter_date_text")) {
+            Stream<Post> postStream = postList.stream();
+            final String author = request.getParameter("filter_author_text");
+            if (author != null && !author.isEmpty()) {
+                postStream = postStream.filter(o -> o.getAuthor().equals(author));
+            }
+
+            final String hashtag = request.getParameter("filter_hashtags_text");
+            if (hashtag != null && !hashtag.isEmpty()) {
+                postStream = postStream.filter(o -> o.getHashtags().contains(hashtag));
+            }
+
+            try {
+                final LocalDate date = LocalDate.parse(request.getParameter("filter_date_text"));
+                postStream = postStream.filter(o -> o.getCreatedAt().isEqual(date));
+            } catch (DateTimeParseException ignored) {
+            }
+            postList = postStream.collect(Collectors.toList());
+        }
+
+        request.setAttribute("postList", postList);
         return new SimpleCommandResponse("WEB-INF/views/index.jsp", false);
     }
 }

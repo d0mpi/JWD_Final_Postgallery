@@ -1,9 +1,8 @@
 
-*, *:after, *:before {
+*{
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-family: Barlow-Medium, sans-serif;
     font-weight: 0;
     font-size: 14px;
     background: transparent;
@@ -29,9 +28,6 @@ a {
     color: black;
 }
 
-a:hover:before {
-    color: #81d742;
-}
 
 img {
     display: block;
@@ -43,7 +39,7 @@ html {
 }
 
 body {
-    font-family: Star Wars, fantasy;
+    font-family: Barlow-Medium, sans-serif;
     display: block;
     justify-content: center;
     background: url("../images/bg-04.jpg") no-repeat center;
@@ -139,13 +135,11 @@ header {
     flex-grow: 2;
 }
 
-.header-add-button:before {
-    content: "\f055";
-    font-size: 2em;
+.header-add-button i:before {
+    font-size: 2.5em;
     position: absolute;
     left: 4px;
     top: 8px;
-    font-family: FontAwesome, serif;
     color: #524f4e;
     width: 30px;
     height: 23px;
@@ -562,7 +556,6 @@ header {
     display: flex;
     flex-direction: column;
     width: auto;
-    margin-left: 5px;
     background: none;
 }
 
@@ -650,59 +643,17 @@ header {
     align-items: flex-end;
 }
 
-.card-edit-button:before {
-    content: "\f044";
-    font-size: 2em;
-    font-family: FontAwesome, serif;
-    color: black;
-
-    border-radius: 50%;
-    background: transparent;
-    transition: .3s ease-in-out;
-}
-
-.card-edit-button {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.card-edit-button:hover {
-    transform: scale(.95);
-}
-
-.card-delete-button:hover {
-    transform: scale(.95);
-}
-
 .card-buttons-col button, .card-like-button {
     display: flex;
     justify-content: center;
     align-items: center;
     border-style: solid;
-    height: 40px;
     background: transparent;
     border-width: 0;
     cursor: pointer;
     outline: none;
-    width: 40px;
     border-radius: 30px;
 }
-
-
-.card-delete-button:before {
-    content: "\f1f8";
-    font-size: 2em;
-    width: 40px;
-    height: 40px;
-    font-family: FontAwesome, serif;
-    color: black;
-    background: transparent;
-    transition: .3s ease-in-out;
-}
-
 
 .like-check[type = checkbox] {
     display: none;
@@ -719,22 +670,15 @@ header {
     cursor: pointer;
 }
 
-.like-check + label:hover {
+.like-check + label i:active {
     transform: scale(.95);
 }
 
-.like-check + label:after {
-    content: "\f004";
-    font-size: 35px;
-    font-family: FontAwesome, serif;
+.like-check + label i:before{
     color: #524f4e;
-    transition: .3s ease-in-out;
 }
 
-.like-check:checked + label:after {
-    content: "\f004";
-    font-size: 35px;
-    font-family: FontAwesome, serif;
+.like-check:checked + label i:before {
     color: #e20505;
     transition: .3s ease-in-out;
 }
@@ -760,13 +704,11 @@ header {
     animation: fa-spin 2s infinite linear;
 }
 
-
 .font-footer li {
     font-size: 14px;
     text-transform: uppercase;
     font-weight: 300;
 }
-
 
 footer {
     width: 100%;
@@ -941,19 +883,6 @@ footer {
 }
 
 
-.card-edit-button div, .card-delete-button div {
-    display: block;
-    transition: .5s ease-in-out;
-    overflow: hidden;
-    max-width: 0;
-    opacity: 0;
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    line-height: 1;
-}
-
 .button-7:hover div {
     display: block;
     min-width: 1vw;
@@ -1034,6 +963,18 @@ footer {
 .language-select option {
     box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.2);
     font-size: 20px;
+}
+
+.a-icon{
+    font-size: 1.5rem;
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+
+.a-icon:hover{
+    transform: scale(.95);
+    transition: .3s;
+    color: #81d742;
 }
 
 

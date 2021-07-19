@@ -1,6 +1,5 @@
 package by.bsu.d0mpi.UP_PostGallery.command;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
@@ -19,4 +18,6 @@ public interface CommandRequest {
     void setAttribute(String name, Object value);
 
     void setSessionAttribute(String name, Object value);
+
+    boolean hasParameter(String name);
 }

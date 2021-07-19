@@ -1,9 +1,6 @@
 package by.bsu.d0mpi.UP_PostGallery.command;
 
-import by.bsu.d0mpi.UP_PostGallery.command.action.DeletePostAction;
-import by.bsu.d0mpi.UP_PostGallery.command.action.RegistrationAction;
-import by.bsu.d0mpi.UP_PostGallery.command.action.SignInAction;
-import by.bsu.d0mpi.UP_PostGallery.command.action.SignOutAction;
+import by.bsu.d0mpi.UP_PostGallery.command.action.*;
 import by.bsu.d0mpi.UP_PostGallery.command.page.*;
 import by.bsu.d0mpi.UP_PostGallery.model.Role;
 import lombok.Getter;
@@ -28,6 +25,9 @@ public enum CommandType {
     DEFAULT_PAGE(ShowMainPage.getInstance()),
 
     DELETE_POST(DeletePostAction.getInstance(), USER, ADMIN, MODERATOR),
+    ADD_POST(AddPostAction.getInstance(), USER, ADMIN, MODERATOR),
+    EDIT_POST(EditPostAction.getInstance(), USER, ADMIN, MODERATOR),
+    LIKE(LikeAction.getInstance(), USER, ADMIN, MODERATOR),
     REGISTER(RegistrationAction.getInstance(), UNAUTHORIZED),
     SIGN_IN(SignInAction.getInstance(), UNAUTHORIZED),
     SIGN_OUT(SignOutAction.getInstance(), USER, ADMIN, MODERATOR);

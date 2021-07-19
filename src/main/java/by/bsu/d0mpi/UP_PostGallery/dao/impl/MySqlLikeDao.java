@@ -17,11 +17,14 @@ public class MySqlLikeDao extends MySqlAbstractDao<Integer, Like> implements Lik
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String SQL_SELECT_POSTS_ID_LIKED_BY_USER =
-            "SELECT likes_post_id FROM likes WHERE likes.likes_user_id = ?";
+            "SELECT likes_post_id FROM likes WHERE likes.likes_user_login = ?";
     private static final String SQL_UPDATE_LIKE =
-            "UPDATE likes SET likes_user_id = ?, likes_post_id = ? WHERE like_id = ?";
+            "UPDATE likes SET likes_post_id = ?, likes_user_login = ? WHERE like_id = ?";
     private static final String SQL_INSERT_LIKE =
-            "INSERT INTO likes (likes_user_id, likes_post_id) VALUES (?, ?)";
+            "INSERT INTO likes (likes_post_id, likes_user_login) VALUES (?, ?)";
+    private static final String SQL_DELETE_LIKE =
+            "DELETE FROM likes WHERE likes_post_id = ? AND likes_user_login = ?";
+
 
     private MySqlLikeDao(String tableName, String idColumn) {
         super(tableName, idColumn);
@@ -66,8 +69,8 @@ public class MySqlLikeDao extends MySqlAbstractDao<Integer, Like> implements Lik
         while (resultSet.next()) {
             int id = resultSet.getInt(1);
             int postId = resultSet.getInt(2);
-            int userId = resultSet.getInt(3);
-            likes.add(new Like(id, postId, userId));
+            String userLogin = resultSet.getString(3);
+            likes.add(new Like(id, postId, userLogin));
         }
         return likes;
     }
@@ -75,12 +78,13 @@ public class MySqlLikeDao extends MySqlAbstractDao<Integer, Like> implements Lik
     @Override
     protected void setDefaultStatementArgs(PreparedStatement statement, Like entity) throws SQLException {
         statement.setInt(1, entity.getPostId());
-        statement.setInt(2, entity.getAuthorId());
+        statement.setString(2, entity.getAuthorLogin());
     }
 
     @Override
     public boolean create(Like entity) {
-        try (PreparedStatement statement = BasicConnectionPool.getInstance().getConnection().prepareStatement(SQL_INSERT_LIKE, Statement.RETURN_GENERATED_KEYS)) {
+        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
+                final PreparedStatement statement = connection.prepareStatement(SQL_INSERT_LIKE, Statement.RETURN_GENERATED_KEYS)) {
             setDefaultStatementArgs(statement, entity);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -108,5 +112,18 @@ public class MySqlLikeDao extends MySqlAbstractDao<Integer, Like> implements Lik
         } catch (SQLException | DAOException e) {
             LOGGER.error("DB connection error", e);
             return entity;
-        }    }
+        }
+    }
+
+    @Override
+    public void delete(Integer postId, String userLogin) {
+        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
+             final PreparedStatement statement = connection.prepareStatement(SQL_DELETE_LIKE)) {
+            statement.setInt(1, postId);
+            statement.setString(2, userLogin);
+            statement.executeUpdate();
+        } catch (SQLException | DAOException e) {
+            e.printStackTrace();
+        }
+    }
 }

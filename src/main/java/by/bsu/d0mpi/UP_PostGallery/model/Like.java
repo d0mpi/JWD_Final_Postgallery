@@ -9,11 +9,12 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor
 public class Like extends DatabaseEntity{
     private int postId;
-    private int authorId;
+    private String authorLogin;
 
-    public Like (int id, int postId, int authorId){
+    public Like (int id, int postId, String authorLogin){
         super(id);
         this.postId = postId;
-        this.authorId = authorId;
+        this.authorLogin = authorLogin;
     }
+
 }

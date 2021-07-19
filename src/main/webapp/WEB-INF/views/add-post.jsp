@@ -10,7 +10,7 @@
     <title>Add post</title>
     <link rel="stylesheet" type="text/css" href="../../css/index-styles.css">
     <link rel="stylesheet" type="text/css" href="../../css/add-post-styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/ede64561b8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../../fonts/fonts.css">
     <script src="../../js/controllerAdd.js" defer></script>
     <script src="../../js/jquery-3.6.0.min.js"></script>
@@ -23,7 +23,7 @@
     <div class="main-container">
         <div class="main-col">
             <div class="col-66">
-                <form name="add" method="post" action="${pageContext.request.contextPath}/add-post"
+                <form name="add" method="post" action="${pageContext.request.contextPath}/controller?command=add_post"
                       class="add-main-box">
                     <div class="col-full add-title">
                         <h3><fmt:message key="addLabel"/></h3>

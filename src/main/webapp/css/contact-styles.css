@@ -1,5 +1,4 @@
 body {
-    font-family: Star Wars, fantasy;
     display: block;
     justify-content: center;
     background: url("../images/bg-02.jpg") no-repeat center;
@@ -13,7 +12,8 @@ body {
     color: #373737;
     height: 100%;
 }
-input:invalid{
+
+input:invalid {
     border: 1px solid #a21313;
 }
 
@@ -198,6 +198,6 @@ button:hover {
     background: #81d742;
 }
 
-.col-50-1{
+.col-50-1 {
     max-width: 900px;
 }

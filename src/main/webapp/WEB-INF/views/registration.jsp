@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <title>Register</title>
     <link rel="stylesheet" type="text/css" href="../../css/register-styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/ede64561b8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../../fonts/fonts.css">
     <script src="../../js/jquery-3.6.0.min.js"></script>
 

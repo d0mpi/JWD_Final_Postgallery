@@ -6,4 +6,6 @@ public interface CommandResponse {
 
     boolean isRedirect();
 
+    boolean doNothing();
+
 }

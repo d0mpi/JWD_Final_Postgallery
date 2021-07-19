@@ -9,4 +9,6 @@ public interface PostService extends DBEntityService<Integer, Post>{
     static PostService simple() {
         return SimplePostService.getInstance();
     }
+
+    boolean doesPostBelongsToAuthor(Integer postId, String login);
 }

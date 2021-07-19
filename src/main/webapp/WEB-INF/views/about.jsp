@@ -10,7 +10,7 @@
     <title>About us</title>
     <link rel="stylesheet" type="text/css" href="../../css/index-styles.css">
     <link rel="stylesheet" type="text/css" href="../../css/about-styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/ede64561b8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../../fonts/fonts.css">
     <jsp:include page="title-logo.jsp"/>
 </head>
@@ -61,7 +61,7 @@
             <div class="part back-blur">
                 <div class="feature-block col-33">
                     <div class="circle-info col-full">
-                        <div class="fa-edit"></div>
+                        <i class="fas fa-edit"></i>
                     </div>
                     <h3><fmt:message key="aboutEditTitle"/></h3>
                     <div class="col-full feature-left-text">
@@ -74,12 +74,12 @@
                     </div>
                     <h3><fmt:message key="aboutDeleteTitle"/></h3>
                     <div class="circle-info col-full">
-                        <div class="fa-delete"></div>
+                        <i class="fas fa-delete fa-trash-alt"></i>
                     </div>
                 </div>
                 <div class="feature-block col-33">
                     <div class="circle-info col-full">
-                        <div class="fa-like"></div>
+                        <i class="fas fa-like fa-heart"></i>
                     </div>
 
                     <h3><fmt:message key="aboutLikeTitle"/></h3>
@@ -121,7 +121,7 @@
                 <hr class="col-full">
                 <div class="filter-block col-33">
                     <div class="circle-filter col-full">
-                        <div class="fa-user"></div>
+                        <div class="fa-user far fa-user"></div>
                     </div>
                     <h3><fmt:message key="aboutAuthorTitle"/></h3>
                     <div class="col-full filter-text">
@@ -136,12 +136,12 @@
                     </div>
                     <h3><fmt:message key="aboutDateTitle"/></h3>
                     <div class="circle-filter col-full">
-                        <div class="fa-date"></div>
+                        <div class="fa-date fas fa-calendar-alt"></div>
                     </div>
                 </div>
                 <div class="filter-block col-33">
                     <div class="circle-filter col-full">
-                        <div class="fa-hash"></div>
+                        <div class="fa-hash fas fa-hashtag"></div>
                     </div>
 
                     <h3><fmt:message key="aboutHashtagTitle"/></h3>

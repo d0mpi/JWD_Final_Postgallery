@@ -9,4 +9,6 @@ public interface LikeService extends DBEntityService<Integer, Like> {
     static LikeService simple() {
         return SimpleLikeService.getInstance();
     }
+
+    void delete(Integer postId, String login);
 }

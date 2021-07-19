@@ -55,6 +55,12 @@ public class SimpleCommandRequest implements CommandRequest{
         session.setAttribute(name, value);
     }
 
+    @Override
+    public boolean hasParameter(String name) {
+        return request.getParameter(name) != null;
+    }
+
+
     public static CommandRequest of(HttpServletRequest request) {
         return new SimpleCommandRequest(request);
     }

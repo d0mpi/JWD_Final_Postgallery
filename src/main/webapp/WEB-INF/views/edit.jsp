@@ -18,17 +18,11 @@
     <title>Edit post</title>
     <link rel="stylesheet" type="text/css" href="../../css/index-styles.css">
     <link rel="stylesheet" type="text/css" href="../../css/edit-styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/ede64561b8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../../fonts/fonts.css">
     <script src="../../js/jquery-3.6.0.min.js"></script>
 
     <jsp:include page="title-logo.jsp"/>
-
-    <script src="js/modelRegistration.js" defer></script>
-    <%--    <script src="js/viewEdit.js" defer></script>--%>
-    <%--    <script src="js/modelPosts.js" defer></script>--%>
-    <%--    <script src="js/controllerEdit.js" defer></script>--%>
-    <script src="js/viewHeaderButtons.js" defer></script>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -37,7 +31,7 @@
     <div class="main-container">
         <div class="main-col">
             <div class="col-66">
-                <form name="edit" method="post" action="${pageContext.request.contextPath}/edit" class="edit-main-box">
+                <form name="edit" method="post" action="${pageContext.request.contextPath}/controller?command=edit_post" class="edit-main-box">
                     <div class="col-full edit-title">
                         <h3><fmt:message key="editLabel"/></h3>
                     </div>
@@ -190,9 +184,7 @@
                         </div>
                     </div>
                     <div class="col-full edit-btn-box">
-                        <button id="editButton" type="submit" class="edit-btn">
-                            Send
-                        </button>
+                        <input id="editButton" type="submit" class="edit-btn" value="Update"/>
                     </div>
                 </form>
                 <div class="push"></div>

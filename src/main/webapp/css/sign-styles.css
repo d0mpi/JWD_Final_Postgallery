@@ -1,5 +1,5 @@
 
-*, *:after, *:before {
+*{
     box-sizing: border-box;
     padding: 0;
     margin: 0;
@@ -167,7 +167,9 @@ h3 {
 .social-login {
     width: 200px;
     display: flex;
-    padding: 20px 0;
+    padding: 10px 0 0 0;
+
+    align-items: center;
 
     justify-content: space-around;
 }
@@ -210,41 +212,35 @@ h3 {
 
 
 .facebook:before {
-    content: "\f09a";
-    font-family: FontAwesome, serif;
     font-size: 25px;
-    padding: 13px 18px 12px 18px;
+    padding: 12.5px 17.19px 12.5px 17.19px;
+
+    text-align: start;
     width: 50px;
     height: 50px;
-    background: #3b5998;
     color: white;
-
     border-radius: 50%;
+
+    background: #2651ab;
 }
 
 .twitter:before {
-    content: "\f099";
-    font-family: FontAwesome, serif;
     font-size: 25px;
-    padding: 13px 12px 12px 15px;
+    padding: 12.5px;
     width: 50px;
     height: 50px;
     background: #1da1f2;
     color: white;
-
     border-radius: 50%;
 }
 
 .google:before {
-    content: "\f1a0";
-    font-family: FontAwesome, serif;
     font-size: 25px;
-    padding: 13px 15px 12px 15px;
+    padding: 12.5px;
     width: 50px;
     height: 50px;
     background: #ea4335;
     color: white;
-
     border-radius: 50%;
 }
 

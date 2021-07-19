@@ -7,11 +7,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Up! Post gallery.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../../css/index-styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../../fonts/fonts.css">
+    <script src="https://kit.fontawesome.com/ede64561b8.js" crossorigin="anonymous"></script>
+
     <script src="../../js/jquery-3.6.0.min.js"></script>
     <script src="../../js/home.js"></script>
     <jsp:include page="title-logo.jsp"/>
@@ -19,27 +20,29 @@
 <body>
 <jsp:include page="header.jsp"/>
 <main>
+
     <div class="main-container">
         <div class="filter-col">
-            <form class="filter-fieldset" name="filter" method="post">
+            <form class="filter-fieldset" name="filter" method="post"
+                  action="${pageContext.request.contextPath}/controller?command=main_page">
                 <div class="filter-head"><fmt:message key="filterTitle"/></div>
                 <ul class="filter-ul">
                     <li>
                         <label class="filter-label">
                             <div>
-                                <input id="filter_date_check" name="checkbox" value="filter_date_checkbox"
-                                       type="checkbox" class="filter-checkbox">
+                                <%--                                <input id="filter_date_check" name="checkbox" value="filter_date_checkbox"--%>
+                                <%--                                       type="checkbox" class="filter-checkbox">--%>
                                 <span><fmt:message key="filterDateTitle"/></span>
                             </div>
-                            <input id="filter_date" name="filter_date_text" value='2021-05-23' type="date"
+                            <input id="filter_date" name="filter_date_text" type="date"
                                    class="filter-input">
                         </label>
                     </li>
                     <li>
                         <label class="filter-label">
                             <div>
-                                <input id="filter_author_check" name="checkbox" value="filter_author_checkbox"
-                                       type="checkbox" class="filter-checkbox">
+                                <%--                                <input id="filter_author_check" name="checkbox" value="filter_author_checkbox"--%>
+                                <%--                                       type="checkbox" class="filter-checkbox">--%>
                                 <span><fmt:message key="filterAuthorTitle"/></span>
                             </div>
                             <input id="filter_author" name="filter_author_text" type="text" class="filter-input"
@@ -49,8 +52,8 @@
                     <li>
                         <label class="filter-label">
                             <div>
-                                <input name="checkbox" id="filter_hashtags_check" value="filter_hashtags_checkbox"
-                                       type="checkbox" class="filter-checkbox">
+                                <%--                                <input name="checkbox" id="filter_hashtags_check" value="filter_hashtags_checkbox"--%>
+                                <%--                                       type="checkbox" class="filter-checkbox">--%>
                                 <span><fmt:message key="filterHashtagTitle"/></span>
                             </div>
                             <input id="filter_hashtag" name="filter_hashtags_text" type="text" class="filter-input"
@@ -58,8 +61,8 @@
                         </label>
                     </li>
                     <li>
-                        <button type="button" id="filter_btn" class="filter-button"><fmt:message
-                                key="filterBtn"/></button>
+                        <input type="submit" id="filter_btn" class="filter-button"
+                               value="<fmt:message key="filterBtn"/>">
                     </li>
                 </ul>
             </form>
@@ -110,16 +113,13 @@
                                             <li class="card-id"><fmt:message key="id"/>: ${post.id}</li>
                                             <li class="card-text-time"> ${post.createdAt}</li>
                                         </ul>
-                                        <c:if test="${sessionScope.logged != null}">
-                                            <c:if test="${sessionScope.logged == true}">
-                                                <form id="like-form${post.id}"
-                                                      action="${pageContext.request.contextPath}/like" method="post">
-                                                    <input id="like-check${post.id}" class="like-check"
-                                                           type="checkbox" ${true ? "checked" : "unchecked"}
-                                                           value="">
-                                                    <label for="like-check${post.id}" class="like-label"></label>
-                                                </form>
-                                            </c:if>
+                                        <c:if test="${sessionScope.user_name != null}">
+                                            <input id="like-check${post.id}" class="like-check"
+                                                   type="checkbox" ${true ? "checked" : "unchecked"}
+                                                   value="${post.id}">
+                                            <label for="like-check${post.id}" class="like-label">
+                                                <i class="fas fa-heart fa-3x"></i>
+                                            </label>
                                         </c:if>
                                     </div>
 
@@ -132,20 +132,13 @@
                         </div>
 
                         <div class="card-buttons-col">
-                            <c:if test="${sessionScope.logged != null}">
-                                <c:if test="${sessionScope.logged == true}">
-                                    <c:if test="${sessionScope.login == post.author}">
-                                        <form action="${pageContext.request.contextPath}/edit" method="get"
-                                              name="editForm${post.id}">
-                                            <button type="submit" name="edit" value="${post.id}"
-                                                    class="card-edit-button" title=""></button>
-                                        </form>
-                                        <form method="post"
-                                              name="deleteForm${post.id}">
-                                            <button type="button" name="delete" value="${post.id}"
-                                                    class="card-delete-button" title=""></button>
-                                        </form>
-                                    </c:if>
+                            <c:if test="${sessionScope.user_name != null}">
+                                <c:if test="${sessionScope.user_name == post.author}">
+                                    <a class="fas fa-edit a-icon"
+                                       href="${pageContext.request.contextPath}/controller?command=post_edit_page&post_id=${post.id}">
+                                    </a>
+                                    <button class="fas fa-trash-alt a-icon delete-post" value="${post.id}">
+                                    </button>
                                 </c:if>
                             </c:if>
                         </div>

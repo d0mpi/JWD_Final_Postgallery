@@ -7,4 +7,6 @@ public interface LikeDao extends Dao<Integer, Like>{
     static LikeDao MySQL() {
         return MySqlLikeDao.getInstance();
     }
+
+    void delete(Integer postId, String userLogin);
 }

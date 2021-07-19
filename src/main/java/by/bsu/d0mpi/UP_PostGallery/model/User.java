@@ -2,6 +2,10 @@ package by.bsu.d0mpi.UP_PostGallery.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -9,12 +13,15 @@ public class User extends DatabaseEntity {
     private String login;
     private String password;
     private Role role;
+    @Setter
+    private List<Integer> likedPostIdList;
 
     public User(int id, String login, String password, Role role) {
         super(id);
         this.login = login;
         this.password = password;
         this.role = role;
+        this.likedPostIdList = new ArrayList<>();
     }
 
     public User(int id, String login, String password) {

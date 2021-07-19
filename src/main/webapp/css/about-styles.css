@@ -55,11 +55,10 @@ body {
     background: whitesmoke;
 }
 
-.fa-edit:before {
-    content: "\f044";
-    font-size: 6em;
-    font-family: FontAwesome, serif;
+.fa-edit {
+    font-size: 5.5em;
     color: #0b2852;
+    font-weight: 600;
 
     border-radius: 50%;
     background: transparent;
@@ -67,9 +66,7 @@ body {
 }
 
 .fa-delete:before {
-    content: "\f1f8";
     font-size: 6em;
-    font-family: FontAwesome, serif;
     color: #0b2852;
 
     border-radius: 50%;
@@ -78,9 +75,7 @@ body {
 }
 
 .fa-like:before {
-    content: "\f004";
     font-size: 6em;
-    font-family: FontAwesome, serif;
     color: #0b2852;
 
     border-radius: 50%;
@@ -430,9 +425,7 @@ h3 {
 
 
 .fa-user:before {
-    content: "\f007";
     font-size: 6em;
-    font-family: FontAwesome, serif;
     color: #ffffff;
 
     border-radius: 50%;
@@ -441,9 +434,7 @@ h3 {
 }
 
 .fa-date:before {
-    content: "\f073";
     font-size: 6em;
-    font-family: FontAwesome, serif;
     color: #ffffff;
 
     border-radius: 50%;
