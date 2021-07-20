@@ -147,11 +147,21 @@
                     </div>
                 </c:forEach>
             </div>
-            <div class="more-button-box">
-                <button class="more-button" id="more_btn">
-                    <div class="fa fa-refresh"></div>
-                    <fmt:message key="loadMore"/>
-                </button>
+<%--            <div class="more-button-box">--%>
+<%--                <button class="more-button" id="more_btn">--%>
+<%--                    <div class="fa fa-refresh"></div>--%>
+<%--                    <fmt:message key="loadMore"/>--%>
+<%--                </button>--%>
+<%--            </div>--%>
+            <div class="pagination-bar">
+                <a href="#"><i class="fas fa-angle-double-left"></i></a>
+                <a href="#">1</a>
+                <a href="#" class="active">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#"><i class="fas fa-angle-double-right"></i></a>
             </div>
         </div>
     </div>

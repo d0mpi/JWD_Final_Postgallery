@@ -18,8 +18,8 @@ public enum CommandType {
     CONTACT_PAGE(ShowContactPage.getInstance()),
     ERROR_PAGE(ShowErrorPage.getInstance()),
     MAIN_PAGE(ShowMainPage.getInstance()),
-    POST_ADD_PAGE(ShowPostAddPage.getInstance()),
-    POST_EDIT_PAGE(ShowPostEditPage.getInstance()),
+    POST_ADD_PAGE(ShowPostAddPage.getInstance(), USER, ADMIN, MODERATOR),
+    POST_EDIT_PAGE(ShowPostEditPage.getInstance(), USER, ADMIN, MODERATOR),
     REGISTRATION_PAGE(ShowRegistrationPage.getInstance(), UNAUTHORIZED),
     LOGIN_PAGE(ShowLoginPage.getInstance(), UNAUTHORIZED),
     DEFAULT_PAGE(ShowMainPage.getInstance()),
@@ -28,6 +28,7 @@ public enum CommandType {
     ADD_POST(AddPostAction.getInstance(), USER, ADMIN, MODERATOR),
     EDIT_POST(EditPostAction.getInstance(), USER, ADMIN, MODERATOR),
     LIKE(LikeAction.getInstance(), USER, ADMIN, MODERATOR),
+    CHANGE_LANGUAGE(ChangeLanguageAction.getInstance()),
     REGISTER(RegistrationAction.getInstance(), UNAUTHORIZED),
     SIGN_IN(SignInAction.getInstance(), UNAUTHORIZED),
     SIGN_OUT(SignOutAction.getInstance(), USER, ADMIN, MODERATOR);

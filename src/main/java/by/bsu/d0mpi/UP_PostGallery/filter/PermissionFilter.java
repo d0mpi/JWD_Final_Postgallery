@@ -29,7 +29,7 @@ public class PermissionFilter implements Filter {
         if (commandType.getAllowedRoles().contains(currentRole)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            ((HttpServletResponse) servletResponse).sendRedirect("/WEB-INF/views/error.jsp");
+            ((HttpServletResponse) servletResponse).sendRedirect("/controller?command=main_page");
         }
     }
 

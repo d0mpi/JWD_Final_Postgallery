@@ -15,6 +15,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,6 +80,9 @@ public class ShowMainPage implements Command {
             request.setAttribute("likedPostsIdList", Collections.emptyList());
         }
 
+        System.out.println(request.getParameter("language-select"));
+
+        System.out.println(Arrays.toString(request.getCookies()));
         request.setAttribute("postList", postList);
         return forwardHomePage;
     }

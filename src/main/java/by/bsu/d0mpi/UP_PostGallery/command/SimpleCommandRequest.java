@@ -3,6 +3,7 @@ package by.bsu.d0mpi.UP_PostGallery.command;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
@@ -58,6 +59,10 @@ public class SimpleCommandRequest implements CommandRequest{
     @Override
     public boolean hasParameter(String name) {
         return request.getParameter(name) != null;
+    }
+
+    public Cookie[] getCookies(){
+        return request.getCookies();
     }
 
 

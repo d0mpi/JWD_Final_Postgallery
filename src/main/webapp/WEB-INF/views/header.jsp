@@ -37,8 +37,7 @@
                         <div></div>
                         <fmt:message key="headerContact"/></a>
                 </div>
-                <form class="menu-col" id="languageForm" method="post"
-                      action="${pageContext.request.contextPath}/controller?command=main_page">
+                <form class="menu-col" id="languageForm" method="post" action="${pageContext.request.contextPath}/controller?command=change_language">
                     <label for="language-select"></label>
                     <select id="language-select" name="language-select" class="language-select"
                             onchange="document.getElementById('languageForm').submit()">

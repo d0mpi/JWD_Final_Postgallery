@@ -32,24 +32,4 @@ $(document).ready(function () {
                 }
             });
     });
-
-//
-//
-//     $('#filter_btn').on('click', function () {
-//         $.ajax({
-//             type: "post",
-//             url: "filter",
-//             data: {
-//                 filter_author_text: $('#filter_author').val(),
-//                 filter_date_text: $('#filter_date').val(),
-//                 filter_hashtags_text: $('#filter_hashtag').val(),
-//             },
-//             success: function (response) {
-//                 $('#post_container').empty();
-//                 $('#post_container').append(response);
-//                 $('#more_btn').remove();
-//             }
-//         });
-//     });
-//
 });

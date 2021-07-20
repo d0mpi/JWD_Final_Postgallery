@@ -187,6 +187,8 @@ header {
     text-align: center;
     color: #524f4e;
     white-space: nowrap;
+    transition: .3s;
+
 
     font-size: 20px;
     font-family: Barlow-Medium, sans-serif;
@@ -479,7 +481,7 @@ header {
     display: flex;
     width: inherit;
     margin-top: 70px;
-    margin-bottom: 90px;
+    margin-bottom: 120px;
 }
 
 .main-col {
@@ -977,4 +979,34 @@ footer {
     color: #81d742;
 }
 
+.pagination-bar {
+    display: inline-block;
+}
+
+.pagination-bar a {
+    color: black;
+    float: left;
+    padding: 12px 20px;
+    margin: 0 4px;
+    text-decoration: none;
+    background: white;
+    border-radius: 5px;
+    transition: background-color .3s;
+    box-shadow: 0 0 17px -10px #000000;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.pagination-bar a.active {
+    background-color: #0b2852;
+    color: white;
+    border-radius: 5px;
+}
+
+.pagination-bar a:hover:not(.active) {
+    background-color: #e0f2ff;
+    border-radius: 5px;
+    transform: scale(0.95);
+    transition: .3s;
+}
 
