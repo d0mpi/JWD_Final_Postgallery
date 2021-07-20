@@ -44,7 +44,6 @@ public class LikeAction implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        System.out.println("Like!!!");
         boolean isLike = Boolean.parseBoolean(request.getParameter("isLike"));
         int postId = Integer.parseInt(request.getParameter("post_id"));
         HttpSession session = request.getCurrentSession().orElse(null);

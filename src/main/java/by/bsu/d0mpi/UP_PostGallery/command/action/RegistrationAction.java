@@ -44,7 +44,6 @@ public class RegistrationAction implements Command {
         final String login = request.getParameter("login");
         final String password = request.getParameter("password");
         final User enteredUser = new User(login, password);
-        System.out.println(login + " " + password);
         if (userService.isLoginPresented(login)) {
             request.setAttribute("error_text", "User with this login is already exist. Try again.");
             return registrationPageResponse;

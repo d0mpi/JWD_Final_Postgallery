@@ -65,4 +65,6 @@ public class SimplePostService implements PostService {
         return postDao.getPostsByAuthorLogin(login).stream().map(DatabaseEntity::getId).
                 collect(Collectors.toList()).contains(postId);
     }
+
+
 }

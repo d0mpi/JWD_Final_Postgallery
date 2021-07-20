@@ -12,7 +12,6 @@ public interface UserDao extends Dao<Integer, User>{
 
     Optional<User> findUserByLogin(String login);
 
-    List<Integer> getLikedPostIdList(String login);
 
     static MySqlUserDao MySQL() {
         return MySqlUserDao.getInstance();

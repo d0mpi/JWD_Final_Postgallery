@@ -61,4 +61,9 @@ public class SimpleLikeService implements LikeService {
     public void delete(Integer postId, String login) {
         likeDao.delete(postId, login);
     }
+
+    @Override
+    public List<Integer> getLikedPostIdList(String login) {
+        return likeDao.getLikedPostIdList(login);
+    }
 }

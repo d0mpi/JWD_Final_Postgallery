@@ -43,7 +43,6 @@ public class SignInAction implements Command {
         final String login = request.getParameter("login");
         final String password = request.getParameter("password");
         final User enteredUser = new User(login, password);
-        System.out.println(login + " " + password);
         if (!userService.canLogIn(enteredUser)) {
             request.setAttribute("error_text", "User with this data does not exist.\nTry again.");
             return loginPageResponse;

@@ -2,6 +2,7 @@ package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.PostDao;
 import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
+import by.bsu.d0mpi.UP_PostGallery.model.DatabaseEntity;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements PostDao {
     private static final String SQL_UPDATE_POST =
@@ -32,7 +34,6 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             "DELETE FROM hashtags WHERE hashtags_post_id = ?";
     private static final String SQL_SELECT_HASHTAGS_BY_POST_ID =
             "select hashtags.hashtag_text from posts JOIN hashtags WHERE posts.post_id = hashtags.hashtags_post_id AND posts.post_id = ?";
-
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -169,4 +170,6 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             return Collections.emptyList();
         }
     }
+
+
 }

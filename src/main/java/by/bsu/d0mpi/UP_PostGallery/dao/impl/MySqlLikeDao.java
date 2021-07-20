@@ -2,6 +2,7 @@ package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.LikeDao;
 import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
+import by.bsu.d0mpi.UP_PostGallery.model.DatabaseEntity;
 import by.bsu.d0mpi.UP_PostGallery.model.Like;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
@@ -12,6 +13,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MySqlLikeDao extends MySqlAbstractDao<Integer, Like> implements LikeDao {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -24,6 +26,7 @@ public class MySqlLikeDao extends MySqlAbstractDao<Integer, Like> implements Lik
             "INSERT INTO likes (likes_post_id, likes_user_login) VALUES (?, ?)";
     private static final String SQL_DELETE_LIKE =
             "DELETE FROM likes WHERE likes_post_id = ? AND likes_user_login = ?";
+
 
 
     private MySqlLikeDao(String tableName, String idColumn) {
@@ -45,23 +48,6 @@ public class MySqlLikeDao extends MySqlAbstractDao<Integer, Like> implements Lik
         return localInstance;
     }
 
-    public List<Integer> getListOfLikedPostsId(int userId) {
-        List<Integer> likesId = new ArrayList<>();
-        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
-             final PreparedStatement statement = connection.prepareStatement(SQL_SELECT_POSTS_ID_LIKED_BY_USER)) {
-            statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                int postId = resultSet.getInt(1);
-                likesId.add(postId);
-            }
-            return likesId;
-        } catch (SQLException | DAOException e) {
-            LOGGER.error("Dao connection exception");
-            e.printStackTrace();
-            return Collections.emptyList();
-        }
-    }
 
     @Override
     protected List<Like> mapResultSet(Connection connection, ResultSet resultSet) throws SQLException {
@@ -124,6 +110,25 @@ public class MySqlLikeDao extends MySqlAbstractDao<Integer, Like> implements Lik
             statement.executeUpdate();
         } catch (SQLException | DAOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<Integer> getLikedPostIdList(String login) {
+        List<Integer> likesId = new ArrayList<>();
+        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
+             final PreparedStatement statement = connection.prepareStatement(SQL_SELECT_POSTS_ID_LIKED_BY_USER)) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int postId = resultSet.getInt(1);
+                likesId.add(postId);
+            }
+            return likesId;
+        } catch (SQLException | DAOException e) {
+            LOGGER.error("Dao connection exception");
+            e.printStackTrace();
+            return Collections.emptyList();
         }
     }
 }

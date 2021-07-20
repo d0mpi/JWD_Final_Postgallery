@@ -11,4 +11,5 @@ public interface PostDao extends Dao<Integer, Post>{
     }
 
     List<Post> getPostsByAuthorLogin(String login);
+
 }

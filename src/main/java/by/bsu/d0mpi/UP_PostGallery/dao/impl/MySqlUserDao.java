@@ -24,6 +24,7 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
     private static final String SQL_SELECT_BY_LOGIN =
             "SELECT * FROM users WHERE user_login = ?";
 
+
     private static MySqlUserDao instance;
 
     private MySqlUserDao(String tableName, String idColumn) {
@@ -66,7 +67,7 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
     @Override
     public boolean create(User entity) {
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
-             final PreparedStatement statement = connection.prepareStatement(SQL_INSERT_USER,Statement.RETURN_GENERATED_KEYS)) {
+             final PreparedStatement statement = connection.prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
             setDefaultStatementArgs(statement, entity);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -112,4 +113,6 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
             }
         }).stream().findFirst();
     }
+
+
 }

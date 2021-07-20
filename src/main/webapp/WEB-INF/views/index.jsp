@@ -1,3 +1,5 @@
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -115,7 +117,7 @@
                                         </ul>
                                         <c:if test="${sessionScope.user_name != null}">
                                             <input id="like-check${post.id}" class="like-check"
-                                                   type="checkbox" ${true ? "checked" : "unchecked"}
+                                                   type="checkbox" ${requestScope.likedPostsIdList.contains(post.id) ? "checked" : "unchecked"}
                                                    value="${post.id}">
                                             <label for="like-check${post.id}" class="like-label">
                                                 <i class="fas fa-heart fa-3x"></i>

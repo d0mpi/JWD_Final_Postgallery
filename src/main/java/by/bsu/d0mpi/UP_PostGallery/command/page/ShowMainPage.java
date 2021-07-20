@@ -6,13 +6,16 @@ import by.bsu.d0mpi.UP_PostGallery.command.CommandResponse;
 import by.bsu.d0mpi.UP_PostGallery.command.SimpleCommandResponse;
 import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDao;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
+import by.bsu.d0mpi.UP_PostGallery.service.LikeService;
 import by.bsu.d0mpi.UP_PostGallery.service.PostService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -20,6 +23,15 @@ import java.util.stream.Stream;
 public class ShowMainPage implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private static volatile ShowMainPage instance;
+    private final PostService postService;
+    private final LikeService likeService;
+    private final CommandResponse forwardHomePage;
+
+    public ShowMainPage() {
+        postService = PostService.simple();
+        likeService = LikeService.simple();
+        forwardHomePage = new SimpleCommandResponse("WEB-INF/views/index.jsp", false);
+    }
 
     public static ShowMainPage getInstance() {
         ShowMainPage localInstance = instance;
@@ -36,7 +48,7 @@ public class ShowMainPage implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        List<Post> postList = PostService.simple().findAll();
+        List<Post> postList = postService.findAll();
 
         if (request.hasParameter("filter_author_text") && request.hasParameter("filter_hashtags_text") &&
                 request.hasParameter("filter_date_text")) {
@@ -59,7 +71,15 @@ public class ShowMainPage implements Command {
             postList = postStream.collect(Collectors.toList());
         }
 
+        HttpSession session = request.getCurrentSession().orElse(null);
+        if (session != null && session.getAttribute("user_name") != null) {
+            request.setAttribute("likedPostsIdList",
+                    likeService.getLikedPostIdList((String) session.getAttribute("user_name")));
+        } else {
+            request.setAttribute("likedPostsIdList", Collections.emptyList());
+        }
+
         request.setAttribute("postList", postList);
-        return new SimpleCommandResponse("WEB-INF/views/index.jsp", false);
+        return forwardHomePage;
     }
 }
