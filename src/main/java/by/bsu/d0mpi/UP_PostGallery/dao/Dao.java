@@ -17,4 +17,6 @@ public interface Dao<K extends Number, T extends DatabaseEntity> {
     boolean create(T entity);
 
     T update(T entity);
+
+    int getEntriesCount();
 }

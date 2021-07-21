@@ -4,6 +4,7 @@ import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import by.bsu.d0mpi.UP_PostGallery.service.impl.SimplePostService;
 import by.bsu.d0mpi.UP_PostGallery.service.impl.SimpleUserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface PostService extends DBEntityService<Integer, Post>{
@@ -14,5 +15,5 @@ public interface PostService extends DBEntityService<Integer, Post>{
 
     boolean doesPostBelongsToAuthor(Integer postId, String login);
 
-
+    List<Post> getPage(int startNumber, ArrayList<FilterType> filters, ArrayList<String> filterParams);
 }

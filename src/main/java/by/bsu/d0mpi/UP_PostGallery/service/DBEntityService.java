@@ -16,4 +16,6 @@ public interface DBEntityService <K extends Number, T extends DatabaseEntity>{
     T findEntityById(K id);
 
     T editEntity(T entity);
+
+    int getEntriesCount();
 }

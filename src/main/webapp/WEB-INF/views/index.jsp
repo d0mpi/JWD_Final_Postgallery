@@ -32,34 +32,30 @@
                     <li>
                         <label class="filter-label">
                             <div>
-                                <%--                                <input id="filter_date_check" name="checkbox" value="filter_date_checkbox"--%>
-                                <%--                                       type="checkbox" class="filter-checkbox">--%>
                                 <span><fmt:message key="filterDateTitle"/></span>
                             </div>
                             <input id="filter_date" name="filter_date_text" type="date"
-                                   class="filter-input">
+                                   class="filter-input" value="${requestScope.filter_date_text}">
                         </label>
                     </li>
                     <li>
                         <label class="filter-label">
                             <div>
-                                <%--                                <input id="filter_author_check" name="checkbox" value="filter_author_checkbox"--%>
-                                <%--                                       type="checkbox" class="filter-checkbox">--%>
                                 <span><fmt:message key="filterAuthorTitle"/></span>
                             </div>
                             <input id="filter_author" name="filter_author_text" type="text" class="filter-input"
-                                   placeholder="<fmt:message key="filterAuthorInput"/>">
+                                   placeholder="<fmt:message key="filterAuthorInput"/>"
+                                   value="${requestScope.filter_author_text}">
                         </label>
                     </li>
                     <li>
                         <label class="filter-label">
                             <div>
-                                <%--                                <input name="checkbox" id="filter_hashtags_check" value="filter_hashtags_checkbox"--%>
-                                <%--                                       type="checkbox" class="filter-checkbox">--%>
                                 <span><fmt:message key="filterHashtagTitle"/></span>
                             </div>
                             <input id="filter_hashtag" name="filter_hashtags_text" type="text" class="filter-input"
-                                   placeholder="<fmt:message key="filterHashtagInput"/>">
+                                   placeholder="<fmt:message key="filterHashtagInput"/>"
+                                   value="${requestScope.filter_hashtags_text}">
                         </label>
                     </li>
                     <li>
@@ -147,21 +143,26 @@
                     </div>
                 </c:forEach>
             </div>
-<%--            <div class="more-button-box">--%>
-<%--                <button class="more-button" id="more_btn">--%>
-<%--                    <div class="fa fa-refresh"></div>--%>
-<%--                    <fmt:message key="loadMore"/>--%>
-<%--                </button>--%>
-<%--            </div>--%>
+            <%--            <div class="more-button-box">--%>
+            <%--                <button class="more-button" id="more_btn">--%>
+            <%--                    <div class="fa fa-refresh"></div>--%>
+            <%--                    <fmt:message key="loadMore"/>--%>
+            <%--                </button>--%>
+            <%--            </div>--%>
             <div class="pagination-bar">
-                <a href="#"><i class="fas fa-angle-double-left"></i></a>
-                <a href="#">1</a>
-                <a href="#" class="active">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#">6</a>
-                <a href="#"><i class="fas fa-angle-double-right"></i></a>
+                <c:if test="${requestScope.pageNumber>1}">
+                    <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${requestScope.pageNumber-1}"><i
+                            class="fas fa-angle-double-left"></i></a>
+                </c:if>
+                <c:forEach var="i"
+                           begin="${requestScope.pageNumber-4>=1 ? requestScope.pageNumber-4 : 1}"
+                           end="${requestScope.pageNumber+4>requestScope.pageCount ? requestScope.pageCount : requestScope.pageNumber+4}">
+                    <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${i}" class="${requestScope.pageNumber == i ? "active" : ""}">${i}</a>
+                </c:forEach>
+                <c:if test="${requestScope.pageNumber<requestScope.pageCount}">
+                    <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${requestScope.pageNumber+1}"><i
+                            class="fas fa-angle-double-right"></i></a>
+                </c:if>
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@ package by.bsu.d0mpi.UP_PostGallery.service;
 import by.bsu.d0mpi.UP_PostGallery.model.User;
 import by.bsu.d0mpi.UP_PostGallery.service.impl.SimpleUserService;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService extends DBEntityService<Integer, User>{
@@ -16,4 +17,7 @@ public interface UserService extends DBEntityService<Integer, User>{
     Optional<User> findUserByLogin(String login);
 
     boolean isLoginPresented(String login);
+
+
+
 }

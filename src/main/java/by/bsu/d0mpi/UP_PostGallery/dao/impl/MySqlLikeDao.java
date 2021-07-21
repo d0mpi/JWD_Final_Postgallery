@@ -19,7 +19,7 @@ public class MySqlLikeDao extends MySqlAbstractDao<Integer, Like> implements Lik
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String SQL_SELECT_POSTS_ID_LIKED_BY_USER =
-            "SELECT likes_post_id FROM likes WHERE likes.likes_user_login = ?";
+            "SELECT * FROM likes WHERE likes.likes_user_login = ?";
     private static final String SQL_UPDATE_LIKE =
             "UPDATE likes SET likes_post_id = ?, likes_user_login = ? WHERE like_id = ?";
     private static final String SQL_INSERT_LIKE =
@@ -115,20 +115,11 @@ public class MySqlLikeDao extends MySqlAbstractDao<Integer, Like> implements Lik
 
     @Override
     public List<Integer> getLikedPostIdList(String login) {
-        List<Integer> likesId = new ArrayList<>();
-        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
-             final PreparedStatement statement = connection.prepareStatement(SQL_SELECT_POSTS_ID_LIKED_BY_USER)) {
-            statement.setString(1, login);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                int postId = resultSet.getInt(1);
-                likesId.add(postId);
-            }
-            return likesId;
-        } catch (SQLException | DAOException e) {
-            LOGGER.error("Dao connection exception");
-            e.printStackTrace();
-            return Collections.emptyList();
-        }
+        return findPreparedEntities(SQL_SELECT_POSTS_ID_LIKED_BY_USER,statement -> {
+            try {
+                statement.setString(1, login);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }}).stream().map(Like::getPostId).collect(Collectors.toList());
     }
 }

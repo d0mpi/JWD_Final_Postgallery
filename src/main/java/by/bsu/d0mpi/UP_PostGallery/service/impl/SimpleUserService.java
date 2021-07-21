@@ -94,4 +94,9 @@ public class SimpleUserService implements UserService {
     public boolean isLoginPresented(String login) {
         return userDao.isLoginPresented(login);
     }
+
+    @Override
+    public int getEntriesCount() {
+        return userDao.getEntriesCount();
+    }
 }

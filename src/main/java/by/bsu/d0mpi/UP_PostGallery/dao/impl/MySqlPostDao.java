@@ -5,6 +5,8 @@ import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
 import by.bsu.d0mpi.UP_PostGallery.model.DatabaseEntity;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
+import by.bsu.d0mpi.UP_PostGallery.service.FilterService;
+import by.bsu.d0mpi.UP_PostGallery.service.FilterType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,7 +29,6 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
                     " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_SELECT_POST_ID_LIST_BY_AUTHOR =
             "SELECT * FROM posts WHERE posts.post_author = ?";
-
     public static final String SQL_INSERT_HASHTAGS_WITH_POST_ID =
             "INSERT INTO hashtags (hashtag_text, hashtags_post_id) VALUES (?, ?)";
     private static final String SQL_DELETE_HASHTAGS_BY_POST_ID =
@@ -35,10 +36,16 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
     private static final String SQL_SELECT_HASHTAGS_BY_POST_ID =
             "select hashtags.hashtag_text from posts JOIN hashtags WHERE posts.post_id = hashtags.hashtags_post_id AND posts.post_id = ?";
 
+    private static final String SQL_SELECT_PAGE =
+            "SELECT * FROM posts ORDER BY post_create_date DESC LIMIT ?, 10";
+
     private static final Logger LOGGER = LogManager.getLogger();
+
+    private final FilterService filterService;
 
     private MySqlPostDao(String tableName, String idColumn) {
         super(tableName, idColumn);
+        filterService = FilterService.simple();
     }
 
     private static volatile MySqlPostDao instance;
@@ -171,5 +178,33 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
         }
     }
 
+
+    @Override
+    public List<Post> getPage(int startNumber, ArrayList<FilterType> filters, ArrayList<String> filterParams) {
+        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
+             final PreparedStatement statement =
+                     connection.prepareStatement(filterService.buildAndGetPageWithFiltersRequest(filters))
+        ) {
+            int i = 0;
+            if (filters.contains(FilterType.HASHTAG)) {
+                statement.setString(i + 1, filterParams.get(i));
+                i++;
+            }
+            if (filters.contains(FilterType.AUTHOR)) {
+                statement.setString(i + 1, filterParams.get(i));
+                i++;
+            }
+            if (filters.contains(FilterType.DATE)) {
+                statement.setString(i + 1, filterParams.get(i));
+                i++;
+            }
+            statement.setInt(i + 1, startNumber);
+            ResultSet resultSet = statement.executeQuery();
+            return mapResultSet(connection, resultSet);
+        } catch (SQLException | DAOException e) {
+            LOGGER.error("DB connection error", e);
+            return Collections.emptyList();
+        }
+    }
 
 }

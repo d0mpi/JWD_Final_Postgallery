@@ -20,15 +20,18 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
     private static final String SQL_SELECT_ALL = "SELECT * FROM %s";
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM %s WHERE %s = ?";
     private static final String SQL_DELETE_BY_ID = "DELETE FROM %s WHERE %s = ?";
+    private static final String SQL_COUNT_ALL = "SELECT COUNT(%s) FROM %s";
 
     private final String sqlFindAll;
     private final String sqlFindById;
     private final String sqlDeleteById;
+    private final String sqlCountAll;
 
     protected MySqlAbstractDao(String tableName, String idColumn) {
         this.sqlFindAll = String.format(SQL_SELECT_ALL, tableName);
         this.sqlFindById = String.format(SQL_SELECT_BY_ID, tableName, idColumn);
         this.sqlDeleteById = String.format(SQL_DELETE_BY_ID, tableName, idColumn);
+        this.sqlCountAll = String.format(SQL_COUNT_ALL, idColumn, tableName);
     }
 
     protected List<T> findPreparedEntities(String sql, Consumer<PreparedStatement> consumer) {
@@ -105,4 +108,18 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
 
     @Override
     public abstract T update(T entity);
+
+    @Override
+    public int getEntriesCount() {
+        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
+             final Statement statement = connection.createStatement()
+        ) {
+            ResultSet resultSet = statement.executeQuery(sqlCountAll);
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException | DAOException e) {
+            LOGGER.error("DB connection error", e);
+            return 0;
+        }
+    }
 }

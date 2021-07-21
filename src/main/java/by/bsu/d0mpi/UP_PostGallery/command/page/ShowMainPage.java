@@ -6,6 +6,7 @@ import by.bsu.d0mpi.UP_PostGallery.command.CommandResponse;
 import by.bsu.d0mpi.UP_PostGallery.command.SimpleCommandResponse;
 import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDao;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
+import by.bsu.d0mpi.UP_PostGallery.service.FilterType;
 import by.bsu.d0mpi.UP_PostGallery.service.LikeService;
 import by.bsu.d0mpi.UP_PostGallery.service.PostService;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -49,28 +51,44 @@ public class ShowMainPage implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        List<Post> postList = postService.findAll();
+        int startNumber;
+        int pageCount = (int) Math.ceil(postService.getEntriesCount() / 10.0);
+        try {
+            startNumber = getStartNumber(request, pageCount);
+        } catch (NumberFormatException e) {
+            return forwardHomePage;
+        }
+        ArrayList<FilterType> filterList = new ArrayList<>();
+        ArrayList<String> filterParams = new ArrayList<>();
 
         if (request.hasParameter("filter_author_text") && request.hasParameter("filter_hashtags_text") &&
                 request.hasParameter("filter_date_text")) {
-            Stream<Post> postStream = postList.stream();
-            final String author = request.getParameter("filter_author_text");
-            if (author != null && !author.isEmpty()) {
-                postStream = postStream.filter(o -> o.getAuthor().equals(author));
+            final String hashtag = request.getParameter("filter_hashtags_text");
+            System.out.println(hashtag);
+            if (hashtag != null && !hashtag.isEmpty()) {
+                filterList.add(FilterType.HASHTAG);
+                filterParams.add(request.getParameter("filter_hashtags_text"));
+                request.setAttribute("filter_hashtags_text", hashtag);
             }
 
-            final String hashtag = request.getParameter("filter_hashtags_text");
-            if (hashtag != null && !hashtag.isEmpty()) {
-                postStream = postStream.filter(o -> o.getHashtags().contains(hashtag));
+            final String author = request.getParameter("filter_author_text");
+            if (author != null && !author.isEmpty()) {
+                filterList.add(FilterType.AUTHOR);
+                filterParams.add(request.getParameter("filter_author_text"));
+                request.setAttribute("filter_author_text", author);
             }
 
             try {
                 final LocalDate date = LocalDate.parse(request.getParameter("filter_date_text"));
-                postStream = postStream.filter(o -> o.getCreatedAt().isEqual(date));
+                filterList.add(FilterType.DATE);
+                filterParams.add(request.getParameter("filter_date_text"));
+                request.setAttribute("filter_date_text", date);
             } catch (DateTimeParseException ignored) {
             }
-            postList = postStream.collect(Collectors.toList());
         }
+
+        List<Post> postList = postService.getPage(startNumber, filterList, filterParams);
+
 
         HttpSession session = request.getCurrentSession().orElse(null);
         if (session != null && session.getAttribute("user_name") != null) {
@@ -80,10 +98,23 @@ public class ShowMainPage implements Command {
             request.setAttribute("likedPostsIdList", Collections.emptyList());
         }
 
-        System.out.println(request.getParameter("language-select"));
-
-        System.out.println(Arrays.toString(request.getCookies()));
+        request.setAttribute("pageNumber", startNumber / 10 + 1);
         request.setAttribute("postList", postList);
+        request.setAttribute("pageCount", pageCount);
         return forwardHomePage;
+    }
+
+    int getStartNumber(CommandRequest request, int pageCount) throws NumberFormatException {
+        int startNumber = 0;
+        if (request.hasParameter("page_number")) {
+            startNumber = Integer.parseInt(request.getParameter("page_number"));
+            if (startNumber <= 0)
+                startNumber = 1;
+            if (startNumber > pageCount)
+                startNumber = pageCount;
+            startNumber -= 1;
+            startNumber *= 10;
+        }
+        return startNumber;
     }
 }

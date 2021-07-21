@@ -3,10 +3,12 @@ package by.bsu.d0mpi.UP_PostGallery.service.impl;
 import by.bsu.d0mpi.UP_PostGallery.dao.PostDao;
 import by.bsu.d0mpi.UP_PostGallery.model.DatabaseEntity;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
+import by.bsu.d0mpi.UP_PostGallery.service.FilterType;
 import by.bsu.d0mpi.UP_PostGallery.service.PostService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,9 +63,19 @@ public class SimplePostService implements PostService {
     }
 
     @Override
+    public int getEntriesCount() {
+        return postDao.getEntriesCount();
+    }
+
+    @Override
     public boolean doesPostBelongsToAuthor(Integer postId, String login) {
         return postDao.getPostsByAuthorLogin(login).stream().map(DatabaseEntity::getId).
                 collect(Collectors.toList()).contains(postId);
+    }
+
+    @Override
+    public List<Post> getPage(int startNumber, ArrayList<FilterType> filters, ArrayList<String> filterParams) {
+        return postDao.getPage(startNumber, filters, filterParams);
     }
 
 

@@ -66,4 +66,9 @@ public class SimpleLikeService implements LikeService {
     public List<Integer> getLikedPostIdList(String login) {
         return likeDao.getLikedPostIdList(login);
     }
+
+    @Override
+    public int getEntriesCount() {
+        return likeDao.getEntriesCount();
+    }
 }
