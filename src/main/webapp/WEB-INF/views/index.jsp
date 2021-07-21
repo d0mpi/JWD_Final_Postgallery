@@ -24,145 +24,155 @@
 <main>
 
     <div class="main-container">
-        <div class="filter-col">
-            <form class="filter-fieldset" name="filter" method="post"
-                  action="${pageContext.request.contextPath}/controller?command=main_page">
-                <div class="filter-head"><fmt:message key="filterTitle"/></div>
-                <ul class="filter-ul">
-                    <li>
-                        <label class="filter-label">
-                            <div>
-                                <span><fmt:message key="filterDateTitle"/></span>
-                            </div>
-                            <input id="filter_date" name="filter_date_text" type="date"
-                                   class="filter-input" value="${requestScope.filter_date_text}">
-                        </label>
-                    </li>
-                    <li>
-                        <label class="filter-label">
-                            <div>
-                                <span><fmt:message key="filterAuthorTitle"/></span>
-                            </div>
-                            <input id="filter_author" name="filter_author_text" type="text" class="filter-input"
-                                   placeholder="<fmt:message key="filterAuthorInput"/>"
-                                   value="${requestScope.filter_author_text}">
-                        </label>
-                    </li>
-                    <li>
-                        <label class="filter-label">
-                            <div>
-                                <span><fmt:message key="filterHashtagTitle"/></span>
-                            </div>
-                            <input id="filter_hashtag" name="filter_hashtags_text" type="text" class="filter-input"
-                                   placeholder="<fmt:message key="filterHashtagInput"/>"
-                                   value="${requestScope.filter_hashtags_text}">
-                        </label>
-                    </li>
-                    <li>
-                        <input type="submit" id="filter_btn" class="filter-button"
-                               value="<fmt:message key="filterBtn"/>">
-                    </li>
-                </ul>
-            </form>
-        </div>
-        <div class="main-col">
-            <div class="main-box-inline-block" id="post_container">
-                <c:forEach var="post" items="${requestScope.postList}">
-                    <div class="card-box">
-                        <div class="card-main-col">
-                            <div class="card-main-box col-full">
-                                <div class="card-img-box">
-                                    <img src="${post.photoLink}" alt="samolet" class="card-img">
+        <div class="mg-b-120">
+            <div class="filter-col">
+                <form class="filter-fieldset" name="filter" method="post"
+                      action="${pageContext.request.contextPath}/controller?command=main_page">
+                    <div class="filter-head"><fmt:message key="filterTitle"/></div>
+                    <ul class="filter-ul">
+                        <li>
+                            <label class="filter-label">
+                                <div>
+                                    <span><fmt:message key="filterDateTitle"/></span>
                                 </div>
-                                <div class="card-text-box">
-                                    <ul class="card-text-top font-card">
-                                        <li><span><fmt:message
-                                                key="postModel"/>:</span> ${post.model == "" ? "-" : post.model}  </li>
-                                        <li><span><fmt:message
-                                                key="postType"/>:</span> ${post.type == "" ? "-" : post.type}</li>
-                                        <li><span><fmt:message
-                                                key="postLength"/>:</span> ${post.length == 0 ? "-" : post.length}</li>
-                                        <li><span><fmt:message
-                                                key="postWingspan"/>:</span> ${post.wingspan == 0 ? "-" : post.wingspan}
-                                        </li>
-                                        <li><span><fmt:message
-                                                key="postHeight"/>:</span> ${post.height == 0 ? "-" : post.height}</li>
-                                        <li><span><fmt:message
-                                                key="postOrigin"/>:</span> ${post.origin == "" ? "-" : post.origin}</li>
-                                        <li><span><fmt:message
-                                                key="postCrew"/>:</span> ${post.crew == 0 ? "-" : post.crew}</li>
-                                        <li><span><fmt:message
-                                                key="postMaxSpeed"/>:</span> ${post.speed == 0 ? "-" : post.speed} km/h
-                                        </li>
-                                        <li><span><fmt:message
-                                                key="postFlyingDist"/>:</span> ${post.distance == 0 ? "-" : post.distance}
-                                            km
-                                        </li>
-                                        <li><span><fmt:message
-                                                key="postPrice"/>:</span> ${post.price == 0 ? "-" : post.price}$
-                                        </li>
-                                        <li>
-                                            <hr class="card-text-hr col-full">
-                                        </li>
-                                    </ul>
-                                    <div class="card-text-bottom-box">
-                                        <ul class="card-text-bottom-left">
-                                            <li class="card-text-user"> ${post.author} </li>
-                                            <li class="card-id"><fmt:message key="id"/>: ${post.id}</li>
-                                            <li class="card-text-time"> ${post.createdAt}</li>
-                                        </ul>
-                                        <c:if test="${sessionScope.user_name != null}">
-                                            <input id="like-check${post.id}" class="like-check"
-                                                   type="checkbox" ${requestScope.likedPostsIdList.contains(post.id) ? "checked" : "unchecked"}
-                                                   value="${post.id}">
-                                            <label for="like-check${post.id}" class="like-label">
-                                                <i class="fas fa-heart fa-3x"></i>
-                                            </label>
-                                        </c:if>
-                                    </div>
-
+                                <input id="filter_date" name="filter_date_text" type="date"
+                                       class="filter-input" value="${requestScope.filter_date_text}">
+                            </label>
+                        </li>
+                        <li>
+                            <label class="filter-label">
+                                <div>
+                                    <span><fmt:message key="filterAuthorTitle"/></span>
                                 </div>
-                            </div>
-
-                            <div class="card-hashtags col-full">
-                                    ${post.hashtagsAsHashString}
-                            </div>
-                        </div>
-
-                        <div class="card-buttons-col">
-                            <c:if test="${sessionScope.user_name != null}">
-                                <c:if test="${sessionScope.user_name == post.author}">
-                                    <a class="fas fa-edit a-icon"
-                                       href="${pageContext.request.contextPath}/controller?command=post_edit_page&post_id=${post.id}">
-                                    </a>
-                                    <button class="fas fa-trash-alt a-icon delete-post" value="${post.id}">
-                                    </button>
-                                </c:if>
-                            </c:if>
-                        </div>
-                    </div>
-                </c:forEach>
+                                <input id="filter_author" name="filter_author_text" type="text" class="filter-input"
+                                       placeholder="<fmt:message key="filterAuthorInput"/>"
+                                       value="${requestScope.filter_author_text}">
+                            </label>
+                        </li>
+                        <li>
+                            <label class="filter-label">
+                                <div>
+                                    <span><fmt:message key="filterHashtagTitle"/></span>
+                                </div>
+                                <input id="filter_hashtag" name="filter_hashtags_text" type="text" class="filter-input"
+                                       placeholder="<fmt:message key="filterHashtagInput"/>"
+                                       value="${requestScope.filter_hashtags_text}">
+                            </label>
+                        </li>
+                        <li>
+                            <input type="submit" id="filter_btn" class="filter-button"
+                                   value="<fmt:message key="filterBtn"/>">
+                        </li>
+                    </ul>
+                </form>
             </div>
-            <%--            <div class="more-button-box">--%>
-            <%--                <button class="more-button" id="more_btn">--%>
-            <%--                    <div class="fa fa-refresh"></div>--%>
-            <%--                    <fmt:message key="loadMore"/>--%>
-            <%--                </button>--%>
-            <%--            </div>--%>
-            <div class="pagination-bar">
-                <c:if test="${requestScope.pageNumber>1}">
-                    <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${requestScope.pageNumber-1}"><i
-                            class="fas fa-angle-double-left"></i></a>
-                </c:if>
-                <c:forEach var="i"
-                           begin="${requestScope.pageNumber-4>=1 ? requestScope.pageNumber-4 : 1}"
-                           end="${requestScope.pageNumber+4>requestScope.pageCount ? requestScope.pageCount : requestScope.pageNumber+4}">
-                    <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${i}" class="${requestScope.pageNumber == i ? "active" : ""}">${i}</a>
-                </c:forEach>
-                <c:if test="${requestScope.pageNumber<requestScope.pageCount}">
-                    <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${requestScope.pageNumber+1}"><i
-                            class="fas fa-angle-double-right"></i></a>
-                </c:if>
+            <div class="main-col">
+                <div class="main-box-inline-block" id="post_container">
+                    <c:forEach var="post" items="${requestScope.postList}">
+                        <div class="card-box">
+                            <div class="card-main-col">
+                                <div class="card-main-box col-full">
+                                    <div class="card-img-box">
+                                        <img src="${post.photoLink}" alt="samolet" class="card-img">
+                                    </div>
+                                    <div class="card-text-box">
+                                        <ul class="card-text-top font-card">
+                                            <li><span><fmt:message
+                                                    key="postModel"/>:</span> ${post.model == "" ? "-" : post.model}
+                                            </li>
+                                            <li><span><fmt:message
+                                                    key="postType"/>:</span> ${post.type == "" ? "-" : post.type}</li>
+                                            <li><span><fmt:message
+                                                    key="postLength"/>:</span> ${post.length == 0 ? "-" : post.length}
+                                            </li>
+                                            <li><span><fmt:message
+                                                    key="postWingspan"/>:</span> ${post.wingspan == 0 ? "-" : post.wingspan}
+                                            </li>
+                                            <li><span><fmt:message
+                                                    key="postHeight"/>:</span> ${post.height == 0 ? "-" : post.height}
+                                            </li>
+                                            <li><span><fmt:message
+                                                    key="postOrigin"/>:</span> ${post.origin == "" ? "-" : post.origin}
+                                            </li>
+                                            <li><span><fmt:message
+                                                    key="postCrew"/>:</span> ${post.crew == 0 ? "-" : post.crew}</li>
+                                            <li><span><fmt:message
+                                                    key="postMaxSpeed"/>:</span> ${post.speed == 0 ? "-" : post.speed}
+                                                km/h
+                                            </li>
+                                            <li><span><fmt:message
+                                                    key="postFlyingDist"/>:</span> ${post.distance == 0 ? "-" : post.distance}
+                                                km
+                                            </li>
+                                            <li><span><fmt:message
+                                                    key="postPrice"/>:</span> ${post.price == 0 ? "-" : post.price}$
+                                            </li>
+                                            <li>
+                                                <hr class="card-text-hr col-full">
+                                            </li>
+                                        </ul>
+                                        <div class="card-text-bottom-box">
+                                            <ul class="card-text-bottom-left">
+                                                <li class="card-text-user"> ${post.author} </li>
+                                                <li class="card-id"><fmt:message key="id"/>: ${post.id}</li>
+                                                <li class="card-text-time"> ${post.createdAt}</li>
+                                            </ul>
+                                            <c:if test="${sessionScope.user_name != null}">
+                                                <input id="like-check${post.id}" class="like-check"
+                                                       type="checkbox" ${requestScope.likedPostsIdList.contains(post.id) ? "checked" : "unchecked"}
+                                                       value="${post.id}">
+                                                <label for="like-check${post.id}" class="like-label">
+                                                    <i class="fas fa-heart fa-3x"></i>
+                                                </label>
+                                            </c:if>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="card-hashtags col-full">
+                                        ${post.hashtagsAsHashString}
+                                </div>
+                            </div>
+
+                            <div class="card-buttons-col">
+                                <c:if test="${sessionScope.user_name != null}">
+                                    <c:if test="${sessionScope.user_name == post.author}">
+                                        <a class="fas fa-edit a-icon"
+                                           href="${pageContext.request.contextPath}/controller?command=post_edit_page&post_id=${post.id}">
+                                        </a>
+                                        <button class="fas fa-trash-alt a-icon delete-post" value="${post.id}">
+                                        </button>
+                                    </c:if>
+                                </c:if>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+                <%--            <div class="more-button-box">--%>
+                <%--                <button class="more-button" id="more_btn">--%>
+                <%--                    <div class="fa fa-refresh"></div>--%>
+                <%--                    <fmt:message key="loadMore"/>--%>
+                <%--                </button>--%>
+                <%--            </div>--%>
+                <div class="pagination-bar">
+                    <c:set var="filter_postfix"
+                           value="&filter_hashtags_text=${requestScope.filter_hashtags_text}&filter_author_text=${requestScope.filter_author_text}&filter_date_text=${requestScope.filter_date_text}"/>
+                    <c:if test="${requestScope.pageNumber>1}">
+                        <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${requestScope.pageNumber-1}${filter_postfix}"><i
+                                class="fas fa-angle-double-left"></i></a>
+                    </c:if>
+                    <c:forEach var="i"
+                               begin="${requestScope.pageNumber-4>=1 ? requestScope.pageNumber-4 : 1}"
+                               end="${requestScope.pageNumber+4>requestScope.pageCount ? requestScope.pageCount : requestScope.pageNumber+4}">
+                        <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${i}${filter_postfix}"
+                           class="${requestScope.pageNumber == i ? "active" : ""}">${i}</a>
+                    </c:forEach>
+                    <c:if test="${requestScope.pageNumber<requestScope.pageCount}">
+                        <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${requestScope.pageNumber+1}${filter_postfix}"><i
+                                class="fas fa-angle-double-right"></i></a>
+                    </c:if>
+                </div>
             </div>
         </div>
     </div>

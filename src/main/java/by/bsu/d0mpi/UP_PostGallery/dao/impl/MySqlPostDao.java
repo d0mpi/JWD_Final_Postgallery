@@ -2,11 +2,11 @@ package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.PostDao;
 import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
-import by.bsu.d0mpi.UP_PostGallery.model.DatabaseEntity;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
 import by.bsu.d0mpi.UP_PostGallery.service.FilterService;
 import by.bsu.d0mpi.UP_PostGallery.service.FilterType;
+import by.bsu.d0mpi.UP_PostGallery.service.MyPair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements PostDao {
     private static final String SQL_UPDATE_POST =
@@ -180,30 +179,39 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
 
 
     @Override
-    public List<Post> getPage(int startNumber, ArrayList<FilterType> filters, ArrayList<String> filterParams) {
+    public MyPair<List<Post>, Integer> getPage(int startNumber, ArrayList<FilterType> filters, ArrayList<String> filterParams) {
+        List<Post> posts;
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
              final PreparedStatement statement =
-                     connection.prepareStatement(filterService.buildAndGetPageWithFiltersRequest(filters))
+                     connection.prepareStatement(filterService.buildAndGetPageWithFiltersRequest(filters));
+             final PreparedStatement statement1 = connection.prepareStatement(filterService.buildAndGetPostsCountWithFiltersRequest(filters))
         ) {
             int i = 0;
             if (filters.contains(FilterType.HASHTAG)) {
                 statement.setString(i + 1, filterParams.get(i));
+                statement1.setString(i + 1, filterParams.get(i));
                 i++;
             }
             if (filters.contains(FilterType.AUTHOR)) {
                 statement.setString(i + 1, filterParams.get(i));
+                statement1.setString(i + 1, filterParams.get(i));
                 i++;
             }
             if (filters.contains(FilterType.DATE)) {
                 statement.setString(i + 1, filterParams.get(i));
+                statement1.setString(i + 1, filterParams.get(i));
                 i++;
             }
             statement.setInt(i + 1, startNumber);
             ResultSet resultSet = statement.executeQuery();
-            return mapResultSet(connection, resultSet);
+            posts = mapResultSet(connection, resultSet);
+            ResultSet resultSet1 = statement1.executeQuery();
+            resultSet1.next();
+            int postCount = resultSet1.getInt(1);
+            return new MyPair<>(posts, postCount);
         } catch (SQLException | DAOException e) {
             LOGGER.error("DB connection error", e);
-            return Collections.emptyList();
+            return new MyPair<>(Collections.emptyList(), 0);
         }
     }
 

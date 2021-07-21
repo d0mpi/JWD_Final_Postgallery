@@ -15,6 +15,7 @@ main {
     overflow: hidden;
     min-height: 100%;
     margin-bottom: -90px;
+    justify-content: center
 }
 
 ul {
@@ -63,7 +64,7 @@ body:before {
     height: 100%;
     top: 0;
     left: 0;
-    background: #4a669063;
+    background: #4a66908c;
     position: fixed;
     opacity: 0.9;
 }
@@ -81,6 +82,8 @@ header {
     color: white;
     padding: 0 30px;
     box-shadow: 0 6px 4px -4px rgba(0, 0, 0, .2);
+    justify-content: center;
+    display: flex;
 
     z-index: 1000;
 
@@ -100,6 +103,8 @@ header {
     height: inherit;
     align-items: center;
     justify-content: space-between;
+    width: inherit;
+    max-width: 1800px;
 }
 
 .header-logo-col {
@@ -308,6 +313,7 @@ header {
     border-style: solid;
     border-width: 0;
     box-shadow: 0 0 15px -5px #000000;
+    position: fixed;
 }
 
 .filter-head {
@@ -481,7 +487,8 @@ header {
     display: flex;
     width: inherit;
     margin-top: 70px;
-    margin-bottom: 120px;
+    max-width: 1800px;
+    background: rgba(255, 255, 255, 0.28);
 }
 
 .main-col {
@@ -498,6 +505,7 @@ header {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    padding-left: 300px;
 }
 
 .push {
@@ -734,6 +742,7 @@ footer {
     justify-content: space-between;
     align-items: center;
     display: flex;
+    max-width: 1800px;
 }
 
 .footer-ul li {
@@ -1010,3 +1019,6 @@ footer {
     transition: .3s;
 }
 
+.mg-b-120{
+    margin-bottom: 120px;
+}

@@ -4,6 +4,7 @@ import by.bsu.d0mpi.UP_PostGallery.dao.PostDao;
 import by.bsu.d0mpi.UP_PostGallery.model.DatabaseEntity;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import by.bsu.d0mpi.UP_PostGallery.service.FilterType;
+import by.bsu.d0mpi.UP_PostGallery.service.MyPair;
 import by.bsu.d0mpi.UP_PostGallery.service.PostService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -74,7 +75,7 @@ public class SimplePostService implements PostService {
     }
 
     @Override
-    public List<Post> getPage(int startNumber, ArrayList<FilterType> filters, ArrayList<String> filterParams) {
+    public MyPair<List<Post>, Integer> getPage(int startNumber, ArrayList<FilterType> filters, ArrayList<String> filterParams) {
         return postDao.getPage(startNumber, filters, filterParams);
     }
 

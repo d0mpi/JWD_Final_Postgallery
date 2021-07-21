@@ -32,8 +32,13 @@ public class SimpleFilterService implements FilterService {
     public String buildAndGetPageWithFiltersRequest(ArrayList<FilterType> filterTypeList) {
         String sqlFirstPart = "SELECT * FROM posts ";
         String sqlLastPart = "ORDER BY post_create_date DESC LIMIT ?, 10";
+        String sqlSecondPart = buildRequestPostfix(filterTypeList);
+        return sqlFirstPart + sqlSecondPart + sqlLastPart;
 
-        StringBuilder sqlRequest = new StringBuilder(sqlFirstPart);
+    }
+
+    private String buildRequestPostfix(ArrayList<FilterType> filterTypeList) {
+        StringBuilder sqlRequest = new StringBuilder();
         boolean isFirst = true;
         if (filterTypeList.contains(FilterType.HASHTAG)) {
             sqlRequest.append(" left join hashtags on post_id=hashtags_post_id ");
@@ -43,8 +48,7 @@ public class SimpleFilterService implements FilterService {
         if (filterTypeList.contains(FilterType.AUTHOR)) {
             if (!isFirst) {
                 sqlRequest.append(" AND ");
-            }
-            else {
+            } else {
                 sqlRequest.append(" where ");
             }
             sqlRequest.append("posts.post_author = ?");
@@ -53,14 +57,19 @@ public class SimpleFilterService implements FilterService {
         if (filterTypeList.contains(FilterType.DATE)) {
             if (!isFirst) {
                 sqlRequest.append(" AND ");
-            }
-            else {
+            } else {
                 sqlRequest.append(" where ");
             }
             sqlRequest.append("posts.post_create_date = ?");
             isFirst = false;
         }
-        sqlRequest.append(sqlLastPart);
         return sqlRequest.toString();
+    }
+
+    @Override
+    public String buildAndGetPostsCountWithFiltersRequest(ArrayList<FilterType> filterTypeList) {
+        String sqlFirstPart = "SELECT COUNT(post_id) FROM posts ";
+        String sqlSecondPart = buildRequestPostfix(filterTypeList);
+        return sqlFirstPart + sqlSecondPart;
     }
 }

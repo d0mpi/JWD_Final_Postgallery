@@ -11,4 +11,6 @@ public interface FilterService {
 
 
     String buildAndGetPageWithFiltersRequest(ArrayList<FilterType> filters);
+
+    String buildAndGetPostsCountWithFiltersRequest(ArrayList<FilterType> filterTypeList);
 }
