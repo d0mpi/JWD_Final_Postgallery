@@ -34,6 +34,7 @@ public class ApplicationController extends HttpServlet {
     public void init() throws ServletException {
         super.init();
 
+
     }
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

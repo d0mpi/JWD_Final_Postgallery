@@ -52,12 +52,10 @@
             <a href="#" class="google fab fa-google"></a>
         </div>
     </form>
-    <form method="post" action="${pageContext.request.contextPath}/controller?command=registration_page"
-          name="sign_form">
-        <div class="text-create-row">
-            <button name="register" class="a-create"><fmt:message key="signInCreate"/></button>
-        </div>
-    </form>
+    <div class="text-create-row">
+        <a href="${pageContext.request.contextPath}/controller?command=registration_page"
+           class="a-create"><fmt:message key="signInCreate"/></a>
+    </div>
 </div>
 </body>
 </html>

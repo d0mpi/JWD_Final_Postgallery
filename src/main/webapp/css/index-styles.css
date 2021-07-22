@@ -121,6 +121,12 @@ header {
     justify-content: center;
 }
 
+.header-username-col a{
+    color: white;
+    font-size: 18px;
+    text-decoration: underline;
+}
+
 .img-logo {
     height: 40px;
     width: 108px;
@@ -1021,4 +1027,8 @@ footer {
 
 .mg-b-120{
     margin-bottom: 120px;
+}
+
+.card-text-top li{
+    word-break: break-word;
 }

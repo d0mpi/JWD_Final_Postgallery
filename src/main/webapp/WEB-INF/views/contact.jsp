@@ -17,7 +17,6 @@
 <body>
 <jsp:include page="header.jsp"/>
 <main>
-    <div class="main-container">
         <div class="main-col">
             <div class="col-50-1">
                 <div class="contact-stripped-box">
@@ -64,7 +63,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
             <div class="push"></div>
         </div>
     </div>

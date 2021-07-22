@@ -37,7 +37,8 @@
                         <div></div>
                         <fmt:message key="headerContact"/></a>
                 </div>
-                <form class="menu-col" id="languageForm" method="post" action="${pageContext.request.contextPath}/controller?command=change_language">
+                <form class="menu-col" id="languageForm" method="post"
+                      action="${pageContext.request.contextPath}/controller?command=change_language">
                     <label for="language-select"></label>
                     <select id="language-select" name="language-select" class="language-select"
                             onchange="document.getElementById('languageForm').submit()">
@@ -67,7 +68,9 @@
 
             <div class="header-log-col">
                 <c:if test="${sessionScope.user_name != null}">
-                    <div class="header-username-col" id="header_username"> User: ${sessionScope.user_name}</div>
+                    <div class="header-username-col" id="header_username"> User:&#160 <a
+                            href="${pageContext.request.contextPath}/controller?command=user_profile_page">${sessionScope.user_name}</a>
+                    </div>
                     <form name="log1" action="${pageContext.request.contextPath}/controller?command=sign_out"
                           method="post">
                         <input name="sign-out" type="submit" title="" class="header-button" id="sign_out_btn"

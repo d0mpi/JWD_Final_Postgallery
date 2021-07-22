@@ -1,0 +1,129 @@
+.main-col * {
+    font-size: 20px;
+}
+
+.main-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: inherit;
+}
+
+.profile-main-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    flex-wrap: wrap;
+
+    border-radius: 20px;
+    padding: 40px 30px 30px 30px;
+}
+
+.col-50-1 {
+    max-width: 500px;
+}
+
+.profile-title {
+    font-size: 30px;
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.align-text-center {
+    text-align: center;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: space-evenly;
+    padding: 15px;
+}
+
+.column i {
+    color: #0b2852;
+}
+
+.bordered{
+    border-radius: 10px;
+    border-width: 0;
+    border-style: solid;
+    display: flex;
+    height: 150px;
+    align-items: center;
+    margin-bottom: 30px;
+    background: #e0f2ff;
+}
+
+.column .fa-heart {
+    color: #e20505;
+}
+
+.change-area {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 10px;
+    background: #e0f2ff;
+    justify-content: center;
+}
+
+.profile-input{
+    font-family: Poppins-Medium, sans-serif;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.2;
+    display: block;
+    width: 100%;
+    height: 40px;
+    border: none;
+    outline: none;
+    margin-bottom: 20px;
+    margin-top: 5px;
+
+    border-bottom: solid 1px #7f7f7f;
+}
+
+.profile-button{
+    background: #0b2852;
+    color: white;
+    font-size: 18px;
+    font-family: Barlow-Regular, sans-serif;
+    font-weight: 500;
+    width: max-content;
+    padding: 0 30px;
+    line-height: 40px;
+    text-transform: uppercase;
+
+    justify-self: center;
+    transition: .3s;
+    border: solid 1px;
+    border-radius: 10px;
+
+}
+
+.profile-button:hover{
+    transform: scale(0.95);
+    background: #81d742;
+    transition: .3s;
+}
+
+.email-area{
+    border-radius: 10px;
+    font-size: 20px;
+    background: #e0f2ff;
+    margin-bottom: 25px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.email-area i{
+    color: #0b2852;
+    margin-right: 20px;
+}
