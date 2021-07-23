@@ -2,6 +2,7 @@ package by.bsu.d0mpi.UP_PostGallery.service.impl;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.LikeDao;
 import by.bsu.d0mpi.UP_PostGallery.model.Like;
+import by.bsu.d0mpi.UP_PostGallery.model.User;
 import by.bsu.d0mpi.UP_PostGallery.service.LikeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,7 +29,7 @@ public class SimpleLikeService implements LikeService {
 
 
     @Override
-    public boolean createEntity(Like entity) {
+    public Like createEntity(Like entity) {
         return likeDao.create(entity);
     }
 

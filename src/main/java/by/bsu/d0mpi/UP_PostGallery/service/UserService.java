@@ -19,5 +19,7 @@ public interface UserService extends DBEntityService<Integer, User>{
     boolean isLoginPresented(String login);
 
 
+    int getNumberOfPosts(String login);
 
+    int getRating(String login);
 }

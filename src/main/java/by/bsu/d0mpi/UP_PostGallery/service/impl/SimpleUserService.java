@@ -42,10 +42,10 @@ public class SimpleUserService implements UserService {
     }
 
     @Override
-    public boolean createEntity(User user) {
+    public User createEntity(User user) {
         final char[] rawPassword = user.getPassword().toCharArray();
         final String encryptedPassword = hasher.hashToString(MIN_COST, rawPassword);
-        return userDao.create(new User(user.getId(), user.getLogin(), encryptedPassword, user.getRole()));
+        return userDao.create(new User(user.getLogin(), encryptedPassword, user.getRole()));
     }
 
     @Override
@@ -98,5 +98,15 @@ public class SimpleUserService implements UserService {
     @Override
     public int getEntriesCount() {
         return userDao.getEntriesCount();
+    }
+
+    @Override
+    public int getNumberOfPosts(String login){
+        return userDao.getNumberOfPostsByAuthor(login);
+    }
+
+    @Override
+    public int getRating(String login){
+        return userDao.getNumberOfLikesByAuthor(login);
     }
 }

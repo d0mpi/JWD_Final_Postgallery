@@ -40,9 +40,9 @@
                             <div class="edit-label"><fmt:message key="editimage"/>:
                             </div>
                             <div class="drag-and-drop">
-                                <img src="${requestScope.postToEdit.photoLink}" alt="" class="add-img" id="add_img">
+                                <img src="../images/planes/${postToEdit.id}.jpeg" alt="" class="add-img" id="add_img">
                                 <label hidden>
-                                    <input value="${requestScope.postToEdit.photoLink}" name="file" hidden>
+                                    <input value="" name="file" hidden>
                                 </label>
                             </div>
                         </div>

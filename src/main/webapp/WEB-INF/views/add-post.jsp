@@ -23,7 +23,8 @@
     <div class="main-container">
         <div class="main-col">
             <div class="col-66">
-                <form name="add" method="post" action="${pageContext.request.contextPath}/controller?command=add_post"
+                <form enctype="multipart/form-data" name="add" method="post"
+                      action="${pageContext.request.contextPath}/controller?command=add_post"
                       class="add-main-box">
                     <div class="col-full add-title">
                         <h3><fmt:message key="addLabel"/></h3>
@@ -31,14 +32,17 @@
                     <div class="col-half" style="height: 504px">
                         <div class="img-box col-full">
                             <div class="add-label"><fmt:message key="editimage"/></div>
-                            <div class="drag-and-drop">
-                                <img src="" alt="" class="add-img" id="add_img">
+                            <div id="drag-and-drop">
+                                <i class="fas fa-download fa-8x"></i>
+                                <div>
+                                    <button class="drop-button">Choose a file</button>
+                                    &#160or drag it here
+                                    <img src="" alt="" class="add-img" id="add_img">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-full file-load-box">
-                            <input type="file" name="file" id="dropbox" class="input-file"
-                                   accept="image/jpeg,image/png,image/jpg" required>
-                        </div>
+                        <input type="file" name="file" id="file" class="input-file"
+                               accept="image/jpeg,image/png,image/jpg" required>
                     </div>
                     <div class="col-half">
                         <div class="add-text-box">

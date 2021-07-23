@@ -1,5 +1,5 @@
 
-*{
+* {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
@@ -121,7 +121,7 @@ header {
     justify-content: center;
 }
 
-.header-username-col a{
+.header-username-col a {
     color: white;
     font-size: 18px;
     text-decoration: underline;
@@ -326,6 +326,7 @@ header {
     height: 10%;
     font-size: 20px;
     text-transform: uppercase;
+    padding: 0 10px;
 }
 
 .filter-ul {
@@ -334,11 +335,13 @@ header {
     flex-direction: column;
     justify-content: space-around;
     height: 90%;
+    align-items: center;
 }
 
 .filter-input {
     border-radius: 5px;
     font-size: 14px;
+    height: 25px;
     padding: 3px;
     align-items: center;
     margin-top: 5px;
@@ -356,6 +359,10 @@ header {
     margin-right: 5px;
     width: 15px;
     height: 15px;
+}
+
+.li-filter-button {
+    align-self: center;
 }
 
 .filter-label {
@@ -379,6 +386,32 @@ header {
     font-size: 16px;
     font-family: Barlow-Regular, sans-serif;
     text-align: center;
+}
+
+
+.main-container {
+display: flex;
+width: inherit;
+margin-top: 70px;
+max-width: 1800px;
+background: rgba(255, 255, 255, 0.28);
+}
+
+.main-col {
+width: inherit;
+color: black;
+margin: 30px 0 0 0;
+display: flex;
+
+flex-direction: column;
+align-items: center;
+}
+
+.main-box-inline-block {
+display: flex;
+flex-wrap: wrap;
+justify-content: space-evenly;
+padding-left: 300px;
 }
 
 @media (max-width: 1200px) {
@@ -424,7 +457,8 @@ header {
     .filter-ul {
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: space-between;
+        align-items: stretch;
         height: 150px;
         width: 350px;
     }
@@ -432,6 +466,7 @@ header {
     .filter-ul li label {
         display: flex;
         justify-content: space-between;
+        padding: 0 20px;
     }
 
     .filter-input {
@@ -486,36 +521,14 @@ header {
     .main-container {
         margin-top: 60px;
     }
+
+    .main-box-inline-block{
+        margin-top: 300px;
+        padding-left: 20px;
+    }
 }
-
-
-.main-container {
-    display: flex;
-    width: inherit;
-    margin-top: 70px;
-    max-width: 1800px;
-    background: rgba(255, 255, 255, 0.28);
-}
-
-.main-col {
-    width: inherit;
-    color: black;
-    margin: 30px 30px 0 0;
-    display: flex;
-
-    flex-direction: column;
-    align-items: center;
-}
-
-.main-box-inline-block {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    padding-left: 300px;
-}
-
 .push {
-    height: 90px;
+height: 90px;
     width: 100%;
 }
 
@@ -690,7 +703,7 @@ header {
     transform: scale(.95);
 }
 
-.like-check + label i:before{
+.like-check + label i:before {
     color: #524f4e;
 }
 
@@ -859,6 +872,7 @@ footer {
 
     .main-box-inline-block {
         width: 100%;
+        margin-top: 300px;
     }
 
     .card-main-col {
@@ -949,7 +963,7 @@ footer {
 .filter-button {
     border-radius: 5px;
     font-size: 14px;
-    padding: 3px;
+    padding: 3px 10px;
     align-items: center;
     margin-top: 5px;
 
@@ -958,11 +972,16 @@ footer {
     outline: none;
     cursor: pointer;
 
-    width: 100px;
+    width: max-content;
     height: 25px;
 
-    border-style: solid;
-    border-width: 0;
+    border: solid 0;
+}
+
+.filter-button:hover {
+    transition: .3s;
+    transform: scale(.95);
+    background: #81d742;
 }
 
 .hide {
@@ -982,13 +1001,13 @@ footer {
     font-size: 20px;
 }
 
-.a-icon{
+.a-icon {
     font-size: 1.5rem;
     margin-left: 5px;
     margin-bottom: 10px;
 }
 
-.a-icon:hover{
+.a-icon:hover {
     transform: scale(.95);
     transition: .3s;
     color: #81d742;
@@ -1025,10 +1044,10 @@ footer {
     transition: .3s;
 }
 
-.mg-b-120{
+.mg-b-120 {
     margin-bottom: 120px;
 }
 
-.card-text-top li{
+.card-text-top li {
     word-break: break-word;
 }

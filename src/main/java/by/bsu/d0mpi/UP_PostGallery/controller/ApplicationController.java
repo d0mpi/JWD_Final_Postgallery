@@ -8,6 +8,7 @@ import by.bsu.d0mpi.UP_PostGallery.model.Role;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/controller")
+@MultipartConfig
 public class ApplicationController extends HttpServlet {
 
     public static final String COMMAND_PARAM_NAME = "command";

@@ -2,6 +2,7 @@ package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.PostDao;
 import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
+import by.bsu.d0mpi.UP_PostGallery.model.Like;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
 import by.bsu.d0mpi.UP_PostGallery.service.FilterService;
@@ -21,22 +22,21 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
     private static final String SQL_UPDATE_POST =
             "UPDATE posts SET post_model = ?, post_type = ?,post_length = ?, post_wingspan = ?, post_height = ?," +
                     " post_origin = ?, post_crew = ?, post_speed = ?, post_distance = ?, post_price = ?," +
-                    " post_create_date = ?, post_photo = ?, post_author = ? WHERE post_id = ?";
+                    " post_create_date = ?, post_author = ? WHERE post_id = ?";
     private static final String SQL_INSERT =
             "INSERT INTO posts (post_model ,post_type, post_length, post_wingspan, post_height, post_origin, post_crew," +
-                    " post_speed, post_distance, post_price, post_create_date, post_photo, post_author)" +
-                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    " post_speed, post_distance, post_price, post_create_date, post_author)" +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_SELECT_POST_ID_LIST_BY_AUTHOR =
             "SELECT * FROM posts WHERE posts.post_author = ?";
+    private static final String SQL_SELECT_POST_BY_ID =
+            "SELECT * FROM posts WHERE posts.post_id = ?";
     public static final String SQL_INSERT_HASHTAGS_WITH_POST_ID =
             "INSERT INTO hashtags (hashtag_text, hashtags_post_id) VALUES (?, ?)";
     private static final String SQL_DELETE_HASHTAGS_BY_POST_ID =
             "DELETE FROM hashtags WHERE hashtags_post_id = ?";
     private static final String SQL_SELECT_HASHTAGS_BY_POST_ID =
             "select hashtags.hashtag_text from posts JOIN hashtags WHERE posts.post_id = hashtags.hashtags_post_id AND posts.post_id = ?";
-
-    private static final String SQL_SELECT_PAGE =
-            "SELECT * FROM posts ORDER BY post_create_date DESC LIMIT ?, 10";
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -78,8 +78,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             Float distance = rs.getFloat(10);
             Integer price = rs.getInt(11);
             LocalDate createdAt = rs.getDate(12).toLocalDate();
-            String photoLink = rs.getString(13);
-            String author = rs.getString(14);
+            String author = rs.getString(13);
             PreparedStatement statement2 = connection.prepareStatement(SQL_SELECT_HASHTAGS_BY_POST_ID);
             statement2.setInt(1, id);
             ResultSet rsHash = statement2.executeQuery();
@@ -89,7 +88,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             }
             statement2.close();
             posts.add(new Post(id, model, type, length, wingspan, height, origin, crew, speed, distance,
-                    price, createdAt, author, photoLink, hashtags));
+                    price, createdAt, author, hashtags));
         }
         return posts;
     }
@@ -108,12 +107,11 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
         statement.setString(9, String.valueOf(entity.getDistance()));
         statement.setString(10, String.valueOf(entity.getPrice()));
         statement.setString(11, String.valueOf(entity.getCreatedAt()));
-        statement.setString(12, entity.getPhotoLink());
-        statement.setString(13, entity.getAuthor());
+        statement.setString(12, entity.getAuthor());
     }
 
     @Override
-    public boolean create(Post entity) {
+    public Post create(Post entity) {
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
              final PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
              final PreparedStatement statement1 = connection.prepareStatement(SQL_INSERT_HASHTAGS_WITH_POST_ID)) {
@@ -125,7 +123,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
                 entity.setId(id);
             } else {
                 LOGGER.error("No autoincremented index after trying to add record into table user");
-                return false;
+                return null;
             }
             for (String hashtag : entity.getHashtags()) {
                 statement1.setString(1, hashtag);
@@ -134,9 +132,9 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             }
         } catch (SQLException | DAOException e) {
             LOGGER.error("DB connection error", e);
-            return false;
+            return null;
         }
-        return true;
+        return entity;
     }
 
     @Override
@@ -214,5 +212,4 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             return new MyPair<>(Collections.emptyList(), 0);
         }
     }
-
 }

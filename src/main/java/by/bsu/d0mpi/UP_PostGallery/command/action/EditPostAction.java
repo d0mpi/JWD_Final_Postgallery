@@ -69,7 +69,6 @@ public class EditPostAction implements Command {
         post.setSpeed(Float.valueOf(request.getParameter("speed")));
         post.setDistance(Float.valueOf(request.getParameter("dist")));
         post.setPrice(Integer.valueOf(request.getParameter("price")));
-        post.setPhotoLink(request.getParameter("file"));
         List<String> hashtags;
         if (request.getParameter("hashtags") != null && !request.getParameter("hashtags").equals("")) {
             hashtags = Arrays.stream(

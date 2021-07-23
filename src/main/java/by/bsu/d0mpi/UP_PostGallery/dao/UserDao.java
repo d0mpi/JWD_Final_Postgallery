@@ -16,4 +16,8 @@ public interface UserDao extends Dao<Integer, User>{
     static MySqlUserDao MySQL() {
         return MySqlUserDao.getInstance();
     }
+
+    int getNumberOfPostsByAuthor(String login);
+
+    int getNumberOfLikesByAuthor(String login);
 }

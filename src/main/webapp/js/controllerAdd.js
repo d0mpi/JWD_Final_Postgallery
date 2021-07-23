@@ -1,19 +1,81 @@
-
-let dropbox = document.getElementById("dropbox");
+let fileInput = document.getElementById("file");
 let image = document.getElementById("add_img");
-let box = document.querySelector(".drag-and-drop");
+let dropbox = document.getElementById("drag-and-drop");
 let fileName;
 
-function onFileLoad(event) {
-    fileName = dropbox.files.item(0).name;
-    console.log(fileName);
-    image.setAttribute("src","images/planes/"+fileName);
-    box.style.borderStyle = "none";
+dropbox.addEventListener("dragenter", dragenter, false);
+dropbox.addEventListener("dragover", dragover, false);
+dropbox.addEventListener("dragleave", dragleave, false);
+dropbox.addEventListener("drop", drop, false);
+
+function dragenter(e) {
+    jQuery('#drag-and-drop').addClass('hover');
+
+    e.stopPropagation();
+    e.preventDefault();
 }
-dropbox.addEventListener('change',onFileLoad);
-//
-//
-//
-//
-//
-//
+
+function dragover(e) {
+    jQuery('#drag-and-drop').addClass('hover');
+    e.stopPropagation();
+    e.preventDefault();
+}
+
+function dragleave(e) {
+    jQuery('#drag-and-drop').removeClass('hover');
+
+}
+
+function drop(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    let dt = e.dataTransfer;
+    let files = dt.files;
+    fileInput.files = dt.files;
+
+    handleFiles(files);
+}
+
+function dragleave(e) {
+    jQuery('#drag-and-drop').removeClass('hover');
+    return false;
+}
+
+dropbox.ondrop = function (event) {
+    event.preventDefault();
+    dropbox.removeClass('hover');
+    dropbox.addClass('drop');
+};
+
+$(document).ready(function () {
+    $('.drop-button').click(function () {
+        $('#file').trigger('click');
+    });
+});
+
+function onFileLoad(event) {
+    fileName = fileInput.files.item(0).name;
+    handleFiles(fileInput.files);
+    dropbox.style.borderStyle = "none";
+}
+
+fileInput.addEventListener('change', onFileLoad);
+
+function handleFiles(files) {
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (!file.type.startsWith('image/')) {
+            continue
+        }
+        image.file = file;
+        const reader = new FileReader();
+        reader.onload = (function (aImg) {
+            return function (e) {
+                aImg.src = e.target.result;
+            };
+        })(image);
+        reader.readAsDataURL(file);
+    }
+}
+

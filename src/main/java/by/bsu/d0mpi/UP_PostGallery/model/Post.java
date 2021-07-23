@@ -23,12 +23,11 @@ public class Post extends DatabaseEntity {
     private Integer price;
     private LocalDate createdAt;
     private String author;
-    private String photoLink;
     private List<String> hashtags;
 
     public Post(int id, String model, String type, Float length, Float wingspan, Float height, String origin,
                 Integer crew, Float speed, Float distance, Integer price, LocalDate createdAt, String author,
-                String photoLink, List<String> hashtags) {
+                 List<String> hashtags) {
         super(id);
         this.model = model;
         this.type = type;
@@ -42,13 +41,12 @@ public class Post extends DatabaseEntity {
         this.price = price;
         this.createdAt = createdAt;
         this.author = author;
-        this.photoLink = photoLink;
         this.hashtags = hashtags;
     }
 
     public Post(String model, String type, Float length, Float wingspan, Float height, String origin, Integer crew,
-                Float speed, Float distance, Integer price, LocalDate createdAt, String author, String photoLink, List<String> hashtags) {
-        this(-1, model, type, length, wingspan, height, origin, crew, speed, distance, price, createdAt, author, photoLink, hashtags);
+                Float speed, Float distance, Integer price, LocalDate createdAt, String author, List<String> hashtags) {
+        this(-1, model, type, length, wingspan, height, origin, crew, speed, distance, price, createdAt, author, hashtags);
     }
 
     public String getHashtagsAsHashString() {

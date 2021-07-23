@@ -59,7 +59,7 @@
                                        value="${requestScope.filter_hashtags_text}">
                             </label>
                         </li>
-                        <li>
+                        <li class="li-filter-button">
                             <input type="submit" id="filter_btn" class="filter-button"
                                    value="<fmt:message key="filterBtn"/>">
                         </li>
@@ -73,7 +73,7 @@
                             <div class="card-main-col">
                                 <div class="card-main-box col-full">
                                     <div class="card-img-box">
-                                        <img src="${post.photoLink}" alt="samolet" class="card-img">
+                                        <img src="../images/planes/${post.id}.jpeg" alt="plane" class="card-img">
                                     </div>
                                     <div class="card-text-box">
                                         <ul class="card-text-top font-card">

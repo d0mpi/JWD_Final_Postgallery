@@ -3,12 +3,12 @@ package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 import by.bsu.d0mpi.UP_PostGallery.dao.Dao;
 import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
 import by.bsu.d0mpi.UP_PostGallery.model.DatabaseEntity;
+import by.bsu.d0mpi.UP_PostGallery.model.Like;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
@@ -104,7 +104,7 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
     }
 
     @Override
-    public abstract boolean create(T entity);
+    public abstract T create(T entity);
 
     @Override
     public abstract T update(T entity);

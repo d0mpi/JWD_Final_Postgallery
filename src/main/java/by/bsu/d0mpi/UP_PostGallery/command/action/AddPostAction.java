@@ -10,7 +10,16 @@ import by.bsu.d0mpi.UP_PostGallery.service.PostService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +29,8 @@ import java.util.stream.Collectors;
 
 public class AddPostAction implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
+    public static final String UPLOAD_PATH = "B:\\Proga\\UP_PostGallery\\src\\main\\webapp\\images\\planes\\";
+    public static final String PLANE_IMAGE_POSTFIX = ".jpeg";
     private static volatile AddPostAction instance;
 
     private final CommandResponse redirectHomePage;
@@ -73,7 +84,6 @@ public class AddPostAction implements Command {
         }
         String author = (String) session.getAttribute("user_name");
 
-        String photoLink = "images/planes/" + request.getParameter("file");
         List<String> hashtags;
         if (request.getParameter("hashtags") != null && !request.getParameter("hashtags").equals("")) {
             hashtags = Arrays.stream(
@@ -82,8 +92,38 @@ public class AddPostAction implements Command {
         } else {
             hashtags = new ArrayList<>();
         }
-        Post post = new Post(model, type, length, wingspan, height, origin, crew, speed, distance, price, createdAt, author, photoLink, hashtags);
+        Post post = new Post(model, type, length, wingspan, height, origin, crew, speed, distance, price, createdAt, author, hashtags);
         postService.createEntity(post);
+
+        try {
+            Part filePart = request.getPart("file");
+            String fileName = extractFileName(filePart);
+            InputStream fileContent = filePart.getInputStream();
+            filePart.write(UPLOAD_PATH + post.getId() + PLANE_IMAGE_POSTFIX);
+        } catch (ServletException | IOException e) {
+            System.out.println("exception");
+            return redirectErrorPage;
+        }
         return redirectHomePage;
+    }
+
+    private String extractFileName(Part part) {
+        // form-data; name="file"; filename="C:\file1.zip"
+        // form-data; name="file"; filename="C:\Note\file2.zip"
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                // C:\file1.zip
+                // C:\Note\file2.zip
+                String clientFileName = s.substring(s.indexOf("=") + 2, s.length() - 1);
+                clientFileName = clientFileName.replace("\\", "/");
+                int i = clientFileName.lastIndexOf('/');
+                // file1.zip
+                // file2.zip
+                return clientFileName.substring(i + 1);
+            }
+        }
+        return null;
     }
 }

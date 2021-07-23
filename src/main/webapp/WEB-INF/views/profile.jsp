@@ -27,17 +27,17 @@
                 <div class="col-full bordered">
                     <div class="col-33 column">
                         <i class="fas fa-paper-plane fa-2x"></i>
-                        <p>422</p>
-                        <p>Number of posts</p>
+                        <p>${requestScope.number_of_posts}</p>
+                        <p>Posts posted</p>
                     </div>
                     <div class="col-33 column">
                         <i class="fas fa-heart fa-2x"></i>
-                        <p>623</p>
+                        <p>${requestScope.number_of_likes}</p>
                         <p>Users' likes</p>
                     </div>
                     <div class="col-33 column">
                         <i class="fas fa-birthday-cake fa-2x "></i>
-                        <p>462</p>
+                        <p>${sessionScope.user_age}</p>
                         <p>Days on site</p>
                     </div>
                 </div>

@@ -2,16 +2,13 @@ package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.LikeDao;
 import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
-import by.bsu.d0mpi.UP_PostGallery.model.DatabaseEntity;
 import by.bsu.d0mpi.UP_PostGallery.model.Like;
-import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,7 +65,7 @@ public class MySqlLikeDao extends MySqlAbstractDao<Integer, Like> implements Lik
     }
 
     @Override
-    public boolean create(Like entity) {
+    public Like create(Like entity) {
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
                 final PreparedStatement statement = connection.prepareStatement(SQL_INSERT_LIKE, Statement.RETURN_GENERATED_KEYS)) {
             setDefaultStatementArgs(statement, entity);
@@ -77,14 +74,14 @@ public class MySqlLikeDao extends MySqlAbstractDao<Integer, Like> implements Lik
             if (resultSet.next()) {
                 int id = resultSet.getInt(1);
                 entity.setId(id);
-                return true;
+                return entity;
             } else {
                 LOGGER.error("No autoincremented index after trying to add record into table user");
-                return false;
+                return null;
             }
         } catch (SQLException | DAOException e) {
             LOGGER.error("DB connection error", e);
-            return false;
+            return null;
         }
     }
 
@@ -122,4 +119,5 @@ public class MySqlLikeDao extends MySqlAbstractDao<Integer, Like> implements Lik
                 e.printStackTrace();
             }}).stream().map(Like::getPostId).collect(Collectors.toList());
     }
+
 }

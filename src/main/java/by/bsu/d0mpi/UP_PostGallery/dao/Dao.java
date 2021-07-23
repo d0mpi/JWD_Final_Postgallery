@@ -1,7 +1,7 @@
 package by.bsu.d0mpi.UP_PostGallery.dao;
 
-import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
 import by.bsu.d0mpi.UP_PostGallery.model.DatabaseEntity;
+import by.bsu.d0mpi.UP_PostGallery.model.User;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface Dao<K extends Number, T extends DatabaseEntity> {
 
     boolean delete(T entity);
 
-    boolean create(T entity);
+    T create(T entity);
 
     T update(T entity);
 

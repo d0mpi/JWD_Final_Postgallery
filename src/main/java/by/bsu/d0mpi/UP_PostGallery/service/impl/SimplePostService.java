@@ -3,6 +3,7 @@ package by.bsu.d0mpi.UP_PostGallery.service.impl;
 import by.bsu.d0mpi.UP_PostGallery.dao.PostDao;
 import by.bsu.d0mpi.UP_PostGallery.model.DatabaseEntity;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
+import by.bsu.d0mpi.UP_PostGallery.model.User;
 import by.bsu.d0mpi.UP_PostGallery.service.FilterType;
 import by.bsu.d0mpi.UP_PostGallery.service.MyPair;
 import by.bsu.d0mpi.UP_PostGallery.service.PostService;
@@ -34,7 +35,7 @@ public class SimplePostService implements PostService {
 
 
     @Override
-    public boolean createEntity(Post entity) {
+    public Post createEntity(Post entity) {
         return postDao.create(entity);
     }
 

@@ -1,11 +1,12 @@
 package by.bsu.d0mpi.UP_PostGallery.service;
 
 import by.bsu.d0mpi.UP_PostGallery.model.DatabaseEntity;
+import by.bsu.d0mpi.UP_PostGallery.model.User;
 
 import java.util.List;
 
 public interface DBEntityService <K extends Number, T extends DatabaseEntity>{
-    boolean createEntity(T entity);
+    T createEntity(T entity);
 
     void delete(T entity);
 
