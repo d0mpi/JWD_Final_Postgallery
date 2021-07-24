@@ -1,5 +1,6 @@
 package by.bsu.d0mpi.UP_PostGallery.command;
 
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class SimpleCommandRequest implements CommandRequest {
 
     private static final Logger LOGGER = LogManager.getLogger();
+
     private final HttpServletRequest request;
 
     private SimpleCommandRequest(HttpServletRequest request) {

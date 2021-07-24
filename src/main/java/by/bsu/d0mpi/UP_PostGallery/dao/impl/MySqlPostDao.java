@@ -15,6 +15,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -77,7 +78,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             Float speed = rs.getFloat(9);
             Float distance = rs.getFloat(10);
             Integer price = rs.getInt(11);
-            LocalDate createdAt = rs.getDate(12).toLocalDate();
+            Date createdAt = rs.getDate(12);
             String author = rs.getString(13);
             PreparedStatement statement2 = connection.prepareStatement(SQL_SELECT_HASHTAGS_BY_POST_ID);
             statement2.setInt(1, id);
@@ -106,7 +107,11 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
         statement.setString(8, String.valueOf(entity.getSpeed()));
         statement.setString(9, String.valueOf(entity.getDistance()));
         statement.setString(10, String.valueOf(entity.getPrice()));
-        statement.setString(11, String.valueOf(entity.getCreatedAt()));
+        java.util.Date dt = entity.getCreatedAt();
+        java.text.SimpleDateFormat sdf =
+                new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String created_date = sdf.format(dt);
+        statement.setString(11, created_date);
         statement.setString(12, entity.getAuthor());
     }
 

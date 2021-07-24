@@ -1,6 +1,7 @@
 let fileInput = document.getElementById("file");
 let image = document.getElementById("add_img");
 let dropbox = document.getElementById("drag-and-drop");
+let text = document.querySelector(".drag-text");
 let fileName;
 
 dropbox.addEventListener("dragenter", dragenter, false);
@@ -21,15 +22,14 @@ function dragover(e) {
     e.preventDefault();
 }
 
-function dragleave(e) {
-    jQuery('#drag-and-drop').removeClass('hover');
-
-}
-
 function drop(e) {
     e.stopPropagation();
     e.preventDefault();
 
+    jQuery('#drag-and-drop').removeClass('hover');
+    jQuery('#drag-and-drop').addClass('drop');
+
+    text.remove();
     let dt = e.dataTransfer;
     let files = dt.files;
     fileInput.files = dt.files;
@@ -42,11 +42,6 @@ function dragleave(e) {
     return false;
 }
 
-dropbox.ondrop = function (event) {
-    event.preventDefault();
-    dropbox.removeClass('hover');
-    dropbox.addClass('drop');
-};
 
 $(document).ready(function () {
     $('.drop-button').click(function () {
@@ -56,8 +51,11 @@ $(document).ready(function () {
 
 function onFileLoad(event) {
     fileName = fileInput.files.item(0).name;
+    jQuery('#drag-and-drop').removeClass('hover');
+    jQuery('#drag-and-drop').addClass('drop');
+
+    text.remove();
     handleFiles(fileInput.files);
-    dropbox.style.borderStyle = "none";
 }
 
 fileInput.addEventListener('change', onFileLoad);

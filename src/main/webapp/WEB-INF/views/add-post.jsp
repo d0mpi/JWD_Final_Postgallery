@@ -33,11 +33,13 @@
                         <div class="img-box col-full">
                             <div class="add-label"><fmt:message key="editimage"/></div>
                             <div id="drag-and-drop">
-                                <i class="fas fa-download fa-8x"></i>
-                                <div>
-                                    <button class="drop-button">Choose a file</button>
-                                    &#160or drag it here
-                                    <img src="" alt="" class="add-img" id="add_img">
+                                <img src="" alt="" class="add-img" id="add_img">
+                                <div class="drag-text">
+                                    <i class="fas fa-download fa-8x"></i>
+                                    <div>
+                                        <button class="drop-button">Choose a file</button>
+                                        &#160or drag it here
+                                    </div>
                                 </div>
                             </div>
                         </div>

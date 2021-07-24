@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -21,12 +22,12 @@ public class Post extends DatabaseEntity {
     private Float speed;
     private Float distance;
     private Integer price;
-    private LocalDate createdAt;
+    private Date createdAt;
     private String author;
     private List<String> hashtags;
 
     public Post(int id, String model, String type, Float length, Float wingspan, Float height, String origin,
-                Integer crew, Float speed, Float distance, Integer price, LocalDate createdAt, String author,
+                Integer crew, Float speed, Float distance, Integer price, Date createdAt, String author,
                  List<String> hashtags) {
         super(id);
         this.model = model;
@@ -45,7 +46,7 @@ public class Post extends DatabaseEntity {
     }
 
     public Post(String model, String type, Float length, Float wingspan, Float height, String origin, Integer crew,
-                Float speed, Float distance, Integer price, LocalDate createdAt, String author, List<String> hashtags) {
+                Float speed, Float distance, Integer price, Date createdAt, String author, List<String> hashtags) {
         this(-1, model, type, length, wingspan, height, origin, crew, speed, distance, price, createdAt, author, hashtags);
     }
 

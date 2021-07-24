@@ -4,33 +4,23 @@ import by.bsu.d0mpi.UP_PostGallery.command.Command;
 import by.bsu.d0mpi.UP_PostGallery.command.CommandRequest;
 import by.bsu.d0mpi.UP_PostGallery.command.CommandResponse;
 import by.bsu.d0mpi.UP_PostGallery.command.SimpleCommandResponse;
-import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDao;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import by.bsu.d0mpi.UP_PostGallery.service.PostService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddPostAction implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String UPLOAD_PATH = "B:\\Proga\\UP_PostGallery\\src\\main\\webapp\\images\\planes\\";
-    public static final String PLANE_IMAGE_POSTFIX = ".jpeg";
+    public static final String PLANE_IMAGE_POSTFIX = "-card.jpg";
     private static volatile AddPostAction instance;
 
     private final CommandResponse redirectHomePage;
@@ -75,7 +65,7 @@ public class AddPostAction implements Command {
                 request.getParameter("dist") == null) ? 0 : Float.parseFloat(request.getParameter("dist"));
         Integer price = Integer.valueOf(request.getParameter("price"));
         ResourceBundle resource = ResourceBundle.getBundle("database");
-        LocalDate createdAt = LocalDate.now();
+        Date createdAt = new Date();
 
 
         HttpSession session = request.getCurrentSession().orElse(null);
@@ -95,11 +85,13 @@ public class AddPostAction implements Command {
         Post post = new Post(model, type, length, wingspan, height, origin, crew, speed, distance, price, createdAt, author, hashtags);
         postService.createEntity(post);
 
+
         try {
             Part filePart = request.getPart("file");
             String fileName = extractFileName(filePart);
             InputStream fileContent = filePart.getInputStream();
             filePart.write(UPLOAD_PATH + post.getId() + PLANE_IMAGE_POSTFIX);
+            fileContent.close();
         } catch (ServletException | IOException e) {
             System.out.println("exception");
             return redirectErrorPage;
