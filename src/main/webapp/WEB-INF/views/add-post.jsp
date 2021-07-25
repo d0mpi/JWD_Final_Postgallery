@@ -34,15 +34,13 @@
                             <div class="add-label"><fmt:message key="editimage"/> 1:1 ratio recommended</div>
                             <div id="drag-and-drop">
                                 <img src="" alt="" class="add-img" id="add_img">
-                                <div class="drag-text" id="drag-text">
-                                    <i class="fas fa-download fa-8x"></i>
-                                    <div>
-                                        <label class="drop-button">Choose a file
-                                            <input type="file" name="file" id="file" class="input-file"
-                                                   accept="image/jpeg,image/png,image/jpg" required>
-                                        </label>
-                                        &#160or drag it here
-                                    </div>
+                                <i class="fas fa-download fa-8x" id="download-icon"></i>
+                                <div class="drag-text">
+                                    <label class="drop-button" id="image-label">Choose a file
+                                        <input type="file" name="file" id="file" class="input-file"
+                                               accept="image/jpeg,image/png,image/jpg" required>
+                                    </label>
+                                    <p id="image-text">&#160or drag it here</p>
                                 </div>
                             </div>
                         </div>

@@ -1,7 +1,10 @@
 let fileInput = document.getElementById("file");
 let image = document.getElementById("add_img");
 let dropbox = document.getElementById("drag-and-drop");
-let text = document.getElementById("drag-text");
+let text = document.getElementById("image-label");
+let icon = document.getElementById("download-icon");
+let text2 = document.getElementById("image-text");
+
 
 
 dropbox.addEventListener("dragenter", dragenter, false);
@@ -30,6 +33,9 @@ function drop(e) {
     dropbox.classList.add('drop');
 
     text.hidden = true;
+    text2.hidden = true;
+    icon.remove();
+
     let dt = e.dataTransfer;
     let files = dt.files;
     fileInput.files = dt.files;
@@ -48,6 +54,9 @@ function onFileLoad(event) {
     dropbox.classList.add('drop');
 
     text.hidden = true;
+    text2.hidden = true;
+    icon.remove();
+
     handleFiles(fileInput.files);
 }
 
