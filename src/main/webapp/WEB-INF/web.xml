@@ -9,6 +9,7 @@
             b:\Proga\UP_PostGallery\src\main\webapp\images\planes\
         </param-value>
     </context-param>
+
     <error-page>
         <exception-type>java.lang.Throwable</exception-type >
         <location>/controller?command=error_page</location>

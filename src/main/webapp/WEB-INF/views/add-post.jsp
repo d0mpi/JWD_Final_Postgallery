@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-half" style="height: 504px">
                         <div class="img-box col-full">
-                            <div class="add-label"><fmt:message key="editimage"/></div>
+                            <div class="add-label"><fmt:message key="editimage"/> 1:1 ratio recommended</div>
                             <div id="drag-and-drop">
                                 <img src="" alt="" class="add-img" id="add_img">
                                 <div class="drag-text">

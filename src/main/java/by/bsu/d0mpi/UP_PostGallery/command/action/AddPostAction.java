@@ -12,14 +12,16 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddPostAction implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
-    public static final String UPLOAD_PATH = "B:\\Proga\\UP_PostGallery\\src\\main\\webapp\\images\\planes\\";
+    public static final String UPLOAD_PATH = "B:\\Proga\\temp\\planes\\";
     public static final String PLANE_IMAGE_POSTFIX = "-card.jpg";
     private static volatile AddPostAction instance;
 
@@ -89,9 +91,12 @@ public class AddPostAction implements Command {
         try {
             Part filePart = request.getPart("file");
             String fileName = extractFileName(filePart);
-            InputStream fileContent = filePart.getInputStream();
-            filePart.write(UPLOAD_PATH + post.getId() + PLANE_IMAGE_POSTFIX);
-            fileContent.close();
+            File uploads = new File("b:/Proga/temp/planes");
+            File file = new File(uploads, post.getId() + PLANE_IMAGE_POSTFIX);
+            try (InputStream input = filePart.getInputStream()) {
+                Files.copy(input, file.toPath());
+//                filePart.write(UPLOAD_PATH + post.getId() + PLANE_IMAGE_POSTFIX);
+            }
         } catch (ServletException | IOException e) {
             System.out.println("exception");
             return redirectErrorPage;
@@ -100,19 +105,14 @@ public class AddPostAction implements Command {
     }
 
     private String extractFileName(Part part) {
-        // form-data; name="file"; filename="C:\file1.zip"
-        // form-data; name="file"; filename="C:\Note\file2.zip"
         String contentDisp = part.getHeader("content-disposition");
         String[] items = contentDisp.split(";");
         for (String s : items) {
             if (s.trim().startsWith("filename")) {
-                // C:\file1.zip
-                // C:\Note\file2.zip
                 String clientFileName = s.substring(s.indexOf("=") + 2, s.length() - 1);
                 clientFileName = clientFileName.replace("\\", "/");
                 int i = clientFileName.lastIndexOf('/');
-                // file1.zip
-                // file2.zip
+
                 return clientFileName.substring(i + 1);
             }
         }

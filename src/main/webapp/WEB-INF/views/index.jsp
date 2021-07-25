@@ -73,7 +73,7 @@
                             <div class="card-main-col">
                                 <div class="card-main-box col-full">
                                     <div class="card-img-box">
-                                        <img src="../images/planes/${post.id}-card.jpeg" alt="plane" class="card-img">
+                                        <img src="/files/${post.id}-card.jpg" alt="plane" class="card-img">
                                     </div>
                                     <div class="card-text-box">
                                         <ul class="card-text-top font-card">

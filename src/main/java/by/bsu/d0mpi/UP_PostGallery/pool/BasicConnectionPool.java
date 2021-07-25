@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class BasicConnectionPool implements ConnectionPool {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger(BasicConnectionPool.class);
     private final Lock locker = new ReentrantLock();
     private final BlockingDeque<ProxyConnection> freeConnections;
     private final Set<ProxyConnection> usedConnections;
@@ -90,6 +90,8 @@ public class BasicConnectionPool implements ConnectionPool {
             }
         }
         usedConnections.add(connection);
+
+        LOGGER.info(String.format("Connection was gotten from pool. Current pool size: %d used connections; %d free connection%n", usedConnections.size(), freeConnections.size()));
         System.out.printf("Connection was gotten from pool. Current pool size: %d used connections; %d free connection%n", usedConnections.size(), freeConnections.size());
         locker.unlock();
         return connection;

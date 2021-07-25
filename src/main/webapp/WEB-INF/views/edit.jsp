@@ -31,25 +31,21 @@
     <div class="main-container">
         <div class="main-col">
             <div class="col-66">
-                <form name="edit" method="post" action="${pageContext.request.contextPath}/controller?command=edit_post" class="edit-main-box">
+                <form name="edit" method="post" action="${pageContext.request.contextPath}/controller?command=edit_post"
+                      class="edit-main-box">
                     <div class="col-full edit-title">
                         <h3><fmt:message key="editLabel"/></h3>
                     </div>
-                    <div class="col-half" style="height: 504px">
-                        <div class="img-box col-full">
-                            <div class="edit-label"><fmt:message key="editimage"/>:
-                            </div>
-                            <div class="drag-and-drop">
-                                <img src="../images/planes/${postToEdit.id}.jpeg" alt="" class="add-img" id="add_img">
-                                <label hidden>
-                                    <input value="" name="file" hidden>
-                                </label>
-                            </div>
+                    <div class="img-box col-full">
+                        <div class="edit-label"><fmt:message key="editimage"/>:
                         </div>
-                        <div class="col-full file-load-box">
-                            <%--                            <input type="file" id="dropbox" name="file" class="input-file">--%>
+                        <div class="drag-and-drop">
+                            <img src="/files/${postToEdit.id}-card.jpg" alt="" class="add-img" id="add_img">
                         </div>
-
+                    </div>
+                    <div class="col-full image-text">
+                        <button class="drop-button">Choose new file</button>
+                        &#160or drag it here
                     </div>
                     <div class="col-half">
                         <div class="edit-text-box">
