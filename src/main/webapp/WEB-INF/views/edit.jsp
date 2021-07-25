@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="../../css/edit-styles.css">
     <script src="https://kit.fontawesome.com/ede64561b8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../../fonts/fonts.css">
+    <script src="../../js/controllerEdit.js" defer></script>
     <script src="../../js/jquery-3.6.0.min.js"></script>
 
     <jsp:include page="title-logo.jsp"/>
@@ -31,7 +32,8 @@
     <div class="main-container">
         <div class="main-col">
             <div class="col-66">
-                <form name="edit" method="post" action="${pageContext.request.contextPath}/controller?command=edit_post"
+                <form name="edit" enctype="multipart/form-data" method="post"
+                      action="${pageContext.request.contextPath}/controller?command=edit_post"
                       class="edit-main-box">
                     <div class="col-full edit-title">
                         <h3><fmt:message key="editLabel"/></h3>
@@ -39,12 +41,15 @@
                     <div class="img-box col-full">
                         <div class="edit-label"><fmt:message key="editimage"/>:
                         </div>
-                        <div class="drag-and-drop">
+                        <div class="drag-and-drop" id="drag-and-drop">
                             <img src="/files/${postToEdit.id}-card.jpg" alt="" class="add-img" id="add_img">
                         </div>
                     </div>
                     <div class="col-full image-text">
-                        <button class="drop-button">Choose new file</button>
+                        <label class="drop-button">Choose new file
+                            <input type="file" name="file" id="file" class="input-file"
+                                   accept="image/jpeg,image/png,image/jpg">
+                        </label>
                         &#160or drag it here
                     </div>
                     <div class="col-half">
@@ -57,6 +62,7 @@
                                                 <fmt:message key="postModel"/>*</label>
                                             <input id="edit-model" name="model" type="text" class="input-text" required
                                                    maxlength="100" value="${requestScope.postToEdit.model}">
+
                                         </div>
                                     </div>
                                     <div class="col-33">

@@ -1,8 +1,8 @@
 let fileInput = document.getElementById("file");
 let image = document.getElementById("add_img");
 let dropbox = document.getElementById("drag-and-drop");
-let text = document.querySelector(".drag-text");
-let fileName;
+let text = document.getElementById("drag-text");
+
 
 dropbox.addEventListener("dragenter", dragenter, false);
 dropbox.addEventListener("dragover", dragover, false);
@@ -10,14 +10,14 @@ dropbox.addEventListener("dragleave", dragleave, false);
 dropbox.addEventListener("drop", drop, false);
 
 function dragenter(e) {
-    jQuery('#drag-and-drop').addClass('hover');
+    dropbox.classList.add('hover');
 
     e.stopPropagation();
     e.preventDefault();
 }
 
 function dragover(e) {
-    jQuery('#drag-and-drop').addClass('hover');
+    dropbox.classList.add('hover');
     e.stopPropagation();
     e.preventDefault();
 }
@@ -26,10 +26,10 @@ function drop(e) {
     e.stopPropagation();
     e.preventDefault();
 
-    jQuery('#drag-and-drop').removeClass('hover');
-    jQuery('#drag-and-drop').addClass('drop');
+    dropbox.classList.remove('hover');
+    dropbox.classList.add('drop');
 
-    text.remove();
+    text.hidden = true;
     let dt = e.dataTransfer;
     let files = dt.files;
     fileInput.files = dt.files;
@@ -38,23 +38,16 @@ function drop(e) {
 }
 
 function dragleave(e) {
-    jQuery('#drag-and-drop').removeClass('hover');
+    dropbox.classList.remove('hover');
     return false;
 }
 
 
-$(document).ready(function () {
-    $('.drop-button').click(function () {
-        $('#file').trigger('click');
-    });
-});
-
 function onFileLoad(event) {
-    fileName = fileInput.files.item(0).name;
-    jQuery('#drag-and-drop').removeClass('hover');
-    jQuery('#drag-and-drop').addClass('drop');
+    dropbox.classList.remove('hover');
+    dropbox.classList.add('drop');
 
-    text.remove();
+    text.hidden = true;
     handleFiles(fileInput.files);
 }
 

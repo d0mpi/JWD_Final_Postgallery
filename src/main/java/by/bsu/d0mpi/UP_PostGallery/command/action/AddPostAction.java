@@ -19,6 +19,10 @@ import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static by.bsu.d0mpi.UP_PostGallery.controller.ImageServlet.IMAGES_UPLOAD_PATH;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
+
 public class AddPostAction implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String UPLOAD_PATH = "B:\\Proga\\temp\\planes\\";
@@ -91,16 +95,17 @@ public class AddPostAction implements Command {
         try {
             Part filePart = request.getPart("file");
             String fileName = extractFileName(filePart);
-            File uploads = new File("b:/Proga/temp/planes");
+            System.out.println(fileName);
+            File uploads = new File(IMAGES_UPLOAD_PATH);
             File file = new File(uploads, post.getId() + PLANE_IMAGE_POSTFIX);
             try (InputStream input = filePart.getInputStream()) {
-                Files.copy(input, file.toPath());
-//                filePart.write(UPLOAD_PATH + post.getId() + PLANE_IMAGE_POSTFIX);
+                Files.copy(input, file.toPath(), REPLACE_EXISTING);
             }
         } catch (ServletException | IOException e) {
-            System.out.println("exception");
+            e.printStackTrace();
             return redirectErrorPage;
         }
+
         return redirectHomePage;
     }
 

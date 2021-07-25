@@ -12,12 +12,15 @@ import java.nio.file.Files;
 
 @WebServlet("/files/*")
 public class ImageServlet extends HttpServlet {
+
+    public static final String IMAGES_UPLOAD_PATH = "b:/Proga/temp/planes";
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String filename = URLDecoder.decode(request.getPathInfo().substring(1), "UTF-8");
-        File file = new File("b:/Proga/temp/planes", filename);
+        File file = new File(IMAGES_UPLOAD_PATH, filename);
         if(!file.exists()){
-            file = new File("b:/Proga/temp/planes", "default.png");
+            file = new File(IMAGES_UPLOAD_PATH, "default.png");
         }
         response.setHeader("Content-Type", getServletContext().getMimeType(filename));
         response.setHeader("Content-Length", String.valueOf(file.length()));

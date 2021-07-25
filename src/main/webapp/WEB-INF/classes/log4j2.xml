@@ -12,9 +12,9 @@
         </File>
     </Appenders>
 
-    <Loggers>
-        <Logger name="by.bsu.d0mpi.UP_PostGallery.pool" additivity="true" level="All">
-            <AppenderRef ref="ConnectionPoolAppender"/>
-        </Logger>
-    </Loggers>
+<!--    <Loggers>-->
+<!--        <Logger name="by.bsu.d0mpi.UP_PostGallery.pool" additivity="true" level="All">-->
+<!--            <AppenderRef ref="ConnectionPoolAppender"/>-->
+<!--        </Logger>-->
+<!--    </Loggers>-->
 </Configuration>

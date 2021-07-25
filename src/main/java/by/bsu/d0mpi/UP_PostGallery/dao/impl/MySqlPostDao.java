@@ -149,7 +149,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
              final PreparedStatement statement1 = connection.prepareStatement(SQL_DELETE_HASHTAGS_BY_POST_ID);
              final PreparedStatement statement2 = connection.prepareStatement(SQL_INSERT_HASHTAGS_WITH_POST_ID)) {
             setDefaultStatementArgs(statement, entity);
-            statement.setInt(14, entity.getId());
+            statement.setInt(13, entity.getId());
             statement.executeUpdate();
 
             statement1.setInt(1, entity.getId());
