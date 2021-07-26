@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 public class SimpleCommandRequest implements CommandRequest {
@@ -65,6 +66,15 @@ public class SimpleCommandRequest implements CommandRequest {
     @Override
     public Part getPart(String name) throws ServletException, IOException {
         return request.getPart(name);
+    }
+
+    @Override
+    public void setCharacterEncoding(String s) {
+        try {
+            request.setCharacterEncoding(s);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

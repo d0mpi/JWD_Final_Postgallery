@@ -32,4 +32,6 @@ public interface CommandRequest {
     Cookie[] getCookies();
 
     Part getPart(String name) throws ServletException, IOException;
+
+    void setCharacterEncoding(String s);
 }
