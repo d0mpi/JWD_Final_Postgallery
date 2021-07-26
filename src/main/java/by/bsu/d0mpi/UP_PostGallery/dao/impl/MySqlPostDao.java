@@ -23,7 +23,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
     private static final String SQL_UPDATE_POST =
             "UPDATE posts SET post_model = ?, post_type = ?,post_length = ?, post_wingspan = ?, post_height = ?," +
                     " post_origin = ?, post_crew = ?, post_speed = ?, post_distance = ?, post_price = ?," +
-                    " post_create_date = ?, post_author = ? WHERE post_id = ?";
+                    " post_author = ? WHERE post_id = ?";
     private static final String SQL_INSERT =
             "INSERT INTO posts (post_model ,post_type, post_length, post_wingspan, post_height, post_origin, post_crew," +
                     " post_speed, post_distance, post_price, post_create_date, post_author)" +
@@ -148,8 +148,18 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
              final PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_POST);
              final PreparedStatement statement1 = connection.prepareStatement(SQL_DELETE_HASHTAGS_BY_POST_ID);
              final PreparedStatement statement2 = connection.prepareStatement(SQL_INSERT_HASHTAGS_WITH_POST_ID)) {
-            setDefaultStatementArgs(statement, entity);
-            statement.setInt(13, entity.getId());
+            statement.setString(1, entity.getModel());
+            statement.setString(2, entity.getType());
+            statement.setString(3, String.valueOf(entity.getLength()));
+            statement.setString(4, String.valueOf(entity.getWingspan()));
+            statement.setString(5, String.valueOf(entity.getHeight()));
+            statement.setString(6, entity.getOrigin());
+            statement.setString(7, String.valueOf(entity.getCrew()));
+            statement.setString(8, String.valueOf(entity.getSpeed()));
+            statement.setString(9, String.valueOf(entity.getDistance()));
+            statement.setString(10, String.valueOf(entity.getPrice()));
+            statement.setString(11, entity.getAuthor());
+            statement.setInt(12, entity.getId());
             statement.executeUpdate();
 
             statement1.setInt(1, entity.getId());
