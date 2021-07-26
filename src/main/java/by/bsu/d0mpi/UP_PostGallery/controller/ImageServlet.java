@@ -1,6 +1,5 @@
 package by.bsu.d0mpi.UP_PostGallery.controller;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

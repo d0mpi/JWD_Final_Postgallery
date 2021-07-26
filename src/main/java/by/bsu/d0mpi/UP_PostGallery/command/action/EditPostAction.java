@@ -21,11 +21,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static by.bsu.d0mpi.UP_PostGallery.command.action.AddPostAction.PLANE_IMAGE_POSTFIX;
 import static by.bsu.d0mpi.UP_PostGallery.controller.ImageServlet.IMAGES_UPLOAD_PATH;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-
-
-import static by.bsu.d0mpi.UP_PostGallery.command.action.AddPostAction.PLANE_IMAGE_POSTFIX;
 
 public class EditPostAction implements Command {
     private static final Logger LOGGER = LogManager.getLogger();

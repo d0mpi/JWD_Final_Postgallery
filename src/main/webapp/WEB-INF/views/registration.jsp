@@ -30,23 +30,17 @@
     </c:if>
     <form class="form-row" method="post" name="reg_form"
           action="${pageContext.request.contextPath}/controller?command=register">
-        <%--        <div class="form-group">--%>
-        <%--            <div class="form-under">Email</div>--%>
-        <%--            <label for="email"></label>--%>
-        <%--            <input class="form-input" type="email" name="email" id="email" placeholder="Type your email" required>--%>
-        <%--        </div>--%>
-
         <div class="form-group">
             <div class="form-under"><fmt:message key="registerUsernameTitle"/></div>
             <label class="form-label" for="login"> </label>
-            <input class="form-input" type="text" id="login" name="login" placeholder="Type username"
+            <input class="form-input" type="text" id="login" name="login" placeholder=<fmt:message key="registerUsernameInput"/>
                    pattern="[a-zA-Z0-9]{1,40}" required>
         </div>
         <div class="form-group">
             <div class="form-under"><fmt:message key="registerPasswordTitle"/></div>
             <label for="password"></label>
             <input class="form-input" name="password" pattern="[A-za-z0-9]{1,40}" type="password" id="password"
-                   placeholder="Type password" required>
+                   placeholder=<fmt:message key="registerPasswordInput"/> required>
         </div>
         <input type="submit" id="register_btn" class="register-btn" value="<fmt:message key="registerBtn"/>">
         <div class="text-span"><fmt:message key="orSignUp"/></div>

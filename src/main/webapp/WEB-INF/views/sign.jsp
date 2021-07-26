@@ -34,13 +34,13 @@
             <div class="form-under"><fmt:message key="signInUsernameTitle"/></div>
             <label class="form-label" for="login"> </label>
             <input class="form-input" name="login" type="text" pattern="[a-zA-Z0-9]{1,40}" id="login"
-                   placeholder="Type your username" required>
+                   placeholder="<fmt:message key="signInUsernameInput"/>" required>
         </div>
         <div class="form-group">
             <div class="form-under"><fmt:message key="signInPasswordTitle"/></div>
             <label for="password"></label>
             <input class="form-input" name="password" pattern="[A-za-z0-9]{1,40}" type="password" id="password"
-                   placeholder="Type your password" required>
+                   placeholder="<fmt:message key="signInPasswordInput"/>" required>
         </div>
         <a class="text-forgot"><fmt:message key="signInForgot"/></a>
         <input name="sign" type="submit" id="sign_btn" class="sign-in-btn" value="<fmt:message key="headerSignInBtn"/>">

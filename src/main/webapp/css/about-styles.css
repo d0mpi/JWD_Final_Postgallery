@@ -15,7 +15,6 @@ body {
     align-items: center;
 }
 
-
 .header-add-button {
     display: none;
 }
@@ -179,8 +178,8 @@ h3 {
     justify-content: center;
 
     color: #0b2852;
-    font-size: 150px;
-    font-family: Forte, serif;
+    font-size: 10rem;
+    font-family: Forte_VR, sans-serif;
 
     letter-spacing: 5px;
 

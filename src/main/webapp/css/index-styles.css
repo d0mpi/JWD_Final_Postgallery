@@ -961,13 +961,13 @@ footer {
 }
 
 .filter-button {
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 14px;
     padding: 3px 10px;
     align-items: center;
     margin-top: 5px;
 
-    background: white;
+    background: #e0f2ff;
 
     outline: none;
     cursor: pointer;

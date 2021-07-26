@@ -20,7 +20,7 @@
             </div>
             <nav class="header-menu">
                 <div class="menu-col ">
-                    <a href="${pageContext.request.contextPath}/controller?command=main_page" id="header-home-btn"
+                    <a href="${pageContext.request.contextPath}/controller?command=main_page" id="header-main-btn"
                        class="menu-href">
                         <div></div>
                         <fmt:message key="headerHome"/> </a>

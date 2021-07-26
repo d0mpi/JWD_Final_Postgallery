@@ -53,3 +53,8 @@
     font-family:Barlow-Italic;
     src:url(Barlow/Barlow-Italic.ttf)
 }
+
+@font-face {
+    font-family: Forte_VR;
+    src: url(VR_Fonts/FORTE_VR.TTF)
+}
