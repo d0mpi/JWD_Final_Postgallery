@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SimplePostService implements PostService {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     private static volatile SimplePostService instance;
     private final PostDao postDao = PostDao.MySQL();
 

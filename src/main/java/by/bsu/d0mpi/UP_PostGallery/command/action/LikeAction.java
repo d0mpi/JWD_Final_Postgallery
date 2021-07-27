@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 
 
 public class LikeAction implements Command {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     private static volatile LikeAction instance;
 
     private final CommandResponse doNothing;

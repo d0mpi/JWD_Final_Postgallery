@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class BasicConnectionPool implements ConnectionPool {
 
-    private static final Logger LOGGER = LogManager.getLogger(BasicConnectionPool.class);
+    private static final Logger logger = LogManager.getLogger(BasicConnectionPool.class);
     private final Lock locker = new ReentrantLock();
     private final BlockingDeque<ProxyConnection> freeConnections;
     private final Set<ProxyConnection> usedConnections;
@@ -54,7 +54,7 @@ public class BasicConnectionPool implements ConnectionPool {
                 freeConnections.put(createConnection());
             }
         } catch (SQLException | InterruptedException e) {
-            LOGGER.fatal("Impossible to initialize connection pool", e);
+            logger.fatal("Impossible to initialize connection pool", e);
         } finally {
             locker.unlock();
         }
@@ -79,19 +79,19 @@ public class BasicConnectionPool implements ConnectionPool {
                     }
                     connection = freeConnections.take();
                 } else {
-                    LOGGER.error("Number of database connections is exceeded");
+                    logger.error("Number of database connections is exceeded");
                     locker.unlock();
                     throw new DAOException();
                 }
             } catch (InterruptedException | SQLException e) {
-                LOGGER.error("Impossible to connect to a database", e);
+                logger.error("Impossible to connect to a database", e);
                 locker.unlock();
                 throw new DAOException();
             }
         }
         usedConnections.add(connection);
 
-        LOGGER.info(String.format("Connection was gotten from pool. Current pool size: %d used connections; %d free connection%n", usedConnections.size(), freeConnections.size()));
+        logger.info(String.format("Connection was gotten from pool. Current pool size: %d used connections; %d free connection%n", usedConnections.size(), freeConnections.size()));
         System.out.printf("Connection was gotten from pool. Current pool size: %d used connections; %d free connection%n", usedConnections.size(), freeConnections.size());
         locker.unlock();
         return connection;
@@ -109,10 +109,10 @@ public class BasicConnectionPool implements ConnectionPool {
                 usedConnections.remove(connection);
                 freeConnections.add(connection);
                 System.out.printf("Connection was returned into pool. Current pool size: %d used connections; %d free connection%n", usedConnections.size(), freeConnections.size());
-                LOGGER.debug(String.format("Connection was returned into pool. Current pool size: %d used connections; %d free connection", usedConnections.size(), freeConnections.size()));
+                logger.debug(String.format("Connection was returned into pool. Current pool size: %d used connections; %d free connection", usedConnections.size(), freeConnections.size()));
             }
         } catch (SQLException e) {
-            LOGGER.warn("Impossible to return connection into pool", e);
+            logger.warn("Impossible to return connection into pool", e);
             try {
                 connection.getConnection().close();
             } catch (SQLException throwable) {

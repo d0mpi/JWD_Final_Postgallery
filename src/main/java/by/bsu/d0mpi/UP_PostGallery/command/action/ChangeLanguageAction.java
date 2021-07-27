@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.Cookie;
 
 public class ChangeLanguageAction implements Command{
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     private static volatile ChangeLanguageAction instance;
 
     private final CommandResponse redirectHomePage;

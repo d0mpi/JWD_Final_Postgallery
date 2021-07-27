@@ -26,7 +26,7 @@ import static by.bsu.d0mpi.UP_PostGallery.controller.ImageServlet.IMAGES_UPLOAD_
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class EditPostAction implements Command {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     private static volatile EditPostAction instance;
 
     private final CommandResponse redirectHomePage;
@@ -91,8 +91,7 @@ public class EditPostAction implements Command {
 
         try {
             Part filePart = request.getPart("file");
-            String fileName = extractFileName(filePart);
-            System.out.println(fileName);
+//            String fileName = extractFileName(filePart);
             File uploads = new File(IMAGES_UPLOAD_PATH);
             File file = new File(uploads, post.getId() + PLANE_IMAGE_POSTFIX);
             try (InputStream input = filePart.getInputStream()) {
@@ -107,21 +106,5 @@ public class EditPostAction implements Command {
         postService.editEntity(post);
 
         return redirectHomePage;
-    }
-
-
-    private String extractFileName(Part part) {
-        String contentDisp = part.getHeader("content-disposition");
-        String[] items = contentDisp.split(";");
-        for (String s : items) {
-            if (s.trim().startsWith("filename")) {
-                String clientFileName = s.substring(s.indexOf("=") + 2, s.length() - 1);
-                clientFileName = clientFileName.replace("\\", "/");
-                int i = clientFileName.lastIndexOf('/');
-
-                return clientFileName.substring(i + 1);
-            }
-        }
-        return null;
     }
 }

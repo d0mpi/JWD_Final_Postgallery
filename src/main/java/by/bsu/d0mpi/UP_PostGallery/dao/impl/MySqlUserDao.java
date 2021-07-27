@@ -2,21 +2,23 @@ package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.UserDao;
 import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
-import by.bsu.d0mpi.UP_PostGallery.model.Like;
 import by.bsu.d0mpi.UP_PostGallery.model.Role;
 import by.bsu.d0mpi.UP_PostGallery.model.User;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements UserDao {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
 
     private static final String SQL_UPDATE_USER =
             "UPDATE users SET user_login = ?, user_password = ?, user_role_id = ? WHERE user_id = ?";
@@ -50,7 +52,7 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
     }
 
     @Override
-    protected List<User> mapResultSet(Connection connection, ResultSet resultSet) throws SQLException {
+    protected List<User> getRequestResult(Connection connection, ResultSet resultSet) throws SQLException {
         List<User> users = new ArrayList<>();
         while (resultSet.next()) {
             int id = resultSet.getInt(1);
@@ -64,47 +66,36 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
     }
 
     @Override
-    protected void setDefaultStatementArgs(PreparedStatement statement, User entity) throws SQLException {
+    protected void setCreateStatementArgs(PreparedStatement statement, User entity) throws SQLException {
+        setUpdateStatementArgs(statement, entity);
+        java.util.Date dt = entity.getCreatedDate();
+        java.text.SimpleDateFormat sdf =
+                new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String created_date = sdf.format(dt);
+        statement.setString(4, created_date);
+    }
+
+    @Override
+    protected void setUpdateStatementArgs(PreparedStatement statement, User entity) throws SQLException {
         statement.setString(1, entity.getLogin());
         statement.setString(2, entity.getPassword());
         statement.setInt(3, entity.getRole().ordinal());
+        statement.setInt(4, entity.getId());
     }
 
     @Override
     public User create(User entity) {
-        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
-             final PreparedStatement statement = connection.prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
-            setDefaultStatementArgs(statement, entity);
-            java.text.SimpleDateFormat sdf =
-                    new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            long timeMillis = System.currentTimeMillis();
-            statement.setDate(4, new java.sql.Date(timeMillis));
-            statement.executeUpdate();
-            ResultSet resultSet = statement.getGeneratedKeys();
-            if (resultSet.next()) {
-                int id = resultSet.getInt(1);
-                entity.setId(id);
-                entity.setRegistrationDate(new Date(timeMillis));
-                return entity;
-            } else {
-                LOGGER.error("No autoincremented index after trying to add record into table user");
-                return null;
-            }
-        } catch (SQLException | DAOException e) {
-            LOGGER.error("DB connection error", e);
-            return null;
-        }
+        return createEntityWithoutDependencies(entity, SQL_INSERT_USER);
     }
 
     @Override
     public User update(User entity) {
-        try (PreparedStatement statement = BasicConnectionPool.getInstance().getConnection().prepareStatement(SQL_UPDATE_USER)) {
-            setDefaultStatementArgs(statement, entity);
-            statement.setInt(4, entity.getId());
+        try (final PreparedStatement statement = BasicConnectionPool.getInstance().getConnection().prepareStatement(SQL_UPDATE_USER)) {
+            setCreateStatementArgs(statement, entity);
             statement.executeUpdate();
             return entity;
         } catch (SQLException | DAOException e) {
-            LOGGER.error("DB connection error", e);
+            logger.error("DB connection error", e);
             return entity;
         }
     }
@@ -127,31 +118,24 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
 
     @Override
     public int getNumberOfPostsByAuthor(String login) {
-        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
-             final PreparedStatement statement = connection.prepareStatement(SQL_COUNT_OF_POSTS_BY_AUTHOR)
-        ) {
-            statement.setString(1, login);
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            return resultSet.getInt(1);
-        } catch (SQLException | DAOException e) {
-            LOGGER.error("DB connection error", e);
-            return 0;
-        }
+        return getAuthorStatistic(login, SQL_COUNT_OF_POSTS_BY_AUTHOR);
     }
-
 
     @Override
     public int getNumberOfLikesByAuthor(String login) {
+        return getAuthorStatistic(login, SQL_COUNT_OF_LIKES_BY_AUTHOR);
+    }
+
+    protected int getAuthorStatistic(String login, String sql) {
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
-             final PreparedStatement statement = connection.prepareStatement(SQL_COUNT_OF_LIKES_BY_AUTHOR)
+             final PreparedStatement statement = connection.prepareStatement(sql)
         ) {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1);
         } catch (SQLException | DAOException e) {
-            LOGGER.error("DB connection error", e);
+            logger.error("DB connection error", e);
             return 0;
         }
     }

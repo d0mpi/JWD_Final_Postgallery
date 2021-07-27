@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SimpleLikeService implements LikeService {
     private final LikeDao likeDao = LikeDao.MySQL();
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     private static volatile SimpleLikeService instance;
 
     public static SimpleLikeService getInstance() {

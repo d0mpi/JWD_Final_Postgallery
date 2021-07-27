@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public class SimpleCommandRequest implements CommandRequest {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
 
     private final HttpServletRequest request;
 

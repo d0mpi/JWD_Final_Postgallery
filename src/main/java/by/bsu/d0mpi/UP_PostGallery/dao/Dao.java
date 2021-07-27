@@ -16,6 +16,8 @@ public interface Dao<K extends Number, T extends DatabaseEntity> {
 
     T create(T entity);
 
+    T createEntityWithoutDependencies(T entity, String sql);
+
     T update(T entity);
 
     int getEntriesCount();

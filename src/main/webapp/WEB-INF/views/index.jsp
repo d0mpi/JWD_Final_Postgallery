@@ -114,7 +114,7 @@
                                             <ul class="card-text-bottom-left">
                                                 <li class="card-text-user"> ${post.author} </li>
                                                 <li class="card-id"><fmt:message key="id"/>: ${post.id}</li>
-                                                <li class="card-text-time"> ${post.createdAt}</li>
+                                                <li class="card-text-time"> ${post.createdDate}</li>
                                             </ul>
                                             <c:if test="${sessionScope.user_name != null}">
                                                 <input id="like-check${post.id}" class="like-check"

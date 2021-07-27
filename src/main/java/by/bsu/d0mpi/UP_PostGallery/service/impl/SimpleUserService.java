@@ -16,7 +16,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 
 public class SimpleUserService implements UserService {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     private static volatile SimpleUserService instance;
     private final MySqlUserDao userDao = UserDao.MySQL();
 

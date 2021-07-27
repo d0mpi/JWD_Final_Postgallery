@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.Properties;
 
 public class SendMailAction implements Command {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     private static volatile SendMailAction instance;
 
     private final CommandResponse homePageResponse;

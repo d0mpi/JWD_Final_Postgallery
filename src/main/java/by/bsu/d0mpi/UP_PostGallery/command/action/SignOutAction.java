@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpSession;
 
 public class SignOutAction implements Command {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     private static volatile SignOutAction instance;
 
     public static SignOutAction getInstance() {

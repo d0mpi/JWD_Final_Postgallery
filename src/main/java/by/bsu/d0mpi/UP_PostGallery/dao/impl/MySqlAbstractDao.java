@@ -3,19 +3,22 @@ package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 import by.bsu.d0mpi.UP_PostGallery.dao.Dao;
 import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
 import by.bsu.d0mpi.UP_PostGallery.model.DatabaseEntity;
-import by.bsu.d0mpi.UP_PostGallery.model.Like;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
 public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntity> implements Dao<K, T> {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
 
     private static final String SQL_SELECT_ALL = "SELECT * FROM %s";
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM %s WHERE %s = ?";
@@ -39,26 +42,28 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
              final PreparedStatement statement = connection.prepareStatement(sql)) {
             consumer.accept(statement);
             ResultSet resultSet = statement.executeQuery();
-            return mapResultSet(connection, resultSet);
+            return getRequestResult(connection, resultSet);
         } catch (SQLException | DAOException e) {
-            LOGGER.error("Dao connection exception");
+            logger.error("Dao connection exception");
             e.printStackTrace();
             return Collections.emptyList();
         }
     }
 
-    protected abstract List<T> mapResultSet(Connection connection, ResultSet resultSet) throws SQLException;
+    protected abstract List<T> getRequestResult(Connection connection, ResultSet resultSet) throws SQLException;
 
-    protected abstract void setDefaultStatementArgs(PreparedStatement statement, T entity) throws SQLException;
+    protected abstract void setCreateStatementArgs(PreparedStatement statement, T entity) throws SQLException;
+
+    protected abstract void setUpdateStatementArgs(PreparedStatement statement, T entity) throws SQLException;
 
     @Override
     public List<T> findAll() {
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
              final PreparedStatement statement = connection.prepareStatement(sqlFindAll)) {
             ResultSet resultSet = statement.executeQuery();
-            return mapResultSet(connection, resultSet);
+            return getRequestResult(connection, resultSet);
         } catch (SQLException | DAOException e) {
-            LOGGER.error("Dao connection exception");
+            logger.error("Dao connection exception");
             e.printStackTrace();
             return Collections.emptyList();
         }
@@ -107,6 +112,27 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
     public abstract T create(T entity);
 
     @Override
+    public T createEntityWithoutDependencies(T entity, String insertSQL){
+        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
+             final PreparedStatement statement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
+            setCreateStatementArgs(statement, entity);
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                int id = resultSet.getInt(1);
+                entity.setId(id);
+                return entity;
+            } else {
+                logger.error("No autoincremented index after trying to add record into table user");
+                return null;
+            }
+        } catch (SQLException | DAOException e) {
+            logger.error("DB connection error", e);
+            return null;
+        }
+    }
+
+    @Override
     public abstract T update(T entity);
 
     @Override
@@ -118,7 +144,7 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
             resultSet.next();
             return resultSet.getInt(1);
         } catch (SQLException | DAOException e) {
-            LOGGER.error("DB connection error", e);
+            logger.error("DB connection error", e);
             return 0;
         }
     }

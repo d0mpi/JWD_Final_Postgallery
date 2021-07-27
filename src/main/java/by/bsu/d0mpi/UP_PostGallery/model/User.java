@@ -3,6 +3,7 @@ package by.bsu.d0mpi.UP_PostGallery.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Calendar;
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
@@ -11,7 +12,7 @@ public class User extends DatabaseEntity {
     private String login;
     private String password;
     private Role role;
-    private Date registrationDate;
+    private Date createdDate;
 
 
     public User(int id, String login, String password, Role role, Date registrationDate) {
@@ -19,16 +20,20 @@ public class User extends DatabaseEntity {
         this.login = login;
         this.password = password;
         this.role = role;
-        this.registrationDate = registrationDate;
+        this.createdDate = registrationDate;
     }
 
+    @SuppressWarnings( "deprecation" )
     public User(int id, String login, String password) {
-        this(id, login, password, Role.USER, null);
+        this(id, login, password, Role.USER, new Date(2021, Calendar.JANUARY, 1));
     }
 
+    @SuppressWarnings( "deprecation" )
     public User(String login, String password, Role role) {
-        this(-1, login, password, role, null);
+        this(-1, login, password, role, new Date(2021, Calendar.JANUARY, 1));
     }
 
-    public User(String login, String password) {this(-1, login, password, Role.USER, null);}
+    public User(String login, String password, Date date) {
+        this(-1, login, password, Role.USER, date);
+    }
 }

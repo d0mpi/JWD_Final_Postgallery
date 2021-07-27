@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class SimpleFilterService implements FilterService {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     private static volatile SimpleFilterService instance;
 
     public static SimpleFilterService getInstance() {
@@ -61,7 +61,6 @@ public class SimpleFilterService implements FilterService {
                 sqlRequest.append(" where ");
             }
             sqlRequest.append("posts.post_create_date = ?");
-            isFirst = false;
         }
         return sqlRequest.toString();
     }

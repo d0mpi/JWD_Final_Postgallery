@@ -25,7 +25,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 
 public class AddPostAction implements Command {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     public static final String UPLOAD_PATH = "B:\\Proga\\temp\\planes\\";
     public static final String PLANE_IMAGE_POSTFIX = "-card.jpg";
     private static volatile AddPostAction instance;
@@ -72,7 +72,7 @@ public class AddPostAction implements Command {
                 request.getParameter("dist") == null) ? 0 : Float.parseFloat(request.getParameter("dist"));
         Integer price = Integer.valueOf(request.getParameter("price"));
         ResourceBundle resource = ResourceBundle.getBundle("database");
-        Date createdAt = new Date();
+        Date createdDate = new Date();
 
 
         HttpSession session = request.getCurrentSession().orElse(null);
@@ -89,14 +89,13 @@ public class AddPostAction implements Command {
         } else {
             hashtags = new ArrayList<>();
         }
-        Post post = new Post(model, type, length, wingspan, height, origin, crew, speed, distance, price, createdAt, author, hashtags);
+        Post post = new Post(model, type, length, wingspan, height, origin, crew, speed, distance, price, createdDate, author, hashtags);
         postService.createEntity(post);
 
         try {
             Part filePart = request.getPart("file");
             if (filePart.getSize() != 0) {
-                String fileName = extractFileName(filePart);
-                System.out.println(fileName);
+//                String fileName = extractFileName(filePart);
                 File uploads = new File(IMAGES_UPLOAD_PATH);
                 File file = new File(uploads, post.getId() + PLANE_IMAGE_POSTFIX);
                 try (InputStream input = filePart.getInputStream()) {
@@ -111,18 +110,18 @@ public class AddPostAction implements Command {
         return redirectHomePage;
     }
 
-    private String extractFileName(Part part) {
-        String contentDisp = part.getHeader("content-disposition");
-        String[] items = contentDisp.split(";");
-        for (String s : items) {
-            if (s.trim().startsWith("filename")) {
-                String clientFileName = s.substring(s.indexOf("=") + 2, s.length() - 1);
-                clientFileName = clientFileName.replace("\\", "/");
-                int i = clientFileName.lastIndexOf('/');
-
-                return clientFileName.substring(i + 1);
-            }
-        }
-        return null;
-    }
+//    protected String extractFileName(Part part) {
+//        String contentDisp = part.getHeader("content-disposition");
+//        String[] items = contentDisp.split(";");
+//        for (String s : items) {
+//            if (s.trim().startsWith("filename")) {
+//                String clientFileName = s.substring(s.indexOf("=") + 2, s.length() - 1);
+//                clientFileName = clientFileName.replace("\\", "/");
+//                int i = clientFileName.lastIndexOf('/');
+//
+//                return clientFileName.substring(i + 1);
+//            }
+//        }
+//        return null;
+//    }
 }

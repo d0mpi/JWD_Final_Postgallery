@@ -12,10 +12,11 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 public class RegistrationAction implements Command {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     private static volatile RegistrationAction instance;
 
     private final UserService userService;
@@ -45,7 +46,7 @@ public class RegistrationAction implements Command {
     public CommandResponse execute(CommandRequest request) {
         final String login = request.getParameter("login");
         final String password = request.getParameter("password");
-        final User enteredUser = new User(login, password);
+        final User enteredUser = new User(login, password, new Date());
         if (userService.isLoginPresented(login)) {
             request.setAttribute("error_text", "User with this login is already exist. Try again.");
             return registrationPageResponse;
@@ -61,7 +62,7 @@ public class RegistrationAction implements Command {
         if (null != loggedInUser) {
             session.setAttribute("user_name", loggedInUser.getLogin());
             session.setAttribute("current_role", loggedInUser.getRole());
-            Integer age = Days.daysBetween(new DateTime(loggedInUser.getRegistrationDate()), new DateTime()).getDays();
+            Integer age = Days.daysBetween(new DateTime(loggedInUser.getCreatedDate()), new DateTime()).getDays();
             session.setAttribute("user_age", age);
             return homePageResponse;
         } else {

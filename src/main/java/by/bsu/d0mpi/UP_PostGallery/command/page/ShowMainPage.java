@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ShowMainPage implements Command {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     public static final int PAGE_SIZE = 10;
     private static volatile ShowMainPage instance;
     private final PostService postService;
