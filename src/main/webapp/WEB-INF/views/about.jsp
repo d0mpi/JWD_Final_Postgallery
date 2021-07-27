@@ -107,7 +107,7 @@
                 </div>
                 <div class="col-half">
                     <div class="contact-title col-full">
-                        <fmt:message key="contactTitle"/>
+                        <fmt:message key="aboutContactTitle"/>
                     </div>
                     <div class="contact-text col-full">
                         <fmt:message key="aboutContactText"/>

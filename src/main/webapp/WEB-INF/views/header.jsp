@@ -68,7 +68,7 @@
 
             <div class="header-log-col">
                 <c:if test="${sessionScope.user_name != null}">
-                    <div class="header-username-col" id="header_username"> User:&#160 <a
+                    <div class="header-username-col" id="header_username"> <fmt:message key="headerUser"/>:&#160 <a
                             href="${pageContext.request.contextPath}/controller?command=user_profile_page">${sessionScope.user_name}</a>
                     </div>
                     <form name="log1" action="${pageContext.request.contextPath}/controller?command=sign_out"

@@ -23,7 +23,7 @@
             <div class="contact-stripped-box">
                 <div class="contact-main-box">
                     <div class="contact-title col-full">
-                        <h3><fmt:message key="contactTitle"/></h3>
+                        <h3><fmt:message key="aboutContactTitle"/></h3>
                     </div>
                     <form accept-charset="UTF-8" class="contact-form" method="post"
                           action="${pageContext.request.contextPath}/controller?command=send_mail">

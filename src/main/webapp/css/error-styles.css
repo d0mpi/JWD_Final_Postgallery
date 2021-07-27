@@ -56,7 +56,7 @@ body:before{
 }
 .error-number:before{
     content: var(--before-content, "\f1e2");
-    font-family: FontAwesome, serif;
+    font-family: FontAwesome,sans-serif;
     font-size: 250px;
 }
 

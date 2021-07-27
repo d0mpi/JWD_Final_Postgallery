@@ -15,6 +15,7 @@ import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -91,15 +92,16 @@ public class AddPostAction implements Command {
         Post post = new Post(model, type, length, wingspan, height, origin, crew, speed, distance, price, createdAt, author, hashtags);
         postService.createEntity(post);
 
-
         try {
             Part filePart = request.getPart("file");
-            String fileName = extractFileName(filePart);
-            System.out.println(fileName);
-            File uploads = new File(IMAGES_UPLOAD_PATH);
-            File file = new File(uploads, post.getId() + PLANE_IMAGE_POSTFIX);
-            try (InputStream input = filePart.getInputStream()) {
-                Files.copy(input, file.toPath(), REPLACE_EXISTING);
+            if (filePart.getSize() != 0) {
+                String fileName = extractFileName(filePart);
+                System.out.println(fileName);
+                File uploads = new File(IMAGES_UPLOAD_PATH);
+                File file = new File(uploads, post.getId() + PLANE_IMAGE_POSTFIX);
+                try (InputStream input = filePart.getInputStream()) {
+                    Files.copy(input, file.toPath(), REPLACE_EXISTING);
+                }
             }
         } catch (ServletException | IOException e) {
             e.printStackTrace();

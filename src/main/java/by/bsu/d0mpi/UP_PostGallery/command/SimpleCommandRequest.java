@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 public class SimpleCommandRequest implements CommandRequest {
@@ -49,7 +50,7 @@ public class SimpleCommandRequest implements CommandRequest {
 
     @Override
     public String getParameter(String name) {
-        return request.getParameter(name);
+        return new String(request.getParameter(name).getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
     }
 
     @Override

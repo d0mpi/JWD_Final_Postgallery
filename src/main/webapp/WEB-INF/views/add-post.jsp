@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${cookie['language'].value}" scope="session"/>
 <fmt:setBundle basename="text"/>
@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
     <title>Add post</title>
     <link rel="stylesheet" type="text/css" href="../../css/index-styles.css">
     <link rel="stylesheet" type="text/css" href="../../css/add-post-styles.css">
@@ -38,7 +39,7 @@
                                 <div class="drag-text">
                                     <label class="drop-button" id="image-label">Choose a file
                                         <input type="file" name="file" id="file" class="input-file"
-                                               accept="image/jpeg,image/png,image/jpg" required>
+                                               accept="image/jpeg,image/png,image/jpg">
                                     </label>
                                     <p id="image-text">&#160or drag it here</p>
                                 </div>

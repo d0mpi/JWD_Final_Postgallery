@@ -716,7 +716,7 @@ height: 90px;
 .fa-refresh:before {
     content: "\f021";
     font-size: 1.5em;
-    font-family: FontAwesome, serif;
+    font-family: FontAwesome,sans-serif;
     color: #524f4e;
     width: 40px;
     height: 40px;

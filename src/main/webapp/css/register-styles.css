@@ -209,7 +209,7 @@ h3 {
 
 .facebook:before {
     content: "\f09a";
-    font-family: FontAwesome, serif;
+    font-family: FontAwesome,sans-serif;
     font-size: 25px;
     padding: 13px 18px 12px 18px;
     width: 50px;
@@ -222,7 +222,7 @@ h3 {
 
 .twitter:before {
     content: "\f099";
-    font-family: FontAwesome, serif;
+    font-family: FontAwesome,sans-serif;
     font-size: 25px;
     padding: 13px 12px 12px 15px;
     width: 50px;
@@ -235,7 +235,7 @@ h3 {
 
 .google:before {
     content: "\f1a0";
-    font-family: FontAwesome, serif;
+    font-family: FontAwesome,sans-serif;
     font-size: 25px;
     padding: 13px 15px 12px 15px;
     width: 50px;
@@ -256,7 +256,7 @@ h3 {
 
 .a-create:after {
     content: "\f178";
-    font-family: FontAwesome, serif;;
+    font-family: FontAwesome,sans-serif;;
 
     margin-left: 5px;
 }

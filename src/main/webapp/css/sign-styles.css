@@ -254,7 +254,7 @@ h3 {
 
 .a-create:after {
     content: "\f178";
-    font-family: FontAwesome, serif;;
+    font-family: FontAwesome,sans-serif;;
 
     margin-left: 5px;
 }

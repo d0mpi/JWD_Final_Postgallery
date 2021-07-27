@@ -124,7 +124,7 @@ body {
 
 h3 {
     text-align: center;
-    font-family: Poppins-Regular, serif;
+    font-family: Poppins-Regular,sans-serif;
     font-size: 5em;
 
     font-weight: 100;
@@ -133,7 +133,7 @@ h3 {
 
 .feature-center-text {
     padding: 30px;
-    font-family: Poppins-Regular, serif;
+    font-family: Poppins-Regular,sans-serif;
     font-size: 18px;
     line-height: 25px;
     letter-spacing: 1px;
@@ -144,7 +144,7 @@ h3 {
 
 .feature-left-text {
     padding: 30px;
-    font-family: Poppins-Regular, serif;
+    font-family: Poppins-Regular,sans-serif;
     font-size: 18px;
     line-height: 25px;
     letter-spacing: 1px;
@@ -164,7 +164,7 @@ h3 {
 
 .feature-right-text {
     padding: 30px;
-    font-family: Poppins-Regular, serif;
+    font-family: Poppins-Regular,sans-serif;
     font-size: 18px;
     line-height: 25px;
     letter-spacing: 1px;
@@ -198,7 +198,7 @@ h3 {
 
     color: #0b2852;
 
-    font-family: Poppins-Medium, serif;
+    font-family: Poppins-Medium,sans-serif;
     padding: 20px 0;
     line-height: 25px;
 
@@ -234,13 +234,13 @@ h3 {
 
 .size-title:before{
     font-size: 3vw;
-    font-family: FontAwesome, serif;
+    font-family: FontAwesome,sans-serif;
     content: "\f053";
     margin-right: 1vw;
 }
 .size-title:after{
     font-size: 3vw;
-    font-family: FontAwesome, serif;
+    font-family: FontAwesome,sans-serif;
     content: "\f054";
     margin-left: 1vw;
 }
@@ -254,7 +254,7 @@ h3 {
 
     color: #0b2852;
 
-    font-family: Poppins-Medium, serif;
+    font-family: Poppins-Medium,sans-serif;
     padding: 20px 0;
     margin-top: 20px;
     line-height: 25px;
@@ -279,7 +279,7 @@ h3 {
 .contact-title {
     color: white;
     text-align: center;
-    font-family: Poppins-Regular, serif;
+    font-family: Poppins-Regular,sans-serif;
     font-size: 5em;
     font-weight: 100;
 
@@ -289,7 +289,7 @@ h3 {
 .contact-text {
     color: white;
     padding: 30px;
-    font-family: Poppins-Regular, serif;
+    font-family: Poppins-Regular,sans-serif;
     font-size: 18px;
     line-height: 25px;
 
@@ -352,7 +352,7 @@ h3 {
 .sign-text {
     color: white;
     padding: 30px;
-    font-family: Poppins-Regular, serif;
+    font-family: Poppins-Regular,sans-serif;
     font-size: 18px;
     line-height: 25px;
 
@@ -403,7 +403,7 @@ h3 {
 
 h3 {
     text-align: center;
-    font-family: Poppins-Regular, serif;
+    font-family: Poppins-Regular,sans-serif;
     font-size: 5em;
 
     font-weight: 100;
@@ -412,7 +412,7 @@ h3 {
 
 .filter-text {
     padding: 30px;
-    font-family: Poppins-Regular, serif;
+    font-family: Poppins-Regular,sans-serif;
     font-size: 18px;
     line-height: 25px;
     letter-spacing: 1px;
@@ -444,7 +444,7 @@ h3 {
 .fa-hash:before {
     content: "\f292";
     font-size: 6em;
-    font-family: FontAwesome, serif;
+    font-family: FontAwesome,sans-serif;
     color: #ffffff;
 
     border-radius: 50%;
