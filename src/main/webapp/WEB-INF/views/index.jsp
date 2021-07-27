@@ -151,6 +151,27 @@
                             </div>
                         </div>
                     </c:forEach>
+                    <div class="pagination-bar col-full">
+                        <c:set var="filter_postfix"
+                               value="&filter_hashtags_text=${requestScope.filter_hashtags_text}&filter_author_text=${requestScope.filter_author_text}&filter_date_text=${requestScope.filter_date_text}"/>
+                        <c:if test="${requestScope.pageNumber>1}">
+                            <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${requestScope.pageNumber-1}${filter_postfix}"><i
+                                    class="fas fa-angle-double-left"></i></a>
+                        </c:if>
+                        <c:forEach var="i"
+                                   begin="${requestScope.pageNumber-4>=1 ? requestScope.pageNumber-4 : 1}"
+                                   end="${requestScope.pageNumber+4>requestScope.pageCount ? requestScope.pageCount : requestScope.pageNumber+4}">
+                            <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${i}${filter_postfix}"
+                               class="${requestScope.pageNumber == i ? "active" : ""}">${i}</a>
+                        </c:forEach>
+                        <c:if test="${requestScope.pageNumber<requestScope.pageCount}">
+                            <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${requestScope.pageNumber+1}${filter_postfix}"><i
+                                    class="fas fa-angle-double-right"></i></a>
+                        </c:if>
+                        <div>
+                            of ${requestScope.pageCount}
+                        </div>
+                    </div>
                 </div>
                 <%--            <div class="more-button-box">--%>
                 <%--                <button class="more-button" id="more_btn">--%>
@@ -158,24 +179,7 @@
                 <%--                    <fmt:message key="loadMore"/>--%>
                 <%--                </button>--%>
                 <%--            </div>--%>
-                <div class="pagination-bar">
-                    <c:set var="filter_postfix"
-                           value="&filter_hashtags_text=${requestScope.filter_hashtags_text}&filter_author_text=${requestScope.filter_author_text}&filter_date_text=${requestScope.filter_date_text}"/>
-                    <c:if test="${requestScope.pageNumber>1}">
-                        <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${requestScope.pageNumber-1}${filter_postfix}"><i
-                                class="fas fa-angle-double-left"></i></a>
-                    </c:if>
-                    <c:forEach var="i"
-                               begin="${requestScope.pageNumber-4>=1 ? requestScope.pageNumber-4 : 1}"
-                               end="${requestScope.pageNumber+4>requestScope.pageCount ? requestScope.pageCount : requestScope.pageNumber+4}">
-                        <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${i}${filter_postfix}"
-                           class="${requestScope.pageNumber == i ? "active" : ""}">${i}</a>
-                    </c:forEach>
-                    <c:if test="${requestScope.pageNumber<requestScope.pageCount}">
-                        <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${requestScope.pageNumber+1}${filter_postfix}"><i
-                                class="fas fa-angle-double-right"></i></a>
-                    </c:if>
-                </div>
+
             </div>
         </div>
     </div>
