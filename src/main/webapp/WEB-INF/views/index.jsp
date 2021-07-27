@@ -9,13 +9,13 @@
     <meta charset="UTF-8">
     <title>Up! Post gallery.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
     <link rel="stylesheet" type="text/css" href="../../css/index-styles.css">
     <link rel="stylesheet" type="text/css" href="../../fonts/fonts.css">
     <script src="https://kit.fontawesome.com/ede64561b8.js" crossorigin="anonymous"></script>
 
     <script src="../../js/jquery-3.6.0.min.js"></script>
-    <script src="../../js/home.js"></script>
+    <script src="../../js/home.js" defer></script>
     <jsp:include page="title-logo.jsp"/>
 </head>
 <body>
@@ -61,6 +61,10 @@
                         <li class="li-filter-button">
                             <input type="submit" id="filter_btn" class="filter-button"
                                    value="<fmt:message key="filterBtn"/>">
+                            <label class="filter-reset-label" id="filter_reset_label">
+                                <i class="fas fa-sync" id="fa_sync"></i>
+                                <input type="reset" class="filter-reset-input">
+                            </label>
                         </li>
                     </ul>
                 </form>

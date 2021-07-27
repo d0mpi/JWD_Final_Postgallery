@@ -17,19 +17,20 @@ $(document).ready(function () {
         }
     });
 
-    $('.like-check').on('change',  function () {
+    $('.like-check').on('change', function () {
         let isLike = $(this).is(':checked');
         let id = $(this).attr("value");
         $.ajax({
-                type: "post",
-                url: "controller",
-                data: {
-                    "command": "like",
-                    "post_id": id,
-                    "isLike": isLike
-                },
-                success: function (data) {
-                }
-            });
+            type: "post",
+            url: "controller",
+            data: {
+                "command": "like",
+                "post_id": id,
+                "isLike": isLike
+            },
+            success: function (data) {
+            }
+        });
     });
 });
+

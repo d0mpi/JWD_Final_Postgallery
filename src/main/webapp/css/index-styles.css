@@ -361,9 +361,7 @@ header {
     height: 15px;
 }
 
-.li-filter-button {
-    align-self: center;
-}
+
 
 .filter-label {
     height: auto;
@@ -463,7 +461,7 @@ padding-left: 300px;
         width: 350px;
     }
 
-    .filter-ul li label {
+    .filter-ul li label:not(.filter-reset-label) {
         display: flex;
         justify-content: space-between;
         padding: 0 20px;
@@ -1050,4 +1048,38 @@ footer {
 
 .card-text-top li {
     word-break: break-word;
+}
+
+.filter-reset-input{
+    display: none;
+}
+
+
+.filter-reset-label{
+    border-radius: 50%;
+    font-size: 14px;
+    align-items: center;
+    margin-top: 5px;
+    margin-left: 10px;
+    background: #e0f2ff;
+    outline: none;
+    cursor: pointer;
+    color: black;
+    border: solid 0;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.filter-reset-label:hover{
+    background: #81d742;
+    transform: scale(0.95) rotate(360deg);
+    transition-duration: 1s;
+}
+
+.li-filter-button {
+    display: flex;
+    align-self: center;
+    align-items: center;
 }
