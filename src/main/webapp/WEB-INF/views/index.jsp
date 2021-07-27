@@ -21,7 +21,6 @@
 <body>
 <jsp:include page="header.jsp"/>
 <main>
-
     <div class="main-container">
         <div class="mg-b-120">
             <div class="filter-col">
@@ -61,7 +60,7 @@
                         <li class="li-filter-button">
                             <input type="submit" id="filter_btn" class="filter-button"
                                    value="<fmt:message key="filterBtn"/>">
-                            <label class="filter-reset-label" id="filter_reset_label">
+                            <label class="filter-reset-label" id="filter_reset_label" title="<fmt:message key="filterResetTitle"/>">
                                 <i class="fas fa-sync" id="fa_sync"></i>
                                 <input type="reset" class="filter-reset-input">
                             </label>
@@ -110,10 +109,9 @@
                                             <li><span><fmt:message
                                                     key="postPrice"/>:</span> ${post.price == 0 ? "-" : post.price}$
                                             </li>
-                                            <li>
-                                                <hr class="card-text-hr col-full">
-                                            </li>
+
                                         </ul>
+                                        <hr class="card-text-hr col-full">
                                         <div class="card-text-bottom-box">
                                             <ul class="card-text-bottom-left">
                                                 <li class="card-text-user"> ${post.author} </li>
@@ -125,7 +123,7 @@
                                                        type="checkbox" ${requestScope.likedPostsIdList.contains(post.id) ? "checked" : "unchecked"}
                                                        value="${post.id}">
                                                 <label for="like-check${post.id}" class="like-label">
-                                                    <i class="fas fa-heart fa-3x"></i>
+                                                    <i class="fas fa-heart"></i>
                                                 </label>
                                             </c:if>
                                         </div>

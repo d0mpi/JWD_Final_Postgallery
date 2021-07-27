@@ -130,7 +130,7 @@ body:before {
 .add-label {
     display: block;
     margin-bottom: 10px;
-    font-family: Poppins-Regular, sans-serif;
+    font-family: Ubuntu, sans-serif;
     font-size: 14px;
 }
 
@@ -191,7 +191,7 @@ input:valid {
 h3 {
     margin-bottom: 10px;
     white-space: nowrap;
-    font-family: Poppins-Regular, sans-serif;
+    font-family: Ubuntu, sans-serif;
     font-size: 30px;
     cursor: default;
 }
@@ -219,7 +219,7 @@ h3 {
     height: 40px;
     width: 300px;
 
-    font-family: Poppins-Regular, sans-serif;
+    font-family: Ubuntu, sans-serif;
     font-size: 20px;
 
     border: none;

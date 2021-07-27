@@ -92,10 +92,12 @@ public class EditPostAction implements Command {
         try {
             Part filePart = request.getPart("file");
 //            String fileName = extractFileName(filePart);
-            File uploads = new File(IMAGES_UPLOAD_PATH);
-            File file = new File(uploads, post.getId() + PLANE_IMAGE_POSTFIX);
-            try (InputStream input = filePart.getInputStream()) {
-                Files.copy(input, file.toPath(), REPLACE_EXISTING);
+            if(filePart.getSize() != 0) {
+                File uploads = new File(IMAGES_UPLOAD_PATH);
+                File file = new File(uploads, post.getId() + PLANE_IMAGE_POSTFIX);
+                try (InputStream input = filePart.getInputStream()) {
+                    Files.copy(input, file.toPath(), REPLACE_EXISTING);
+                }
             }
         } catch (ServletException | IOException e) {
             e.printStackTrace();

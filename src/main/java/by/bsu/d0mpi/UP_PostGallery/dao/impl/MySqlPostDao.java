@@ -34,6 +34,8 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             "SELECT * FROM posts WHERE posts.post_author = ?";
     //    private static final String SQL_SELECT_POST_BY_ID =
 //            "SELECT * FROM posts WHERE posts.post_id = ?";
+    private static final String SQL_DELETE_HASHTAGS_BY_POST_ID =
+            "DELETE FROM hashtags WHERE hashtags_post_id = ?";
     public static final String SQL_INSERT_HASHTAGS_WITH_POST_ID =
             "INSERT INTO hashtags (hashtag_text, hashtags_post_id) VALUES (?, ?)";
     private static final String SQL_SELECT_HASHTAGS_BY_POST_ID =
@@ -156,9 +158,12 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
     public Post update(Post entity) {
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
              final PreparedStatement postStatement = connection.prepareStatement(SQL_UPDATE_POST);
+             final PreparedStatement statement1 = connection.prepareStatement(SQL_DELETE_HASHTAGS_BY_POST_ID);
              final PreparedStatement hashtagStatement = connection.prepareStatement(SQL_INSERT_HASHTAGS_WITH_POST_ID)) {
             setUpdateStatementArgs(postStatement, entity);
             postStatement.executeUpdate();
+            statement1.setInt(1, entity.getId());
+            statement1.executeUpdate();
             setAndExecuteHashtagStatement(hashtagStatement, entity);
             return entity;
         } catch (SQLException | DAOException e) {

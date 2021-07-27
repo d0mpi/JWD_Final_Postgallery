@@ -10,7 +10,6 @@ dropbox.addEventListener("drop", drop, false);
 
 
 function dragenter(e) {
-
     e.stopPropagation();
     e.preventDefault();
 }

@@ -5,8 +5,6 @@ let text = document.getElementById("image-label");
 let icon = document.getElementById("download-icon");
 let text2 = document.getElementById("image-text");
 
-
-
 dropbox.addEventListener("dragenter", dragenter, false);
 dropbox.addEventListener("dragover", dragover, false);
 dropbox.addEventListener("dragleave", dragleave, false);

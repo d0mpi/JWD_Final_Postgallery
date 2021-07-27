@@ -32,5 +32,18 @@ $(document).ready(function () {
             }
         });
     });
-});
+    let flag = 0;
 
+
+    $(document).on('click', function () {
+        if (flag === 1)
+            flag = 0;
+        else
+            $('.card-img').removeClass("card-img-clicked");
+    });
+
+    $('.card-img').on('click', function () {
+        $(this).addClass("card-img-clicked");
+        flag = 1
+    });
+});

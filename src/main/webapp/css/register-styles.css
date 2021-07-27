@@ -3,7 +3,7 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-family: Poppins-Medium, sans-serif;
+    font-family: Ubuntu, sans-serif;
     font-weight: 0;
     font-size: 14px;
     background: transparent;
@@ -35,7 +35,7 @@ img {
 }
 
 body {
-    font-family: Poppins-Medium, sans-serif;
+    font-family: Ubuntu, sans-serif;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -137,14 +137,14 @@ h3 {
 }
 
 .form-under {
-    font-family: Poppins-Regular, sans-serif;
+    font-family: Ubuntu, sans-serif;
     font-size: 14px;
     color: #333;
     line-height: 1.5;
 }
 
 .form-input {
-    font-family: Poppins-Medium, sans-serif;
+    font-family: Ubuntu, sans-serif;
     font-size: 16px;
     color: #333;
     line-height: 1.2;
@@ -156,7 +156,7 @@ h3 {
 }
 
 .text-forgot {
-    font-family: Poppins-Regular, sans-serif;
+    font-family: Ubuntu, sans-serif;
 }
 
 .text-span {
@@ -182,7 +182,7 @@ h3 {
     height: 50px;
     background-color: #0b2852;
     border-radius: 60px;
-    font-family: Poppins-Medium, sans-serif;
+    font-family: Ubuntu, sans-serif;
     font-size: 20px;
     margin: 50px 0 0 0;
     color: #fff;
@@ -262,11 +262,11 @@ h3 {
 }
 
 .a-create {
-    font-family: Poppins-Regular, sans-serif;
+    font-family: Ubuntu, sans-serif;
 }
 
 .registration-error{
-    font-family: Poppins-Regular, sans-serif;
+    font-family: Ubuntu, sans-serif;
     font-size: 18px;
     line-height: 1.5;
     color: #e20505;

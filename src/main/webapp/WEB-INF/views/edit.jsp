@@ -39,7 +39,7 @@
                         <h3><fmt:message key="editLabel"/></h3>
                     </div>
                     <div class="img-box col-full">
-                        <div class="edit-label"><fmt:message key="editimage"/>:
+                        <div class="edit-label"><fmt:message key="editImage"/>:
                         </div>
                         <div class="drag-and-drop" id="drag-and-drop">
                             <img src="/files/${postToEdit.id}-card.jpg" alt="" class="add-img" id="add_img">
