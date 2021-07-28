@@ -309,11 +309,11 @@ header {
 }
 
 .filter-fieldset {
-    width: 300px;
+    width: 270px;
     height: 350px;
     background: #0b2852;
     color: white;
-    padding: 30px;
+    padding: 20px;
     border-radius: 0 10px 10px 0;
     border-style: solid;
     border-width: 0;
@@ -325,7 +325,6 @@ header {
     height: 10%;
     font-size: 20px;
     text-transform: uppercase;
-    padding: 0 10px;
 }
 
 .filter-ul {
@@ -335,6 +334,10 @@ header {
     justify-content: space-around;
     height: 90%;
     align-items: center;
+}
+
+.filter-ul li{
+    width: 100%;
 }
 
 .filter-input {
@@ -347,9 +350,8 @@ header {
     background: #f4f4f4;
     outline: none;
     cursor: text;
-
-    width: 220px;
-
+    width: 100%;
+    max-width: 200px;
     border-style: solid;
     border-width: 0;
 }
@@ -957,14 +959,12 @@ footer {
     font-size: 14px;
     padding: 3px 10px;
     align-items: center;
-    margin-top: 5px;
-
     background: #e0f2ff;
 
     outline: none;
     cursor: pointer;
 
-    width: max-content;
+    width: 150px;
     height: 25px;
     font-family: Ubuntu, sans-serif;
     border: solid 0;
@@ -974,6 +974,7 @@ footer {
     transition: .3s;
     transform: scale(.95);
     background: #81d742;
+    color: white;
 }
 
 .hide {
@@ -1071,8 +1072,7 @@ footer {
     border-radius: 50%;
     font-size: 14px;
     align-items: center;
-    margin-top: 5px;
-    margin-left: 10px;
+    margin-left: 20px;
     background: #e0f2ff;
     outline: none;
     cursor: pointer;
@@ -1094,6 +1094,7 @@ footer {
     display: flex;
     align-self: center;
     align-items: center;
+    justify-content: center
 }
 
 .card-img-clicked{
