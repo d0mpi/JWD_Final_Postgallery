@@ -61,11 +61,9 @@
                         <li class="li-filter-button">
                             <input type="submit" id="filter_btn" class="filter-button"
                                    value="<fmt:message key="filterBtn"/>">
-                            <label class="filter-reset-label" id="filter_reset_label"
-                                   title="<fmt:message key="filterResetTitle"/>">
+                            <button title="<fmt:message key="filterResetTitle"/>" class="filter-reset-button">
                                 <i class="fas fa-sync" id="fa_sync"></i>
-                                <input type="reset" class="filter-reset-input">
-                            </label>
+                            </button>
                         </li>
                     </ul>
                 </form>
@@ -77,7 +75,7 @@
                             <div class="card-main-col">
                                 <div class="card-main-box col-full">
                                     <div class="card-img-box">
-                                        <img src="/files/${post.id}-card.jpg" alt="plane" class="card-img resize">
+                                        <img src="/files/${post.id}-card.jpg" alt="plane" class="card-img resize" title="click to expand the image">
                                     </div>
                                     <div class="card-text-box">
                                         <ul class="card-text-top font-card">
@@ -152,34 +150,36 @@
                         </div>
                     </c:forEach>
                     <div class="pagination-bar col-full">
-                        <c:set var="filter_postfix"
-                               value="&filter_hashtags_text=${requestScope.filter_hashtags_text}&filter_author_text=${requestScope.filter_author_text}&filter_date_text=${requestScope.filter_date_text}"/>
-                        <c:if test="${requestScope.pageNumber>1}">
-                            <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${requestScope.pageNumber-1}${filter_postfix}"><i
-                                    class="fas fa-angle-double-left"></i></a>
-                        </c:if>
-                        <c:forEach var="i"
-                                   begin="${requestScope.pageNumber-4>=1 ? requestScope.pageNumber-4 : 1}"
-                                   end="${requestScope.pageNumber+4>requestScope.pageCount ? requestScope.pageCount : requestScope.pageNumber+4}">
-                            <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${i}${filter_postfix}"
-                               class="${requestScope.pageNumber == i ? "active" : ""}">${i}</a>
-                        </c:forEach>
-                        <c:if test="${requestScope.pageNumber<requestScope.pageCount}">
-                            <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${requestScope.pageNumber+1}${filter_postfix}"><i
-                                    class="fas fa-angle-double-right"></i></a>
-                        </c:if>
-                        <div>
-                            of ${requestScope.pageCount}
-                        </div>
+                        <c:choose>
+                            <c:when test="${requestScope.postList.isEmpty()}">
+                                <p class="no-post-text">
+                                    Sorry no posts with this filters :(
+                                </p>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="filter_postfix"
+                                       value="&filter_hashtags_text=${requestScope.filter_hashtags_text}&filter_author_text=${requestScope.filter_author_text}&filter_date_text=${requestScope.filter_date_text}"/>
+                                <c:if test="${requestScope.pageNumber>1}">
+                                    <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${requestScope.pageNumber-1}${filter_postfix}"><i
+                                            class="fas fa-angle-double-left"></i></a>
+                                </c:if>
+                                <c:forEach var="i"
+                                           begin="${requestScope.pageNumber-4>=1 ? requestScope.pageNumber-4 : 1}"
+                                           end="${requestScope.pageNumber+4>requestScope.pageCount ? requestScope.pageCount : requestScope.pageNumber+4}">
+                                    <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${i}${filter_postfix}"
+                                       class="${requestScope.pageNumber == i ? "active" : ""}">${i}</a>
+                                </c:forEach>
+                                <c:if test="${requestScope.pageNumber<requestScope.pageCount}">
+                                    <a href="${pageContext.request.contextPath}/controller?command=main_page&page_number=${requestScope.pageNumber+1}${filter_postfix}"><i
+                                            class="fas fa-angle-double-right"></i></a>
+                                </c:if>
+                                <div>
+                                    of ${requestScope.pageCount}
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
-                <%--            <div class="more-button-box">--%>
-                <%--                <button class="more-button" id="more_btn">--%>
-                <%--                    <div class="fa fa-refresh"></div>--%>
-                <%--                    <fmt:message key="loadMore"/>--%>
-                <%--                </button>--%>
-                <%--            </div>--%>
-
             </div>
         </div>
     </div>

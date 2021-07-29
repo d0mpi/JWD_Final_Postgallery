@@ -91,7 +91,6 @@ public class EditPostAction implements Command {
 
         try {
             Part filePart = request.getPart("file");
-//            String fileName = extractFileName(filePart);
             if(filePart.getSize() != 0) {
                 File uploads = new File(IMAGES_UPLOAD_PATH);
                 File file = new File(uploads, post.getId() + PLANE_IMAGE_POSTFIX);

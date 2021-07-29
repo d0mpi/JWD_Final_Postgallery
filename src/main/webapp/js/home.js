@@ -35,21 +35,22 @@ $(document).ready(function () {
 
     let is_big = 0;
     $('.overlay').on('click', function () {
-            $('.card-img').removeClass("card-img-clicked").addClass('resize');
-            $('.overlay').hide();
-            is_big = 0;
+        $('.card-img').removeClass("card-img-clicked").addClass('resize');
+        $('.overlay').hide();
+        is_big = 0;
     });
 
     $('.card-img').on('click', function () {
-        if(is_big === 0) {
+        if (is_big === 0) {
             $(this).addClass("card-img-clicked").removeClass('resize');
             $('.overlay').show();
             is_big = 1;
         }
     });
 
-
-    // $('.resize-icon').on('hover', function (){
-    //     $(this).append('<style>.resize-icon:before{display: flex;}</style>');
-    // });
+    $('.filter-reset-button').on('click', function (e) {
+        $('.filter-input').val('');
+        e.stopPropagation();
+        e.preventDefault();
+    });
 });
