@@ -22,4 +22,6 @@ public interface UserService extends DBEntityService<Integer, User>{
     int getNumberOfPosts(String login);
 
     int getRating(String login);
+
+    User changePassword(String login, String newPassword);
 }

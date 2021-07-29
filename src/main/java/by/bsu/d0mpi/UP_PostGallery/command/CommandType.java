@@ -29,6 +29,7 @@ public enum CommandType {
     ADD_POST(AddPostAction.getInstance(), USER, ADMIN, MODERATOR),
     EDIT_POST(EditPostAction.getInstance(), USER, ADMIN, MODERATOR),
     LIKE(LikeAction.getInstance(), USER, ADMIN, MODERATOR),
+    CHANGE_PASSWORD(ChangePasswordAction.getInstance(), USER, ADMIN, MODERATOR),
     CHANGE_LANGUAGE(ChangeLanguageAction.getInstance()),
     SEND_MAIL(SendMailAction.getInstance()),
     REGISTER(RegistrationAction.getInstance(), UNAUTHORIZED),

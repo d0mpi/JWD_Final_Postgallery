@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="ctag" uri="customTags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${cookie['language'].value}" scope="session"/>
 <fmt:setBundle basename="text"/>
@@ -75,7 +76,8 @@
                             <div class="card-main-col">
                                 <div class="card-main-box col-full">
                                     <div class="card-img-box">
-                                        <img src="/files/${post.id}-card.jpg" alt="plane" class="card-img resize" title="click to expand the image">
+                                        <img src="/files/${post.id}-card.jpg" alt="plane" class="card-img resize"
+                                             title="click to expand the image">
                                     </div>
                                     <div class="card-text-box">
                                         <ul class="card-text-top font-card">
@@ -114,9 +116,11 @@
                                         <hr class="card-text-hr col-full">
                                         <div class="card-text-bottom-box">
                                             <ul class="card-text-bottom-left">
-                                                <li class="card-text-user"> ${post.author} </li>
-                                                <li class="card-id"><fmt:message key="id"/>: ${post.id}</li>
-                                                <li class="card-text-time"> ${post.createdDate}</li>
+                                                <li> ${post.author} </li>
+                                                <li><fmt:message key="id"/>: ${post.id}</li>
+                                                <li>
+                                                <ctag:locale-date date="${post.createdDate}"/>
+                                                <li>
                                             </ul>
                                             <c:if test="${sessionScope.user_name != null}">
                                                 <input id="like-check${post.id}" class="like-check"

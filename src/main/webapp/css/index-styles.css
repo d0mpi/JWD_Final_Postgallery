@@ -566,7 +566,7 @@ header {
 }
 
 .card-box {
-    width: 610px;
+    width: 640px;
     display: flex;
     background: none;
     float: left;
@@ -577,7 +577,7 @@ header {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    width: 580px;
+    width: 610px;
     background: none;
 }
 
@@ -614,6 +614,7 @@ header {
 .card-img-box {
     width: 320px;
     height: 320px;
+    min-width: 320px;
     display: flex;
     border-width: 0;
     border-style: solid;
@@ -646,7 +647,7 @@ header {
     display: flex;
     flex-direction: column;
     padding: 15px;
-    width: 260px;
+    width: 100%;
 }
 
 .card-text-hr {
@@ -982,11 +983,14 @@ footer {
 }
 
 .language-select {
+    margin-bottom: 3px;
+    font-family: Ubuntu, sans-serif;
     color: white;
     font-size: 20px;
     border-width: 0;
     outline: none;
     background-color: #0b2852;
+    text-align: center;
 }
 
 .language-select option {
@@ -1126,4 +1130,5 @@ footer {
 .no-post-text{
     font-size: 30px;
     border: solid 0;
+    padding: 0 30px;
 }

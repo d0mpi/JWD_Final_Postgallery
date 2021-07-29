@@ -28,7 +28,7 @@
                     <div class="col-33 column">
                         <i class="fas fa-paper-plane fa-2x"></i>
                         <p>${requestScope.number_of_posts}</p>
-                        <p>Posts posted</p>
+                        <p>Posts</p>
                     </div>
                     <div class="col-33 column">
                         <i class="fas fa-heart fa-2x"></i>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="email-area col-full">
                     <i class="fas fa-envelope fa-lg"></i>
-                    mdokuchaevp@gmail.com
+                    coming soon...
                 </div>
                 <form class="col-full change-area"
                       action="${pageContext.request.contextPath}/controller?command=change_password">
@@ -57,7 +57,6 @@
                 </form>
             </div>
         </div>
-    </div>
     </div>
 </main>
 <jsp:include page="footer.jsp"/>

@@ -15,11 +15,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements PostDao {
     private static final String SQL_UPDATE_POST =
@@ -207,8 +206,15 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
                 i++;
             }
             if (filters.contains(FilterType.DATE)) {
-                postStatement.setString(i + 1, filterParams.get(i));
-                countStatement.setString(i + 1, filterParams.get(i));
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Calendar c = Calendar.getInstance();
+                c.setTime(sdf.parse(filterParams.get(i)));
+                postStatement.setString(i + 1, sdf.format(c.getTime()));
+                countStatement.setString(i + 1, sdf.format(c.getTime()));
+                c.add(Calendar.DATE, 1);
+                i++;
+                postStatement.setString(i + 1, sdf.format(c.getTime()));
+                countStatement.setString(i + 1, sdf.format(c.getTime()));
                 i++;
             }
             postStatement.setInt(i + 1, startNumber);
@@ -218,7 +224,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             resultSet1.next();
             int postCount = resultSet1.getInt(1);
             return new MyPair<>(posts, postCount);
-        } catch (SQLException | DAOException e) {
+        } catch (SQLException | DAOException | ParseException e) {
             logger.error("DB connection error", e);
             return new MyPair<>(Collections.emptyList(), 0);
         }

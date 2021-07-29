@@ -109,4 +109,9 @@ public class SimpleUserService implements UserService {
     public int getRating(String login){
         return userDao.getNumberOfLikesByAuthor(login);
     }
+
+    @Override
+    public User changePassword(String login, String newPassword){
+        return null;
+    }
 }

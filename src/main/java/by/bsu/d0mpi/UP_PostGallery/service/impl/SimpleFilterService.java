@@ -60,7 +60,7 @@ public class SimpleFilterService implements FilterService {
             } else {
                 sqlRequest.append(" where ");
             }
-            sqlRequest.append("posts.post_create_date = ?");
+            sqlRequest.append("posts.post_create_date between ? and ?");
         }
         return sqlRequest.toString();
     }
