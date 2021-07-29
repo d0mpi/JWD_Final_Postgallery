@@ -32,18 +32,24 @@ $(document).ready(function () {
             }
         });
     });
-    let flag = 0;
 
-
-    $(document).on('click', function () {
-        if (flag === 1)
-            flag = 0;
-        else
-            $('.card-img').removeClass("card-img-clicked");
+    let is_big = 0;
+    $('.overlay').on('click', function () {
+            $('.card-img').removeClass("card-img-clicked").addClass('resize');
+            $('.overlay').hide();
+            is_big = 0;
     });
 
     $('.card-img').on('click', function () {
-        $(this).addClass("card-img-clicked");
-        flag = 1
+        if(is_big === 0) {
+            $(this).addClass("card-img-clicked").removeClass('resize');
+            $('.overlay').show();
+            is_big = 1;
+        }
     });
+
+
+    // $('.resize-icon').on('hover', function (){
+    //     $(this).append('<style>.resize-icon:before{display: flex;}</style>');
+    // });
 });

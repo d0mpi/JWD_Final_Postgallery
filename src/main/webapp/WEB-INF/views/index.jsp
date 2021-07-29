@@ -21,6 +21,7 @@
 <body>
 <jsp:include page="header.jsp"/>
 <main>
+    <div class="overlay" hidden></div>
     <div class="main-container">
         <div class="mg-b-120">
             <div class="filter-col">
@@ -60,7 +61,8 @@
                         <li class="li-filter-button">
                             <input type="submit" id="filter_btn" class="filter-button"
                                    value="<fmt:message key="filterBtn"/>">
-                            <label class="filter-reset-label" id="filter_reset_label" title="<fmt:message key="filterResetTitle"/>">
+                            <label class="filter-reset-label" id="filter_reset_label"
+                                   title="<fmt:message key="filterResetTitle"/>">
                                 <i class="fas fa-sync" id="fa_sync"></i>
                                 <input type="reset" class="filter-reset-input">
                             </label>
@@ -75,7 +77,7 @@
                             <div class="card-main-col">
                                 <div class="card-main-box col-full">
                                     <div class="card-img-box">
-                                        <img src="/files/${post.id}-card.jpg" alt="plane" class="card-img">
+                                        <img src="/files/${post.id}-card.jpg" alt="plane" class="card-img resize">
                                     </div>
                                     <div class="card-text-box">
                                         <ul class="card-text-top font-card">
