@@ -46,12 +46,20 @@
                     coming soon...
                 </div>
                 <form class="col-full change-area"
+                      method="post"
                       action="${pageContext.request.contextPath}/controller?command=change_password">
+                    <c:if test="${not empty requestScope.error_text}">
+                        <p class="error-text">
+                                ${requestScope.error_text}
+                        </p>
+                    </c:if>
                     <label class="col-full" for="old_password">Enter current password: </label>
                     <input class="profile-input" pattern="[A-za-z0-9]{1,40}" type="password" id="old_password"
+                           name="old_password"
                            placeholder="Type your password" required>
                     <label class="col-full" for="new_password">Enter new password: </label>
                     <input class="profile-input" pattern="[A-za-z0-9]{1,40}" type="password" id="new_password"
+                           name="new_password"
                            placeholder="Type new password" required>
                     <input class="profile-button" type="submit" value="Change password">
                 </form>

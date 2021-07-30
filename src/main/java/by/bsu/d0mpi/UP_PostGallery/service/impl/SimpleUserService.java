@@ -111,7 +111,10 @@ public class SimpleUserService implements UserService {
     }
 
     @Override
-    public User changePassword(String login, String newPassword){
-        return null;
+    public User changePassword(User newUser){
+        final char[] rawPassword = newUser.getPassword().toCharArray();
+        final String encryptedPassword = hasher.hashToString(MIN_COST, rawPassword);
+        newUser.setPassword(encryptedPassword);
+        return userDao.update(newUser);
     }
 }

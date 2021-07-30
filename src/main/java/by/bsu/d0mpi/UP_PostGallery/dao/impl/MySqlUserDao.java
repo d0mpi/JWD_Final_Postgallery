@@ -21,7 +21,7 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
     private static final Logger logger = LogManager.getLogger();
 
     private static final String SQL_UPDATE_USER =
-            "UPDATE users SET user_login = ?, user_password = ?, user_role_id = ? WHERE user_id = ?";
+            "UPDATE users SET user_password = ? WHERE user_login = ?";
     private static final String SQL_INSERT_USER =
             "INSERT INTO users (user_login, user_password, user_role_id, user_registration_time) VALUES (?, ?, ?, ?)";
     private static final String SQL_SELECT_BY_LOGIN =
@@ -67,7 +67,9 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
 
     @Override
     protected void setCreateStatementArgs(PreparedStatement statement, User entity) throws SQLException {
-        setUpdateStatementArgs(statement, entity);
+        statement.setString(1, entity.getLogin());
+        statement.setString(2, entity.getPassword());
+        statement.setInt(3, entity.getRole().ordinal());
         java.util.Date dt = entity.getCreatedDate();
         java.text.SimpleDateFormat sdf =
                 new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -77,10 +79,8 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
 
     @Override
     protected void setUpdateStatementArgs(PreparedStatement statement, User entity) throws SQLException {
-        statement.setString(1, entity.getLogin());
-        statement.setString(2, entity.getPassword());
-        statement.setInt(3, entity.getRole().ordinal());
-        statement.setInt(4, entity.getId());
+        statement.setString(1, entity.getPassword());
+        statement.setString(2, entity.getLogin());
     }
 
     @Override
@@ -91,7 +91,7 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
     @Override
     public User update(User entity) {
         try (final PreparedStatement statement = BasicConnectionPool.getInstance().getConnection().prepareStatement(SQL_UPDATE_USER)) {
-            setCreateStatementArgs(statement, entity);
+            setUpdateStatementArgs(statement, entity);
             statement.executeUpdate();
             return entity;
         } catch (SQLException | DAOException e) {

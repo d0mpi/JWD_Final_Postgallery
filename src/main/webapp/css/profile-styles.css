@@ -48,7 +48,7 @@
     color: #0b2852;
 }
 
-.bordered{
+.bordered {
     border-radius: 10px;
     border-width: 0;
     border-style: solid;
@@ -72,7 +72,7 @@
     justify-content: center;
 }
 
-.profile-input{
+.profile-input {
     font-family: Ubuntu, sans-serif;
     font-size: 16px;
     color: #333;
@@ -88,7 +88,7 @@
     border-bottom: solid 1px #7f7f7f;
 }
 
-.profile-button{
+.profile-button {
     background: #0b2852;
     color: white;
     font-size: 18px;
@@ -106,13 +106,13 @@
 
 }
 
-.profile-button:hover{
+.profile-button:hover {
     transform: scale(0.95);
     background: #81d742;
     transition: .3s;
 }
 
-.email-area{
+.email-area {
     border-radius: 10px;
     font-size: 20px;
     background: #e0f2ff;
@@ -123,7 +123,15 @@
     padding: 0 20px;
 }
 
-.email-area i{
+.email-area i {
     color: #0b2852;
     margin-right: 20px;
+}
+
+.sign-error {
+    font-family: Ubuntu, sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #e20505;
+    text-align: center;
 }
