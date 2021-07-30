@@ -15,6 +15,7 @@ import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,14 +73,15 @@ public class EditPostAction implements Command {
         }
         post.setModel(request.getParameter("model"));
         post.setType(request.getParameter("type"));
-        post.setLength(Float.valueOf(request.getParameter("lengthInput")));
-        post.setWingspan(Float.valueOf(request.getParameter("wingspan")));
-        post.setHeight(Float.valueOf(request.getParameter("height")));
+        post.setLength(new BigDecimal(request.getParameter("lengthInput").replace(',', '.')));
+        post.setWingspan(new BigDecimal(request.getParameter("wingspan").replace(',', '.')));
+        post.setHeight(new BigDecimal(request.getParameter("height").replace(',', '.')));
         post.setOrigin(request.getParameter("origin"));
         post.setCrew(Integer.valueOf(request.getParameter("crew")));
-        post.setSpeed(Float.valueOf(request.getParameter("speed")));
-        post.setDistance(Float.valueOf(request.getParameter("dist")));
-        post.setPrice(Integer.valueOf(request.getParameter("price")));
+        post.setSpeed(new BigDecimal(request.getParameter("speed").replace(',', '.')));
+        System.out.println(new BigDecimal(request.getParameter("speed").replace(',', '.')));
+        post.setDistance(new BigDecimal(request.getParameter("dist").replace(',', '.')));
+        post.setPrice(new BigDecimal(request.getParameter("price").replace(',', '.')));
         List<String> hashtags;
         if (request.getParameter("hashtags") != null && !request.getParameter("hashtags").equals("")) {
             hashtags = Arrays.stream(
@@ -91,7 +93,7 @@ public class EditPostAction implements Command {
 
         try {
             Part filePart = request.getPart("file");
-            if(filePart.getSize() != 0) {
+            if (filePart.getSize() != 0) {
                 File uploads = new File(IMAGES_UPLOAD_PATH);
                 File file = new File(uploads, post.getId() + PLANE_IMAGE_POSTFIX);
                 try (InputStream input = filePart.getInputStream()) {

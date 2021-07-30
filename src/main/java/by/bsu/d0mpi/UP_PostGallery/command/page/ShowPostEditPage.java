@@ -23,7 +23,7 @@ public class ShowPostEditPage implements Command {
     public ShowPostEditPage() {
         postService = new SimplePostService();
         redirectHomePage = new SimpleCommandResponse("/controller?command=main_page", true);
-        forwardEditPage = new SimpleCommandResponse("/WEB-INF/views/edit.jsp",false);
+        forwardEditPage = new SimpleCommandResponse("/WEB-INF/views/edit.jsp", false);
     }
 
     public static ShowPostEditPage getInstance() {
@@ -48,9 +48,14 @@ public class ShowPostEditPage implements Command {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        if (postId == null || session == null || postService.findEntityById(postId) == null ||
-                !postService.doesPostBelongsToAuthor(postId, (String) session.getAttribute("user_name"))) {
-            System.out.println("try again");
+
+        if (postId == null ||
+                session == null ||
+                postService.findEntityById(postId) == null ||
+                (!postService.doesPostBelongsToAuthor(postId, (String) session.getAttribute("user_name")) &&
+                        !(session.getAttribute("current_role").toString().equals("ADMIN") ||
+                                session.getAttribute("current_role").toString().equals("MODERATOR"))
+                )) {
             return redirectHomePage;
         }
 

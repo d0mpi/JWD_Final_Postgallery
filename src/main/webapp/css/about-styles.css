@@ -133,7 +133,7 @@ h3 {
 
 .feature-center-text {
     padding: 30px;
-    font-family: Ubuntu,sans-serif;
+    font-family: Ubuntu-Medium,sans-serif;
     font-size: 18px;
     line-height: 25px;
     letter-spacing: 1px;
@@ -144,7 +144,7 @@ h3 {
 
 .feature-left-text {
     padding: 30px;
-    font-family: Ubuntu,sans-serif;
+    font-family: Ubuntu-Medium,sans-serif;
     font-size: 18px;
     line-height: 25px;
     letter-spacing: 1px;
@@ -164,7 +164,7 @@ h3 {
 
 .feature-right-text {
     padding: 30px;
-    font-family: Ubuntu,sans-serif;
+    font-family: Ubuntu-Medium,sans-serif;
     font-size: 18px;
     line-height: 25px;
     letter-spacing: 1px;
@@ -198,7 +198,7 @@ h3 {
 
     color: #0b2852;
 
-    font-family: Ubuntu,sans-serif;
+    font-family: Ubuntu-Medium,sans-serif;
     padding: 20px 0;
     line-height: 25px;
 
@@ -254,7 +254,7 @@ h3 {
 
     color: #0b2852;
 
-    font-family: Ubuntu,sans-serif;
+    font-family: Ubuntu-Medium,sans-serif;
     padding: 20px 0;
     margin-top: 20px;
     line-height: 25px;
@@ -390,9 +390,6 @@ h3 {
 
 }
 
-.filter-text {
-    color: #0b2852;
-}
 
 .center-text {
     height: 200px;
@@ -412,12 +409,12 @@ h3 {
 
 .filter-text {
     padding: 30px;
-    font-family: Ubuntu,sans-serif;
     font-size: 18px;
     line-height: 25px;
     letter-spacing: 1px;
     word-spacing: 3px;
-
+    font-family: Ubuntu-Medium,sans-serif;
+    color: #0b2852;
     text-align: center;
 }
 

@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${cookie['language'].value}" scope="session"/>
 <fmt:setBundle basename="text"/>
+<%@ page import="by.bsu.d0mpi.UP_PostGallery.model.Role" %>
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -88,12 +89,15 @@
                                                     key="postType"/>:</span> ${post.type == "" ? "-" : post.type}</li>
                                             <li><span><fmt:message
                                                     key="postLength"/>:</span> ${post.length == 0 ? "-" : post.length}
+                                                <fmt:message key="MPostfix"/>
                                             </li>
                                             <li><span><fmt:message
                                                     key="postWingspan"/>:</span> ${post.wingspan == 0 ? "-" : post.wingspan}
+                                                <fmt:message key="MPostfix"/>
                                             </li>
                                             <li><span><fmt:message
                                                     key="postHeight"/>:</span> ${post.height == 0 ? "-" : post.height}
+                                                <fmt:message key="MPostfix"/>
                                             </li>
                                             <li><span><fmt:message
                                                     key="postOrigin"/>:</span> ${post.origin == "" ? "-" : post.origin}
@@ -102,11 +106,11 @@
                                                     key="postCrew"/>:</span> ${post.crew == 0 ? "-" : post.crew}</li>
                                             <li><span><fmt:message
                                                     key="postMaxSpeed"/>:</span> ${post.speed == 0 ? "-" : post.speed}
-                                                km/h
+                                                <fmt:message key="KmHPostfix"/>
                                             </li>
                                             <li><span><fmt:message
                                                     key="postFlyingDist"/>:</span> ${post.distance == 0 ? "-" : post.distance}
-                                                km
+                                                <fmt:message key="KmPostfix"/>
                                             </li>
                                             <li><span><fmt:message
                                                     key="postPrice"/>:</span> ${post.price == 0 ? "-" : post.price}$
@@ -119,7 +123,7 @@
                                                 <li> ${post.author} </li>
                                                 <li><fmt:message key="id"/>: ${post.id}</li>
                                                 <li>
-                                                <ctag:locale-date date="${post.createdDate}"/>
+                                                        <ctag:locale-date date="${post.createdDate}"/>
                                                 <li>
                                             </ul>
                                             <c:if test="${sessionScope.user_name != null}">
@@ -142,7 +146,8 @@
 
                             <div class="card-buttons-col">
                                 <c:if test="${sessionScope.user_name != null}">
-                                    <c:if test="${sessionScope.user_name == post.author}">
+                                    <c:if test="${sessionScope.user_name == post.author || sessionScope.current_role.name().equals('ADMIN')
+                                    || sessionScope.current_role.name().equals('MODERATOR')}">
                                         <a class="fas fa-edit a-icon"
                                            href="${pageContext.request.contextPath}/controller?command=post_edit_page&post_id=${post.id}">
                                         </a>

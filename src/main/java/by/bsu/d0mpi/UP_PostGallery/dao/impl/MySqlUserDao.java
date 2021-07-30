@@ -69,7 +69,7 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
     protected void setCreateStatementArgs(PreparedStatement statement, User entity) throws SQLException {
         statement.setString(1, entity.getLogin());
         statement.setString(2, entity.getPassword());
-        statement.setInt(3, entity.getRole().ordinal());
+        statement.setInt(3, entity.getRole().ordinal() + 1);
         java.util.Date dt = entity.getCreatedDate();
         java.text.SimpleDateFormat sdf =
                 new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

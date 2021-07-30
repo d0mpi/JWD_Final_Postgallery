@@ -1,11 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: mdoku
-  Date: 22.05.2021
-  Time: 13:45
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${cookie['language'].value}" scope="session"/>
@@ -67,26 +60,26 @@
                                     </div>
                                     <div class="col-33">
                                         <div class="input-box">
-                                            <label for="edit-height" class="edit-label"> <fmt:message key="postHeight"/>(m)</label>
+                                            <label for="edit-height" class="edit-label"> <fmt:message key="postHeight"/>(<fmt:message key="MPostfix"/>)</label>
                                             <input id="edit-height" name="height" type="text" class="input-text"
-                                                   pattern="[0-9]+([\.,][0-9]+)?"
+                                                   pattern="[0-9]{1,10}([\.,][0-9]{1,2})?"
                                                    value="${requestScope.postToEdit.height}">
                                         </div>
                                     </div>
                                     <div class="col-33">
                                         <div class="input-box">
-                                            <label for="edit-length" class="edit-label"> <fmt:message key="postLength"/>(m)</label>
+                                            <label for="edit-length" class="edit-label"> <fmt:message key="postLength"/>(<fmt:message key="MPostfix"/>)</label>
                                             <input id="edit-length" type="text" name="lengthInput" class="input-text"
-                                                   pattern="[0-9]+([\.,][0-9]+)?"
+                                                   pattern="[0-9]{1,10}([\.,][0-9]{1,2})?"
                                                    value="${requestScope.postToEdit.length}">
                                         </div>
                                     </div>
                                     <div class="col-33">
                                         <div class="input-box">
                                             <label for="edit-wingspan" class="edit-label"> <fmt:message
-                                                    key="postWingspan"/>(m)</label>
+                                                    key="postWingspan"/>(<fmt:message key="MPostfix"/>)</label>
                                             <input id="edit-wingspan" type="text" name="wingspan" class="input-text"
-                                                   pattern="[0-9]+([\.,][0-9]+)?"
+                                                   pattern="[0-9]{1,10}([\.,][0-9]{1,2})?"
                                                    value="${requestScope.postToEdit.wingspan}">
                                         </div>
                                     </div>
@@ -96,34 +89,34 @@
                                                     key="postType"/></label>
                                             <select id="edit-type" name="type" class="input-text">
                                                 <option ${requestScope.postToEdit.type.equals("fighter") ? "selected" : ""}>
-                                                    fighter
+                                                    <fmt:message key="planeTypeFighter"/>
                                                 </option>
                                                 <option ${requestScope.postToEdit.type.equals("transport") ? "selected" : ""}>
-                                                    transport
+                                                    <fmt:message key="planeTypeTransport"/>
                                                 </option>
                                                 <option ${requestScope.postToEdit.type.equals("maritime patrol") ? "selected" : ""}>
-                                                    maritime patrol
+                                                    <fmt:message key="planeTypeMaritime"/>
                                                 </option>
                                                 <option ${requestScope.postToEdit.type.equals("bomber") ? "selected" : ""}>
-                                                    bomber
+                                                    <fmt:message key="planeTypeBomber"/>
                                                 </option>
                                                 <option ${requestScope.postToEdit.type.equals("attack") ? "selected" : ""}>
-                                                    attack
+                                                    <fmt:message key="planeTypeAttack"/>
                                                 </option>
                                                 <option ${requestScope.postToEdit.type.equals("reconnaissance") ? "selected" : ""}>
-                                                    reconnaissance
+                                                    <fmt:message key="planeTypeReconnaissance"/>
                                                 </option>
                                                 <option ${requestScope.postToEdit.type.equals("multirole") ? "selected" : ""}>
-                                                    multirole
+                                                    <fmt:message key="planeTypeMultirole"/>
                                                 </option>
                                                 <option ${requestScope.postToEdit.type.equals("airborne early warning") ? "selected" : ""}>
-                                                    airborne early warning
+                                                    <fmt:message key="planeTypeAirborne"/>
                                                 </option>
                                                 <option ${requestScope.postToEdit.type.equals("experimental") ? "selected" : ""}>
-                                                    experimental
+                                                    <fmt:message key="planeTypeExperimental"/>
                                                 </option>
                                                 <option ${requestScope.postToEdit.type.equals("electronic warfare") ? "selected" : ""}>
-                                                    electronic warfare
+                                                    <fmt:message key="planeTypeElectronic"/>
                                                 </option>
                                             </select>
                                         </div>
@@ -142,7 +135,7 @@
                                                 <fmt:message key="postPrice"/>
                                                 ($)</label>
                                             <input id="price" type="text" name="price" class="input-text" required
-                                                   pattern="[0-9]+([\.,][0-9]+)*"
+                                                   pattern="[0-9]{1,20}([\.,][0-9]{1,2})*"
                                                    value="${requestScope.postToEdit.price}">
                                         </div>
                                     </div>
@@ -157,18 +150,18 @@
                                     <div class="col-half">
                                         <div class="input-box">
                                             <label for="edit-speed" class="edit-label"> <fmt:message
-                                                    key="postMaxSpeed"/> (km/h)</label>
+                                                    key="postMaxSpeed"/> (<fmt:message key="KmHPostfix"/>)</label>
                                             <input id="edit-speed" type="text" name="speed" class="input-text"
-                                                   pattern="[0-9]+([\.,][0-9]+)?" maxlength="20"
+                                                   pattern="[0-9]{1,10}([\.,][0-9]{1,2})?" maxlength="20"
                                                    value="${requestScope.postToEdit.speed}">
                                         </div>
                                     </div>
                                     <div class="col-half">
                                         <div class="input-box">
                                             <label for="edit-distance" class="edit-label"> <fmt:message
-                                                    key="postFlyingDist"/>(km)</label>
+                                                    key="postFlyingDist"/>(<fmt:message key="KmPostfix"/>)</label>
                                             <input id="edit-distance" type="text" name="dist" class="input-text"
-                                                   pattern="[0-9]+([\.,][0-9]+)?" maxlength="20"
+                                                   pattern="[0-9]{1,10}([\.,][0-9]{1,2})?" maxlength="20"
                                                    value="${requestScope.postToEdit.distance}">
                                         </div>
                                     </div>
@@ -186,7 +179,8 @@
                         </div>
                     </div>
                     <div class="col-full edit-btn-box">
-                        <input id="editButton" type="submit" class="edit-btn" value="Update"/>
+                        <input id="editButton" type="submit" class="edit-btn" value="<fmt:message
+                                                    key="editBtn"/>"/>
                     </div>
                 </form>
                 <div class="push"></div>

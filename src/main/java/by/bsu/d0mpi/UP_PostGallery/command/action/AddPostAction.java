@@ -15,6 +15,7 @@ import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
@@ -57,20 +58,20 @@ public class AddPostAction implements Command {
 
         String model = request.getParameter("model");
         String type = request.getParameter("type");
-        Float length = (request.getParameter("lengthInput").equals("") ||
-                request.getParameter("lengthInput") == null) ? 0 : Float.parseFloat(request.getParameter("lengthInput"));
-        Float wingspan = (request.getParameter("wingspan").equals("") ||
-                request.getParameter("wingspan") == null) ? 0 : Float.parseFloat(request.getParameter("wingspan"));
-        Float height = (request.getParameter("height").equals("") ||
-                request.getParameter("height") == null) ? 0 : Float.parseFloat(request.getParameter("height"));
+        BigDecimal length = (request.getParameter("lengthInput").equals("") ||
+                request.getParameter("lengthInput") == null) ? new BigDecimal(0) : new BigDecimal(request.getParameter("lengthInput").replace(',', '.'));
+        BigDecimal wingspan = (request.getParameter("wingspan").equals("") ||
+                request.getParameter("wingspan") == null) ? new BigDecimal(0) : new BigDecimal(request.getParameter("wingspan").replace(',', '.'));
+        BigDecimal height = (request.getParameter("height").equals("") ||
+                request.getParameter("height") == null) ? new BigDecimal(0) : new BigDecimal(request.getParameter("height").replace(',', '.'));
         String origin = request.getParameter("origin");
         Integer crew = (request.getParameter("crew").equals("") ||
                 request.getParameter("crew") == null) ? 0 : Integer.parseInt(request.getParameter("crew"));
-        Float speed = (request.getParameter("speed").equals("") ||
-                request.getParameter("speed") == null) ? 0 : Float.parseFloat(request.getParameter("speed"));
-        Float distance = (request.getParameter("dist").equals("") ||
-                request.getParameter("dist") == null) ? 0 : Float.parseFloat(request.getParameter("dist"));
-        Integer price = Integer.valueOf(request.getParameter("price"));
+        BigDecimal speed = (request.getParameter("speed").equals("") ||
+                request.getParameter("speed") == null) ? new BigDecimal(0) : new BigDecimal(request.getParameter("speed").replace(',', '.'));
+        BigDecimal distance = (request.getParameter("dist").equals("") ||
+                request.getParameter("dist") == null) ? new BigDecimal(0) : new BigDecimal(request.getParameter("dist").replace(',', '.'));
+        BigDecimal price = new BigDecimal(request.getParameter("price").replace(',', '.'));
         ResourceBundle resource = ResourceBundle.getBundle("database");
         Date createdDate = new Date();
 

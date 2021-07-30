@@ -10,6 +10,7 @@ import by.bsu.d0mpi.UP_PostGallery.service.MyPair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -71,14 +72,14 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             int id = rs.getInt(1);
             String model = rs.getString(2);
             String type = rs.getString(3);
-            Float length = rs.getFloat(4);
-            Float wingspan = rs.getFloat(5);
-            Float height = rs.getFloat(6);
+            BigDecimal length = rs.getBigDecimal(4);
+            BigDecimal wingspan = rs.getBigDecimal(5);
+            BigDecimal height = rs.getBigDecimal(6);
             String origin = rs.getString(7);
             Integer crew = rs.getInt(8);
-            Float speed = rs.getFloat(9);
-            Float distance = rs.getFloat(10);
-            Integer price = rs.getInt(11);
+            BigDecimal speed = rs.getBigDecimal(9);
+            BigDecimal distance = rs.getBigDecimal(10);
+            BigDecimal price = rs.getBigDecimal(11);
             Date createdDate = rs.getDate(12);
             String author = rs.getString(13);
             PreparedStatement statement2 = connection.prepareStatement(SQL_SELECT_HASHTAGS_BY_POST_ID);

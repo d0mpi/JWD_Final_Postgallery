@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${cookie['language'].value}" scope="session"/>
 <fmt:setBundle basename="text"/>
@@ -61,24 +61,24 @@
                                     </div>
                                     <div class="col-33">
                                         <div class="input-box">
-                                            <label for="add-height" class="add-label"> <fmt:message key="postHeight"/>(m)</label>
+                                            <label for="add-height" class="add-label"> <fmt:message key="postHeight"/>(<fmt:message key="MPostfix"/>)</label>
                                             <input id="add-height" name="height" type="text" class="input-text"
-                                                   pattern="[0-9]+([\.,][0-9]+)?">
+                                                   pattern="[0-9]{1,10}([\.,][0-9]{1,2})?">
                                         </div>
                                     </div>
                                     <div class="col-33">
                                         <div class="input-box">
-                                            <label for="add-length" class="add-label"> <fmt:message key="postLength"/>(m)</label>
+                                            <label for="add-length" class="add-label"> <fmt:message key="postLength"/>(<fmt:message key="MPostfix"/>)</label>
                                             <input id="add-length" type="text" name="lengthInput" class="input-text"
-                                                   pattern="[0-9]+([\.,][0-9]+)?">
+                                                   pattern="[0-9]{1,10}([\.,][0-9]{1,2})?">
                                         </div>
                                     </div>
                                     <div class="col-33">
                                         <div class="input-box">
                                             <label for="add-wingspan" class="add-label"> <fmt:message
-                                                    key="postWingspan"/>(m)</label>
+                                                    key="postWingspan"/>(<fmt:message key="MPostfix"/>)</label>
                                             <input id="add-wingspan" type="text" name="wingspan" class="input-text"
-                                                   pattern="[0-9]+([\.,][0-9]+)?">
+                                                   pattern="[0-9]{1,10}([\.,][0-9]{1,2})?">
                                         </div>
                                     </div>
                                     <div class="col-half">
@@ -86,16 +86,16 @@
                                             <label for="add-type" class="add-label"> <fmt:message
                                                     key="postType"/></label>
                                             <select id="add-type" name="type" type="text" class="input-text">
-                                                <option>fighter</option>
-                                                <option>transport</option>
-                                                <option>maritime patrol</option>
-                                                <option>bomber</option>
-                                                <option>attack</option>
-                                                <option>reconnaissance</option>
-                                                <option>multirole</option>
-                                                <option>airborne early warning</option>
-                                                <option>experimental</option>
-                                                <option>electronic warfare</option>
+                                                <option><fmt:message key="planeTypeFighter"/></option>
+                                                <option><fmt:message key="planeTypeTransport"/></option>
+                                                <option><fmt:message key="planeTypeMaritime"/></option>
+                                                <option><fmt:message key="planeTypeBomber"/></option>
+                                                <option><fmt:message key="planeTypeAttack"/></option>
+                                                <option><fmt:message key="planeTypeReconnaissance"/></option>
+                                                <option><fmt:message key="planeTypeMultirole"/></option>
+                                                <option><fmt:message key="planeTypeAirborne"/></option>
+                                                <option><fmt:message key="planeTypeExperimental"/></option>
+                                                <option><fmt:message key="planeTypeElectronic"/></option>
                                             </select>
                                         </div>
                                     </div>
@@ -112,7 +112,7 @@
                                             <label for="price" class="add-label" title="This field is mandatory">
                                                 <fmt:message key="postPrice"/>($)</label>
                                             <input id="price" type="text" name="price" class="input-text" required
-                                                   pattern="[0-9]+([\.,][0-9]+)*">
+                                                   pattern="[0-9]{1,20}([\.,][0-9]{1,2})*">
                                         </div>
                                     </div>
                                     <div class="col-half">
@@ -126,17 +126,17 @@
                                     <div class="col-half">
                                         <div class="input-box">
                                             <label for="add-speed" class="add-label"> <fmt:message key="postMaxSpeed"/>
-                                                (km/h)</label>
+                                                (<fmt:message key="KmHPostfix"/>)</label>
                                             <input id="add-speed" type="text" name="speed" class="input-text"
-                                                   pattern="[0-9]+([\.,][0-9]+)?" maxlength="20">
+                                                   pattern="[0-9]{1,10}([\.,][0-9]{1,2})?" maxlength="20">
                                         </div>
                                     </div>
                                     <div class="col-half">
                                         <div class="input-box">
                                             <label for="add-distance" class="add-label"> <fmt:message
-                                                    key="postFlyingDist"/>(km)</label>
+                                                    key="postFlyingDist"/>(<fmt:message key="KmPostfix"/>)</label>
                                             <input id="add-distance" type="text" name="dist" class="input-text"
-                                                   pattern="[0-9]+([\.,][0-9]+)?" maxlength="20">
+                                                   pattern="[0-9]{1,10}([\.,][0-9]{1,2})?" maxlength="20">
                                         </div>
                                     </div>
                                     <div class="col-full">
@@ -153,7 +153,7 @@
                     </div>
                     <div class="col-full add-btn-box">
                         <button id="addButton" type="submit" class="add-btn">
-                            <fmt:message key="sendBtn"/>
+                            <fmt:message key="createBtn"/>
                         </button>
                     </div>
                 </form>

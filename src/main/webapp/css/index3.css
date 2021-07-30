@@ -225,7 +225,7 @@ header {
     box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
     transition: .3s;
     outline: none;
-    color: #0b2852;
+    color: #524f4e;
     white-space: nowrap;
 
     font-size: 20px;
@@ -730,7 +730,7 @@ header {
 }
 
 .like-check + label i:before {
-    color: #7f7f7f;
+    color: #0b2852;
 }
 
 .like-check:checked + label i:before {
@@ -980,7 +980,7 @@ footer {
 }
 
 .filter-button {
-    border-radius: 30px;
+    border-radius: 10px;
     font-size: 14px;
     padding: 3px 10px;
     align-items: center;
@@ -988,7 +988,7 @@ footer {
     outline: none;
     cursor: pointer;
     width: 150px;
-    height: 30px;
+    height: 25px;
     font-family: Ubuntu, sans-serif;
     border: solid 0;
     color: white;
@@ -1025,7 +1025,6 @@ footer {
     font-size: 1.5rem;
     margin-left: 5px;
     margin-bottom: 10px;
-    color: #0b2852;
 }
 
 .a-icon:hover {
@@ -1101,8 +1100,8 @@ footer {
     outline: none;
     cursor: pointer;
     border: solid 0;
-    height: 30px;
-    width: 30px;
+    height: 25px;
+    width: 25px;
     display: flex;
     justify-content: center;
     color: white;

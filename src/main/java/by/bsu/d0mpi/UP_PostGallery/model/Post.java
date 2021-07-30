@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -14,20 +16,20 @@ import java.util.List;
 public class Post extends DatabaseEntity {
     private String model;
     private String type;
-    private Float length;
-    private Float wingspan;
-    private Float height;
+    private BigDecimal length;
+    private BigDecimal wingspan;
+    private BigDecimal height;
     private String origin;
     private Integer crew;
-    private Float speed;
-    private Float distance;
-    private Integer price;
+    private BigDecimal speed;
+    private BigDecimal distance;
+    private BigDecimal price;
     private Date createdDate;
     private String author;
     private List<String> hashtags;
 
-    public Post(int id, String model, String type, Float length, Float wingspan, Float height, String origin,
-                Integer crew, Float speed, Float distance, Integer price, Date createdDate, String author,
+    public Post(int id, String model, String type, BigDecimal length, BigDecimal wingspan, BigDecimal height, String origin,
+                Integer crew, BigDecimal speed, BigDecimal distance, BigDecimal price, Date createdDate, String author,
                  List<String> hashtags) {
         super(id);
         this.model = model;
@@ -45,8 +47,8 @@ public class Post extends DatabaseEntity {
         this.hashtags = hashtags;
     }
 
-    public Post(String model, String type, Float length, Float wingspan, Float height, String origin, Integer crew,
-                Float speed, Float distance, Integer price, Date createdDate, String author, List<String> hashtags) {
+    public Post(String model, String type, BigDecimal length, BigDecimal wingspan, BigDecimal height, String origin, Integer crew,
+                BigDecimal speed, BigDecimal distance, BigDecimal price, Date createdDate, String author, List<String> hashtags) {
         this(-1, model, type, length, wingspan, height, origin, crew, speed, distance, price, createdDate, author, hashtags);
     }
 
