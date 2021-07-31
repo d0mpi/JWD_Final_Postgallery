@@ -21,14 +21,14 @@ import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static by.bsu.d0mpi.UP_PostGallery.command.page.ShowPostEditPage.SESSION_USER_NAME;
 import static by.bsu.d0mpi.UP_PostGallery.controller.ImageServlet.IMAGES_UPLOAD_PATH;
+import static by.bsu.d0mpi.UP_PostGallery.controller.ImageServlet.PLANE_IMAGE_POSTFIX;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 
 public class AddPostAction implements Command {
     private static final Logger logger = LogManager.getLogger();
-    public static final String UPLOAD_PATH = "B:\\Proga\\temp\\planes\\";
-    public static final String PLANE_IMAGE_POSTFIX = "-card.jpg";
     private static volatile AddPostAction instance;
 
     private final CommandResponse redirectHomePage;
@@ -72,15 +72,13 @@ public class AddPostAction implements Command {
         BigDecimal distance = (request.getParameter("dist").equals("") ||
                 request.getParameter("dist") == null) ? new BigDecimal(0) : new BigDecimal(request.getParameter("dist").replace(',', '.'));
         BigDecimal price = new BigDecimal(request.getParameter("price").replace(',', '.'));
-        ResourceBundle resource = ResourceBundle.getBundle("database");
         Date createdDate = new Date();
-
 
         HttpSession session = request.getCurrentSession().orElse(null);
         if (session == null) {
             return redirectErrorPage;
         }
-        String author = (String) session.getAttribute("user_name");
+        String author = (String) session.getAttribute(SESSION_USER_NAME);
 
         List<String> hashtags;
         if (request.getParameter("hashtags") != null && !request.getParameter("hashtags").equals("")) {
@@ -96,7 +94,6 @@ public class AddPostAction implements Command {
         try {
             Part filePart = request.getPart("file");
             if (filePart.getSize() != 0) {
-//                String fileName = extractFileName(filePart);
                 File uploads = new File(IMAGES_UPLOAD_PATH);
                 File file = new File(uploads, post.getId() + PLANE_IMAGE_POSTFIX);
                 try (InputStream input = filePart.getInputStream()) {
@@ -110,19 +107,4 @@ public class AddPostAction implements Command {
 
         return redirectHomePage;
     }
-
-//    protected String extractFileName(Part part) {
-//        String contentDisp = part.getHeader("content-disposition");
-//        String[] items = contentDisp.split(";");
-//        for (String s : items) {
-//            if (s.trim().startsWith("filename")) {
-//                String clientFileName = s.substring(s.indexOf("=") + 2, s.length() - 1);
-//                clientFileName = clientFileName.replace("\\", "/");
-//                int i = clientFileName.lastIndexOf('/');
-//
-//                return clientFileName.substring(i + 1);
-//            }
-//        }
-//        return null;
-//    }
 }

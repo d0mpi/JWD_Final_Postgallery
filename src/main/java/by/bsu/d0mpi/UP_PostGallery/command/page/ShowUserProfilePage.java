@@ -11,6 +11,8 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpSession;
 
+import static by.bsu.d0mpi.UP_PostGallery.command.page.ShowPostEditPage.SESSION_USER_NAME;
+
 public class ShowUserProfilePage implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static volatile ShowUserProfilePage instance;
@@ -40,9 +42,9 @@ public class ShowUserProfilePage implements Command {
     public CommandResponse execute(CommandRequest request) {
         HttpSession session = request.getCurrentSession().orElse(null);
         if (session != null) {
-            int numberOfPosts = userService.getNumberOfPosts(String.valueOf(session.getAttribute("user_name")));
+            int numberOfPosts = userService.getNumberOfPosts(String.valueOf(session.getAttribute(SESSION_USER_NAME)));
             request.setAttribute("number_of_posts", numberOfPosts);
-            int numberOfLikes = userService.getRating(String.valueOf(session.getAttribute("user_name")));
+            int numberOfLikes = userService.getRating(String.valueOf(session.getAttribute(SESSION_USER_NAME)));
             request.setAttribute("number_of_likes", numberOfLikes);
         }
         return forwardProfilePage;

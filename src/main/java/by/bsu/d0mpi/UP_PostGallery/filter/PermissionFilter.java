@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static by.bsu.d0mpi.UP_PostGallery.command.page.ShowPostEditPage.SESSION_USER_ROLE;
 import static by.bsu.d0mpi.UP_PostGallery.controller.ApplicationController.COMMAND_PARAM_NAME;
 import static by.bsu.d0mpi.UP_PostGallery.model.Role.UNAUTHORIZED;
 
@@ -34,8 +35,8 @@ public class PermissionFilter implements Filter {
     }
 
     private Role extractRoleFromSession(HttpSession session) {
-        return session != null && session.getAttribute("current_role") != null
-                ? (Role) session.getAttribute("current_role")
+        return session != null && session.getAttribute(SESSION_USER_ROLE) != null
+                ? (Role) session.getAttribute(SESSION_USER_ROLE)
                 : UNAUTHORIZED;
     }
 }

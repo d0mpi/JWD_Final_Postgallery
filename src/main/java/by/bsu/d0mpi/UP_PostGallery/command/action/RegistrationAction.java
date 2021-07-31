@@ -14,9 +14,16 @@ import org.joda.time.Days;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
+import static by.bsu.d0mpi.UP_PostGallery.command.action.ChangePasswordAction.REQUEST_ATTRIBUTE_ERROR_TEXT;
+import static by.bsu.d0mpi.UP_PostGallery.command.page.ShowPostEditPage.SESSION_USER_NAME;
+import static by.bsu.d0mpi.UP_PostGallery.command.page.ShowPostEditPage.SESSION_USER_ROLE;
+
 public class RegistrationAction implements Command {
 
     private static final Logger logger = LogManager.getLogger();
+    public static final String SESSION_USER_AGE = "user_age";
+    public static final String REQUEST_LOGIN_PARAM = "login";
+    public static final String REQUEST_PASSWORD_PARAM = "password";
     private static volatile RegistrationAction instance;
 
     private final UserService userService;
@@ -44,11 +51,11 @@ public class RegistrationAction implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        final String login = request.getParameter("login");
-        final String password = request.getParameter("password");
+        final String login = request.getParameter(REQUEST_LOGIN_PARAM);
+        final String password = request.getParameter(REQUEST_PASSWORD_PARAM);
         final User enteredUser = new User(login, password, new Date());
         if (userService.isLoginPresented(login)) {
-            request.setAttribute("error_text", "User with this login is already exist. Try again.");
+            request.setAttribute(REQUEST_ATTRIBUTE_ERROR_TEXT, "User with this login is already exist. Try again.");
             return registrationPageResponse;
         }
         userService.createEntity(enteredUser);
@@ -60,13 +67,13 @@ public class RegistrationAction implements Command {
         final HttpSession session = request.createSession();
         final User loggedInUser = userService.findUserByLogin(login).orElse(null);
         if (null != loggedInUser) {
-            session.setAttribute("user_name", loggedInUser.getLogin());
-            session.setAttribute("current_role", loggedInUser.getRole());
+            session.setAttribute(SESSION_USER_NAME, loggedInUser.getLogin());
+            session.setAttribute(SESSION_USER_ROLE, loggedInUser.getRole());
             Integer age = Days.daysBetween(new DateTime(loggedInUser.getCreatedDate()), new DateTime()).getDays();
-            session.setAttribute("user_age", age);
+            session.setAttribute(SESSION_USER_AGE, age);
             return homePageResponse;
         } else {
-            request.setAttribute("error_text", "User with this login is already exist. Try again.");
+            request.setAttribute(REQUEST_ATTRIBUTE_ERROR_TEXT, "User with this login is already exist. Try again.");
             return registrationPageResponse;
         }
     }

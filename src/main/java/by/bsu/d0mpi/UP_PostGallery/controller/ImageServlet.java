@@ -13,6 +13,8 @@ import java.nio.file.Files;
 public class ImageServlet extends HttpServlet {
 
     public static final String IMAGES_UPLOAD_PATH = "b:/Proga/UP_PostGallery_plane_storage/planes";
+    public static final String PLANE_IMAGE_POSTFIX = "-card.jpg";
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

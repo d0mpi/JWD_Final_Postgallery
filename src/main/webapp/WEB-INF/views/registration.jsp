@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-    <link rel="stylesheet" type="text/css" href="../../css/register-styles.css">
+    <link rel="stylesheet" type="text/css" href="../../css/sign-styles.css">
     <script src="https://kit.fontawesome.com/ede64561b8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../../fonts/fonts.css">
     <script src="../../js/jquery-3.6.0.min.js"></script>
@@ -42,16 +42,13 @@
             <input class="form-input" name="password" pattern="[A-za-z0-9]{1,40}" type="password" id="password"
                    placeholder=<fmt:message key="registerPasswordInput"/> required>
         </div>
-        <input type="submit" id="register_btn" class="register-btn" value="<fmt:message key="registerBtn"/>">
+        <input type="submit" id="register_btn" class="sign-in-btn" value="<fmt:message key="registerBtn"/>">
         <div class="text-span"><fmt:message key="orSignUp"/></div>
 
         <div class="social-login">
-            <a href="#" class="facebook">
-            </a>
-            <a href="#" class="twitter">
-            </a>
-            <a href="#" class="google">
-            </a>
+            <a href="#" class="fab fa-facebook-f facebook"></a>
+            <a href="#" class="twitter fab fa-twitter"></a>
+            <a href="#" class="google fab fa-google"></a>
         </div>
     </form>
 </div>

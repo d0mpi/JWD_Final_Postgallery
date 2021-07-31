@@ -94,7 +94,6 @@ header {
     height: inherit;
     width: 100%;
     justify-content: space-between;
-    margin: 1px;
 }
 
 .header-flex-box {
@@ -257,7 +256,6 @@ header {
     display: flex;
     height: inherit;
     justify-content: center;
-    margin: 1px;
 }
 
 .menu-col {
@@ -438,119 +436,6 @@ header {
     padding-right: 20px;
 }
 
-@media (max-width: 1200px) {
-    header {
-        box-shadow: none;
-        border-style: solid;
-        border-width: 0;
-    }
-
-    .main-container {
-        flex-direction: column;
-        justify-content: flex-start;
-    }
-
-    .filter-col {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        margin-top: 0;
-    }
-
-    .filter-fieldset {
-
-        width: inherit;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        height: 240px;
-        background: #0b2852;
-        color: white;
-        padding: 20px 30px 20px 30px;
-        border-radius: 0 0 10px 10px;
-        border-style: solid;
-        border-width: 0;
-        margin-top: 50px;
-    }
-
-    .filter-head {
-        height: 30px;
-    }
-
-    .filter-ul {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: stretch;
-        height: 150px;
-        width: 350px;
-    }
-
-    .filter-ul li label:not(.filter-reset-label) {
-        display: flex;
-        justify-content: space-between;
-        padding: 0 20px;
-    }
-
-    .filter-input {
-        border-radius: 5px;
-        font-size: 14px;
-        padding: 3px;
-        align-items: center;
-        margin-top: 5px;
-        background: #f4f4f4;
-        outline: none;
-        cursor: text;
-    }
-
-    .filter-checkbox {
-        margin-right: 5px;
-        width: 15px;
-        height: 15px;
-    }
-
-    .filter-label {
-        display: flex;
-        height: auto;
-        text-align: left;
-        align-items: center;
-        flex-direction: row;
-    }
-
-    .header-add-col {
-        flex-grow: unset;
-    }
-
-    .header-right {
-        justify-content: center;
-    }
-
-    * {
-        transition: none;
-    }
-
-    .header-flex-box {
-        flex-direction: column;
-        height: auto;
-        justify-content: center;
-        display: block;
-    }
-
-    header {
-        height: auto;
-    }
-
-
-    .main-container {
-        margin-top: 60px;
-    }
-
-    .main-box-inline-block {
-        margin-top: 300px;
-        padding-left: 20px;
-    }
-}
 
 .push {
     height: 90px;
@@ -981,7 +866,7 @@ footer {
 
 .filter-button {
     border-radius: 30px;
-    font-size: 14px;
+    font-size: 16px;
     padding: 3px 10px;
     align-items: center;
     background: #0b2852;
@@ -1147,7 +1032,7 @@ footer {
 }
 
 .resize:hover{
-    transform: scale(1.2);
+    transform: scale(1.1);
     transition: .5s;
 }
 
@@ -1155,4 +1040,164 @@ footer {
     font-size: 30px;
     border: solid 0;
     padding: 0 30px;
+}
+
+
+@media (max-width: 1120px) {
+    header {
+        box-shadow: none;
+        border-style: solid;
+        border-width: 0;
+    }
+
+    .main-container {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+
+    .header-right {
+        justify-content: center;
+    }
+
+    .header-flex-box {
+        flex-direction: column;
+        height: auto;
+        justify-content: center;
+        display: block;
+    }
+
+    header {
+        height: auto;
+    }
+
+
+    .header-add-col {
+        flex-grow: unset;
+    }
+
+    .filter-fieldset{
+        margin-top: -30px;
+    }
+
+    .main-container{
+        margin-top: 130px;
+    }
+}
+
+@media (max-width: 1000px) {
+
+    .main-container {
+        margin-top: 60px;
+    }
+
+    .main-box-inline-block {
+        margin-top: 320px;
+        padding-left: 20px;
+    }
+
+    .filter-col {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .filter-fieldset {
+        width: inherit;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: auto;
+        background: #0b2852;
+        color: white;
+        padding: 10px 30px 20px 30px;
+        border-radius: 0 0 10px 10px;
+        border-style: solid;
+        border-width: 0;
+        margin-top: 70px;
+        position: absolute;
+        z-index: 90;
+    }
+
+    .filter-head {
+        height: 30px;
+        color: white;
+        border-bottom: solid 0;
+        border-top: solid 2px;
+        padding: 10px 0 0 0;
+    }
+
+    .filter-ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: stretch;
+        height: auto;
+        width: 350px;
+    }
+
+    .filter-ul li{
+        margin-bottom: 10px;
+    }
+
+    .filter-ul li label:not(.filter-reset-label) {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+
+    .filter-input {
+        border-radius: 5px;
+        font-size: 14px;
+        padding: 3px;
+        align-items: center;
+        margin-top: 5px;
+        background: #f4f4f4;
+        outline: none;
+        cursor: text;
+    }
+
+    .filter-checkbox {
+        margin-right: 5px;
+        width: 15px;
+        height: 15px;
+    }
+
+    .filter-label {
+        display: flex;
+        height: auto;
+        text-align: left;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    .filter-label div span{
+        color: white;
+    }
+
+    .filter-button{
+        margin-top: 10px;
+        background: #e0f2ff;
+        color: #0b2852;
+        font-family: Ubuntu-Medium, sans-serif;
+        height: 25px;
+    }
+
+    .filter-reset-button{
+        margin-top: 10px;
+        background: #e0f2ff;
+        color: #0b2852;
+        font-family: Ubuntu-Medium, sans-serif;
+        height: 25px;
+        width: 25px;
+    }
+
+    .filter-reset-button:hover {
+        background: #34b759;
+        color: white;
+        transform: scale(0.95) rotate(360deg);
+        transition-duration: 1s;
+    }
 }

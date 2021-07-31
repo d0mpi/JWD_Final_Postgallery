@@ -21,9 +21,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static by.bsu.d0mpi.UP_PostGallery.command.page.ShowPostEditPage.SESSION_USER_NAME;
+
 public class ShowMainPage implements Command {
     private static final Logger logger = LogManager.getLogger();
     public static final int PAGE_SIZE = 10;
+    public static final String LIKED_POSTS_ID_LIST = "likedPostsIdList";
+    public static final String REQUEST_FILTER_AUTHOR_PARAM = "filter_author_text";
+    public static final String REQUEST_FILTER_DATE_PARAM = "filter_date_text";
+    public static final String REQUEST_FILTER_HASHTAG_PARAM = "filter_hashtags_text";
     private static volatile ShowMainPage instance;
     private final PostService postService;
     private final LikeService likeService;
@@ -53,27 +59,27 @@ public class ShowMainPage implements Command {
         ArrayList<FilterType> filterList = new ArrayList<>();
         ArrayList<String> filterParams = new ArrayList<>();
 
-        if (request.hasParameter("filter_author_text") && request.hasParameter("filter_hashtags_text") &&
-                request.hasParameter("filter_date_text")) {
-            final String hashtag = request.getParameter("filter_hashtags_text");
+        if (request.hasParameter(REQUEST_FILTER_AUTHOR_PARAM) && request.hasParameter(REQUEST_FILTER_HASHTAG_PARAM) &&
+                request.hasParameter(REQUEST_FILTER_DATE_PARAM)) {
+            final String hashtag = request.getParameter(REQUEST_FILTER_HASHTAG_PARAM);
             if (hashtag != null && !hashtag.isEmpty()) {
                 filterList.add(FilterType.HASHTAG);
-                filterParams.add(request.getParameter("filter_hashtags_text"));
-                request.setAttribute("filter_hashtags_text", hashtag);
+                filterParams.add(request.getParameter(REQUEST_FILTER_HASHTAG_PARAM));
+                request.setAttribute(REQUEST_FILTER_HASHTAG_PARAM, hashtag);
             }
 
-            final String author = request.getParameter("filter_author_text");
+            final String author = request.getParameter(REQUEST_FILTER_AUTHOR_PARAM);
             if (author != null && !author.isEmpty()) {
                 filterList.add(FilterType.AUTHOR);
-                filterParams.add(request.getParameter("filter_author_text"));
-                request.setAttribute("filter_author_text", author);
+                filterParams.add(request.getParameter(REQUEST_FILTER_AUTHOR_PARAM));
+                request.setAttribute(REQUEST_FILTER_AUTHOR_PARAM, author);
             }
 
             try {
-                final LocalDate date = LocalDate.parse(request.getParameter("filter_date_text"));
+                final LocalDate date = LocalDate.parse(request.getParameter(REQUEST_FILTER_DATE_PARAM));
                 filterList.add(FilterType.DATE);
-                filterParams.add(request.getParameter("filter_date_text"));
-                request.setAttribute("filter_date_text", date);
+                filterParams.add(request.getParameter(REQUEST_FILTER_DATE_PARAM));
+                request.setAttribute(REQUEST_FILTER_DATE_PARAM, date);
             } catch (DateTimeParseException ignored) {
             }
         }
@@ -91,11 +97,11 @@ public class ShowMainPage implements Command {
 
 
         HttpSession session = request.getCurrentSession().orElse(null);
-        if (session != null && session.getAttribute("user_name") != null) {
-            request.setAttribute("likedPostsIdList",
-                    likeService.getLikedPostIdList((String) session.getAttribute("user_name")));
+        if (session != null && session.getAttribute(SESSION_USER_NAME) != null) {
+            request.setAttribute(LIKED_POSTS_ID_LIST,
+                    likeService.getLikedPostIdList((String) session.getAttribute(SESSION_USER_NAME)));
         } else {
-            request.setAttribute("likedPostsIdList", Collections.emptyList());
+            request.setAttribute(LIKED_POSTS_ID_LIST, Collections.emptyList());
         }
 
         request.setAttribute("pageNumber", startNumber / PAGE_SIZE + 1);

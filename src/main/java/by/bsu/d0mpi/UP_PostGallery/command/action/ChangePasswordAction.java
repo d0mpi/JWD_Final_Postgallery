@@ -12,8 +12,14 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpSession;
 
+import static by.bsu.d0mpi.UP_PostGallery.command.page.ShowPostEditPage.SESSION_USER_NAME;
+import static by.bsu.d0mpi.UP_PostGallery.command.page.ShowPostEditPage.SESSION_USER_ROLE;
+
 public class ChangePasswordAction implements Command {
     private static final Logger logger = LogManager.getLogger();
+    public static final String REQUEST_OLD_PASSWORD_PARAM = "old_password";
+    public static final String REQUEST_NEW_PASSWORD_PARAM = "new_password";
+    public static final String REQUEST_ATTRIBUTE_ERROR_TEXT = "error_text";
     private static volatile ChangePasswordAction instance;
 
     private final CommandResponse redirectErrorPage;
@@ -41,30 +47,30 @@ public class ChangePasswordAction implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        if (!request.hasParameter("old_password") || !request.hasParameter("new_password")) {
+        if (!request.hasParameter(REQUEST_OLD_PASSWORD_PARAM) || !request.hasParameter(REQUEST_NEW_PASSWORD_PARAM)) {
             return redirectErrorPage;
         }
-        final String oldPassword = request.getParameter("old_password");
-        final String newPassword = request.getParameter("new_password");
+        final String oldPassword = request.getParameter(REQUEST_OLD_PASSWORD_PARAM);
+        final String newPassword = request.getParameter(REQUEST_NEW_PASSWORD_PARAM);
         HttpSession session = request.getCurrentSession().orElse(null);
         if (oldPassword.equals(newPassword)) {
-            request.setAttribute("error_text", "Passwords match.\nTry again.");
+            request.setAttribute(REQUEST_ATTRIBUTE_ERROR_TEXT, "Passwords match.\nTry again.");
             return forwardProfilePage;
         }
         if (session == null) {
             return redirectErrorPage;
         }
 
-        final String login = (String) session.getAttribute("user_name");
-        final Role role = (Role) session.getAttribute("current_role");
+        final String login = (String) session.getAttribute(SESSION_USER_NAME);
+        final Role role = (Role) session.getAttribute(SESSION_USER_ROLE);
         User user = new User(login, oldPassword, role);
         if (!userService.canLogIn(user)) {
-            request.setAttribute("error_text", "Wrong password.\nTry again.");
+            request.setAttribute(REQUEST_ATTRIBUTE_ERROR_TEXT, "Wrong password.\nTry again.");
             return forwardProfilePage;
         }
         user.setPassword(newPassword);
         userService.changePassword(user);
-        request.setAttribute("error_text", "Successfully.");
+        request.setAttribute(REQUEST_ATTRIBUTE_ERROR_TEXT, "Successfully.");
         return forwardProfilePage;
     }
 }

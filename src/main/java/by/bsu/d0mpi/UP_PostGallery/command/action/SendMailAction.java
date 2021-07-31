@@ -18,6 +18,9 @@ import java.util.Properties;
 
 public class SendMailAction implements Command {
     private static final Logger logger = LogManager.getLogger();
+    public static final String REQUEST_CONTACT_NAME_PARAM = "contact-name";
+    public static final String REQUEST_CONTACT_EMAIL_PARAM = "contact-email";
+    public static final String REQUEST_CONTACT_TEXT_PARAM = "contact-text";
     private static volatile SendMailAction instance;
 
     private final CommandResponse homePageResponse;
@@ -48,9 +51,9 @@ public class SendMailAction implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        final String userName = new String(request.getParameter("contact-name").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-        final String userAddress = request.getParameter("contact-email");
-        final String text = new String(request.getParameter("contact-text").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+        final String userName = new String(request.getParameter(REQUEST_CONTACT_NAME_PARAM).getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+        final String userAddress = request.getParameter(REQUEST_CONTACT_EMAIL_PARAM);
+        final String text = new String(request.getParameter(REQUEST_CONTACT_TEXT_PARAM).getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
         String login = mailProperties.getProperty("mail.user");
         String to = mailProperties.getProperty("mail.user");
@@ -74,7 +77,6 @@ public class SendMailAction implements Command {
             message.setSubject("Message from UP_PostGallery user");
             message.setText("User name: " + userName + "\nUser address: " + userAddress + "\n" + text);
             Transport.send(message);
-            System.out.println("Sent message successfully....");
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }

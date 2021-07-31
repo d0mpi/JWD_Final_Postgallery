@@ -22,12 +22,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static by.bsu.d0mpi.UP_PostGallery.command.action.AddPostAction.PLANE_IMAGE_POSTFIX;
 import static by.bsu.d0mpi.UP_PostGallery.controller.ImageServlet.IMAGES_UPLOAD_PATH;
+import static by.bsu.d0mpi.UP_PostGallery.controller.ImageServlet.PLANE_IMAGE_POSTFIX;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class EditPostAction implements Command {
     private static final Logger logger = LogManager.getLogger();
+    public static final String SESSION_EDIT_POST_ID = "lastEditPostId";
     private static volatile EditPostAction instance;
 
     private final CommandResponse redirectHomePage;
@@ -60,11 +61,11 @@ public class EditPostAction implements Command {
         if (session == null) {
             return redirectHomePage;
         }
-        Integer postId = (Integer) session.getAttribute("lastEditPostId");
+        Integer postId = (Integer) session.getAttribute(SESSION_EDIT_POST_ID);
         if (postId == null) {
             return redirectHomePage;
         }
-        session.removeAttribute("lastEditPostId");
+        session.removeAttribute(SESSION_EDIT_POST_ID);
 
         Post post = postService.findEntityById(postId);
 

@@ -10,8 +10,10 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.Cookie;
 
-public class ChangeLanguageAction implements Command{
+public class ChangeLanguageAction implements Command {
     private static final Logger logger = LogManager.getLogger();
+    public static final String REQUEST_LANGUAGE_PARAM = "language-select";
+    public static final String LANGUAGE_COOKIE_NAME = "language";
     private static volatile ChangeLanguageAction instance;
 
     private final CommandResponse redirectHomePage;
@@ -32,12 +34,12 @@ public class ChangeLanguageAction implements Command{
         }
         return localInstance;
     }
-    
+
     @Override
     public CommandResponse execute(CommandRequest request) {
-        if (request.getParameter("language-select") != null) {
+        if (request.getParameter(REQUEST_LANGUAGE_PARAM) != null) {
             String languageAbbr;
-            switch (request.getParameter("language-select")) {
+            switch (request.getParameter(REQUEST_LANGUAGE_PARAM)) {
                 case ("RU"):
                     languageAbbr = "ru_BY";
                     break;
@@ -51,18 +53,18 @@ public class ChangeLanguageAction implements Command{
                     languageAbbr = "en_US";
                     break;
             }
-            Cookie cookie = new Cookie("language", languageAbbr);
+            new Cookie(LANGUAGE_COOKIE_NAME, languageAbbr);
         } else {
             Cookie[] cookies = request.getCookies();
             if (cookies == null || cookies.length == 0) {
-                Cookie cookie = new Cookie("language", "en_US");
+                new Cookie(LANGUAGE_COOKIE_NAME, "en_US");
             } else {
                 boolean notPresented = true;
                 for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("language")) notPresented = false;
+                    if (cookie.getName().equals(LANGUAGE_COOKIE_NAME)) notPresented = false;
                 }
                 if (notPresented) {
-                    Cookie cookie = new Cookie("language", "en_US");
+                    new Cookie(LANGUAGE_COOKIE_NAME, "en_US");
                 }
             }
         }

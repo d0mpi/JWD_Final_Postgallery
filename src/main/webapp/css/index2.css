@@ -70,7 +70,7 @@ body:before {
 
 
 button:hover:before {
-    color: #81d742;
+    color: #34b759;
 }
 
 header {
@@ -162,7 +162,7 @@ header {
 }
 
 .header-add-button:hover {
-    background: #81d742;
+    background: #34b759;
     color: white;
     transform: scale(.95);
 }
@@ -233,7 +233,7 @@ header {
 
 
 .header-button:hover {
-    background: #81d742;
+    background: #34b759;
     color: white;
     transform: scale(.95);
 }
@@ -989,7 +989,7 @@ footer {
 .filter-button:hover {
     transition: .3s;
     transform: scale(.95);
-    background: #81d742;
+    background: #34b759;
     color: white;
 }
 
@@ -1022,7 +1022,7 @@ footer {
 .a-icon:hover {
     transform: scale(.95);
     transition: .3s;
-    color: #81d742;
+    color: #34b759;
 }
 
 .pagination-bar {
@@ -1100,7 +1100,7 @@ footer {
 }
 
 .filter-reset-button:hover {
-    background: #81d742;
+    background: #34b759;
     transform: scale(0.95) rotate(360deg);
     transition-duration: 1s;
 }

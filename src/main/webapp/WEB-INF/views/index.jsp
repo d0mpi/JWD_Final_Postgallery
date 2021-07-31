@@ -162,7 +162,7 @@
                         <c:choose>
                             <c:when test="${requestScope.postList.isEmpty()}">
                                 <p class="no-post-text">
-                                    Sorry no posts with this filters :(
+                                    <fmt:message key="noPostsText"/>
                                 </p>
                             </c:when>
                             <c:otherwise>
