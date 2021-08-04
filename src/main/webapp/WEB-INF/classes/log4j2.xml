@@ -1,20 +1,20 @@
-<?xml version = "1.0" encoding = "UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Appenders>
-        <File name="ConnectionPoolAppender" fileName="./logs/ConnectionPoolLog.log" append="true">
-            <PatternLayout pattern="%d{dd.MM.yyyy HH:mm:ss} [%t] %-5p %c{1} - %M() %m%n"/>
-        </File>
-        <File name="DaoAppender" fileName="logs/DaoLog.log" append="true">
-            <PatternLayout pattern="%d{dd.MM.yyyy HH:mm:ss} [%t] %-5p %c{1} - %M() %m%n"/>
-        </File>
-        <File name="ServiceAppender" fileName="logs/ServiceLog.log" append="true">
-            <PatternLayout pattern="%d{dd.MM.yyyy HH:mm:ss} [%t] %-5p %c{1} - %M() %m%n"/>
-        </File>
+        <RollingFile name="errorLogFile" fileName="src/main/logs/errorLog.log"
+                     filePattern="logs/errorLog-%d{yyyy-MM-dd}.log"
+                     ignoreExceptions="false">
+            <PatternLayout pattern="%d{dd:MM:yyyy HH:mm:ss} [%t] %-5level %C{2} %M %msg%n"/>
+            <SizeBasedTriggeringPolicy size="2MB"/>
+            <TimeBasedTriggeringPolicy/>
+        </RollingFile>
     </Appenders>
-
-<!--    <Loggers>-->
-<!--        <Logger name="by.bsu.d0mpi.UP_PostGallery.pool" additivity="true" level="All">-->
-<!--            <AppenderRef ref="ConnectionPoolAppender"/>-->
-<!--        </Logger>-->
-<!--    </Loggers>-->
+    <Loggers>
+        <Logger name="logger" level="All">
+            <AppenderRef ref="errorLogFile"/>
+        </Logger>
+        <Root level="All">
+            <AppenderRef ref="errorLogFile"/>
+        </Root>
+    </Loggers>
 </Configuration>

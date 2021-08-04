@@ -27,7 +27,10 @@ public class LocaleFormatDateTag extends SimpleTagSupport {
     public void doTag() throws IOException {
         PageContext pageContext = (PageContext) getJspContext();
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-        Cookie localeCookie = Arrays.stream(request.getCookies()).filter((cookie) -> (cookie.getName().equals("language"))).findFirst().orElse(null);
+        Cookie[] cookies = request.getCookies();
+        Cookie localeCookie = null;
+        if (cookies != null)
+            localeCookie = Arrays.stream(cookies).filter((cookie) -> (cookie.getName().equals("language"))).findFirst().orElse(null);
         String localeString = "en_US";
         if (localeCookie != null) {
             localeString = localeCookie.getValue();

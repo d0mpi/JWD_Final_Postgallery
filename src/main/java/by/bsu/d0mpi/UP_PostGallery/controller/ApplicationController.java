@@ -5,6 +5,8 @@ import by.bsu.d0mpi.UP_PostGallery.command.CommandResponse;
 import by.bsu.d0mpi.UP_PostGallery.command.SimpleCommandRequest;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.Servlet;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -38,7 +40,6 @@ public class ApplicationController extends HttpServlet {
         final String commandName = req.getParameter(COMMAND_PARAM_NAME);
         final Command command = Command.withName(commandName);
         final CommandResponse response = command.execute(SimpleCommandRequest.of(req));
-
 
         if (!response.doNothing()) {
             if (response.isRedirect()) {

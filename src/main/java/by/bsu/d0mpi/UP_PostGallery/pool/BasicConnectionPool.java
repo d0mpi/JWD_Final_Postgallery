@@ -60,6 +60,17 @@ public class BasicConnectionPool implements ConnectionPool {
         }
     }
 
+    private Boolean isValidConnection(Connection conn) throws SQLException {
+        try {
+            if (conn == null || conn.isClosed()) {
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+        return true;
+    }
+
     @Override
     public Connection getConnection() throws DAOException {
         locker.lock();
@@ -68,7 +79,7 @@ public class BasicConnectionPool implements ConnectionPool {
             try {
                 if (!freeConnections.isEmpty()) {
                     connection = freeConnections.take();
-                    if (!connection.isValid(config.DB_MAX_WAIT)) {
+                    if (!connection.isValid(5)) {
                         connection.getConnection().close();
                         connection = null;
                     }
@@ -105,7 +116,7 @@ public class BasicConnectionPool implements ConnectionPool {
     public void releaseConnection(ProxyConnection connection) {
         locker.lock();
         try {
-            if (connection.isValid(config.DB_MAX_WAIT)) {
+            if (connection.isValid(5)) {
                 usedConnections.remove(connection);
                 freeConnections.add(connection);
                 System.out.printf("Connection was returned into pool. Current pool size: %d used connections; %d free connection%n", usedConnections.size(), freeConnections.size());

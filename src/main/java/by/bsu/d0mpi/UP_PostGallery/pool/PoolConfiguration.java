@@ -1,13 +1,10 @@
 package by.bsu.d0mpi.UP_PostGallery.pool;
 
-import lombok.Getter;
+import org.apache.logging.log4j.Logger;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Objects;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 public class PoolConfiguration {
     public static final String DATABASE_PROPERTIES_PATH = "database.properties";
@@ -18,8 +15,7 @@ public class PoolConfiguration {
     protected final int DB_INITIAL_POOL_SIZE;
     protected final int DB_MAX_POOL_SIZE;
     protected final int DB_GROW_SIZE;
-    protected final int DB_MAX_WAIT;
-    protected final String DB_DATEFORMAT;
+    protected final int DB_INTERVAL;
 
     private static PoolConfiguration instance;
 
@@ -48,11 +44,10 @@ public class PoolConfiguration {
         DB_PASSWORD = poolProperties.getProperty("password");
         DB_URL = poolProperties.getProperty("url");
         DB_DRIVER = poolProperties.getProperty("driver");
-        DB_INITIAL_POOL_SIZE = Integer.parseInt(poolProperties.getProperty("initpoolsize"));
-        DB_MAX_POOL_SIZE = Integer.parseInt(poolProperties.getProperty("maxpoolsize"));
-        DB_GROW_SIZE = Integer.parseInt(poolProperties.getProperty("growsize"));
-        DB_MAX_WAIT = Integer.parseInt(poolProperties.getProperty("maxwait"));
-        DB_DATEFORMAT = poolProperties.getProperty("dateformat");
+        DB_INITIAL_POOL_SIZE = Integer.parseInt(poolProperties.getProperty("init_pool_size"));
+        DB_MAX_POOL_SIZE = Integer.parseInt(poolProperties.getProperty("max_pool_size"));
+        DB_GROW_SIZE = Integer.parseInt(poolProperties.getProperty("grow_size"));
+        DB_INTERVAL = Integer.parseInt(poolProperties.getProperty("update_interval"));
     }
 
 }

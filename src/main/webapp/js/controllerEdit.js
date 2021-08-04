@@ -29,11 +29,11 @@ function drop(e) {
     handleFiles(files);
 }
 
-function dragleave(e) {
+function dragleave() {
     return false;
 }
 
-function onFileLoad(event) {
+function onFileLoad() {
     handleFiles(fileInput.files);
 }
 
@@ -55,4 +55,8 @@ function handleFiles(files) {
         reader.readAsDataURL(file);
     }
 }
+
+$(document).ready(function () {
+
+});
 
