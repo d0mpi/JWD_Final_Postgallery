@@ -50,7 +50,7 @@ public class BasicConnectionPool implements ConnectionPool {
         try {
             destroy();
             registerDrivers();
-            for (int counter = 0; counter < config.DB_INITIAL_POOL_SIZE; counter++) {
+            for (int counter = 0; counter < config.DB_INIT_POOL_SIZE; counter++) {
                 freeConnections.put(createConnection());
             }
         } catch (SQLException | InterruptedException e) {

@@ -8,11 +8,11 @@ import java.util.Properties;
 
 public class PoolConfiguration {
     public static final String DATABASE_PROPERTIES_PATH = "database.properties";
+    protected final String DB_DRIVER;
+    protected final String DB_URL;
     protected final String DB_USER_NAME;
     protected final String DB_PASSWORD;
-    protected final String DB_URL;
-    protected final String DB_DRIVER;
-    protected final int DB_INITIAL_POOL_SIZE;
+    protected final int DB_INIT_POOL_SIZE;
     protected final int DB_MAX_POOL_SIZE;
     protected final int DB_GROW_SIZE;
     protected final int DB_INTERVAL;
@@ -44,7 +44,7 @@ public class PoolConfiguration {
         DB_PASSWORD = poolProperties.getProperty("password");
         DB_URL = poolProperties.getProperty("url");
         DB_DRIVER = poolProperties.getProperty("driver");
-        DB_INITIAL_POOL_SIZE = Integer.parseInt(poolProperties.getProperty("init_pool_size"));
+        DB_INIT_POOL_SIZE = Integer.parseInt(poolProperties.getProperty("init_pool_size"));
         DB_MAX_POOL_SIZE = Integer.parseInt(poolProperties.getProperty("max_pool_size"));
         DB_GROW_SIZE = Integer.parseInt(poolProperties.getProperty("grow_size"));
         DB_INTERVAL = Integer.parseInt(poolProperties.getProperty("update_interval"));

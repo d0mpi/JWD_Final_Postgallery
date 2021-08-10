@@ -5,7 +5,7 @@
 <fmt:setLocale value="${cookie['language'].value}" scope="session"/>
 <fmt:setBundle basename="text"/>
 <fmt:setBundle basename="countries" var="countries"/>
-<%@ page import="by.bsu.d0mpi.UP_PostGallery.model.Role" %>
+<fmt:setBundle basename="plane_types" var="plane_types"/>
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -87,45 +87,46 @@
                                                     key="postModel"/>: </span> ${post.model == "" ? "-" : post.model}
                                             </li>
                                             <li><span><fmt:message
-                                                    key="postType"/>: </span> ${post.type == "" ? "-" : post.type}</li>
+                                                    key="postType"/>: </span> <fmt:message key="${post.type}"
+                                                                                           bundle="${plane_types}"/>
+                                            </li>
                                             <li><span><fmt:message
-                                                    key="postLength"/>:</span> ${post.length == 0.00 ? "-" : post.length}
+                                                    key="postLength"/>:</span> ${post.length == '0.00' ? '-' : post.length}
                                                 <fmt:message key="MPostfix"/>
                                             </li>
                                             <li><span><fmt:message
-                                                    key="postWingspan"/>: </span> ${post.wingspan == 0.00 ? "-" : post.wingspan}
+                                                    key="postWingspan"/>: </span> ${post.wingspan == '0.00' ? '-' : post.wingspan}
                                                 <fmt:message key="MPostfix"/>
                                             </li>
                                             <li><span><fmt:message
-                                                    key="postHeight"/>:</span> ${post.height == 0.00 ? "-" : post.height}
+                                                    key="postHeight"/>:</span> ${post.height == '0.00' ? '-' : post.height}
                                                 <fmt:message key="MPostfix"/>
                                             </li>
                                             <li><span><fmt:message
-                                                    key="postOrigin"/>: </span> <fmt:message key="${post.origin}" bundle="${countries}"/>
+                                                    key="postOrigin"/>: </span> <fmt:message key="${post.origin}"
+                                                                                             bundle="${countries}"/>
                                             </li>
                                             <li><span><fmt:message
-                                                    key="postCrew"/>: </span>${post.crew == 0.00 ? "-" : post.crew}</li>
+                                                    key="postCrew"/>: </span>${post.crew == 0.0 ? "-" : post.crew}</li>
                                             <li><span><fmt:message
-                                                    key="postMaxSpeed"/>: </span> ${post.speed == 0.00 ? "-" : post.speed}
+                                                    key="postMaxSpeed"/>: </span> ${post.speed == '0.00' ? "-" : post.speed}
                                                 <fmt:message key="KmHPostfix"/>
                                             </li>
                                             <li><span><fmt:message
-                                                    key="postFlyingDist"/>: </span> ${post.distance == 0.00 ? "-" : post.distance}
+                                                    key="postFlyingDist"/>: </span> ${post.distance == '0.00' ? "-" : post.distance}
                                                 <fmt:message key="KmPostfix"/>
                                             </li>
                                             <li><span><fmt:message
-                                                    key="postPrice"/>: </span> ${post.price == 0.00 ? "-" : post.price}$
+                                                    key="postPrice"/>: </span> ${post.price == '0.00' ? "-" : post.price}$
                                             </li>
 
                                         </ul>
                                         <hr class="card-text-hr col-full">
                                         <div class="card-text-bottom-box">
                                             <ul class="card-text-bottom-left">
-                                                <li> ${post.author} </li>
+                                                <li>Author:  ${post.author} </li>
                                                 <li><fmt:message key="id"/>: ${post.id}</li>
-                                                <li>
-                                                        <ctag:locale-date date="${post.createdDate}"/>
-                                                <li>
+                                                <li><ctag:locale-date date="${post.createdDate}"/></li>
                                             </ul>
                                             <c:if test="${sessionScope.user_name != null}">
                                                 <input id="like-check${post.id}" class="like-check"
