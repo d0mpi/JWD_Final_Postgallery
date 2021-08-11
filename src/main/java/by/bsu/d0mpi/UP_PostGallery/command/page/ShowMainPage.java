@@ -5,16 +5,14 @@ import by.bsu.d0mpi.UP_PostGallery.command.CommandRequest;
 import by.bsu.d0mpi.UP_PostGallery.command.CommandResponse;
 import by.bsu.d0mpi.UP_PostGallery.command.SimpleCommandResponse;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
-import by.bsu.d0mpi.UP_PostGallery.service.FilterType;
 import by.bsu.d0mpi.UP_PostGallery.service.LikeService;
 import by.bsu.d0mpi.UP_PostGallery.service.MyPair;
 import by.bsu.d0mpi.UP_PostGallery.service.PostService;
+import by.bsu.d0mpi.UP_PostGallery.util.MySQLPageRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -56,29 +54,27 @@ public class ShowMainPage implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        ArrayList<FilterType> filterList = new ArrayList<>();
         ArrayList<String> filterParams = new ArrayList<>();
 
+        MySQLPageRequest.Builder requestStringBuilder = MySQLPageRequest.newBuilder();
         if (request.hasParameter(REQUEST_FILTER_AUTHOR_PARAM) && request.hasParameter(REQUEST_FILTER_HASHTAG_PARAM) &&
                 request.hasParameter(REQUEST_FILTER_DATE_PARAM)) {
             final String hashtag = request.getParameter(REQUEST_FILTER_HASHTAG_PARAM);
             if (hashtag != null && !hashtag.isEmpty()) {
-                filterList.add(FilterType.HASHTAG);
-                filterParams.add(request.getParameter(REQUEST_FILTER_HASHTAG_PARAM));
+                requestStringBuilder.hashtag(hashtag);
                 request.setAttribute(REQUEST_FILTER_HASHTAG_PARAM, hashtag);
             }
 
             final String author = request.getParameter(REQUEST_FILTER_AUTHOR_PARAM);
             if (author != null && !author.isEmpty()) {
-                filterList.add(FilterType.AUTHOR);
-                filterParams.add(request.getParameter(REQUEST_FILTER_AUTHOR_PARAM));
+                requestStringBuilder.author(author);
                 request.setAttribute(REQUEST_FILTER_AUTHOR_PARAM, author);
             }
 
             try {
-                final LocalDate date = LocalDate.parse(request.getParameter(REQUEST_FILTER_DATE_PARAM));
-                filterList.add(FilterType.DATE);
-                filterParams.add(request.getParameter(REQUEST_FILTER_DATE_PARAM));
+                String dateString = request.getParameter(REQUEST_FILTER_DATE_PARAM);
+                final LocalDate date = LocalDate.parse(dateString);
+                requestStringBuilder.date(dateString);
                 request.setAttribute(REQUEST_FILTER_DATE_PARAM, date);
             } catch (DateTimeParseException ignored) {
             }
@@ -86,10 +82,11 @@ public class ShowMainPage implements Command {
 
         int startNumber = 0;
         try {
-            startNumber = getStartNumber(request);
+            startNumber = calculateStartNumber(request);
         } catch (NumberFormatException ignored) {
         }
-        MyPair<List<Post>, Integer> myPair = postService.getPage(startNumber, filterList, filterParams);
+        requestStringBuilder.startNumber(startNumber);
+        MyPair<List<Post>, Integer> myPair = postService.getPage(requestStringBuilder.build());
 
         List<Post> postList = myPair.getFirst();
         int pageCount = (int) Math.ceil(myPair.getSecond() / (double) PAGE_SIZE);
@@ -110,7 +107,7 @@ public class ShowMainPage implements Command {
         return forwardHomePage;
     }
 
-    int getStartNumber(CommandRequest request) throws NumberFormatException {
+    int calculateStartNumber(CommandRequest request) throws NumberFormatException {
         int startNumber = 0;
         if (request.hasParameter("page_number")) {
             startNumber = Integer.parseInt(request.getParameter("page_number"));

@@ -124,7 +124,7 @@
                                         <hr class="card-text-hr col-full">
                                         <div class="card-text-bottom-box">
                                             <ul class="card-text-bottom-left">
-                                                <li>Author:  ${post.author} </li>
+                                                <li>Author: ${post.author} </li>
                                                 <li><fmt:message key="id"/>: ${post.id}</li>
                                                 <li><ctag:locale-date date="${post.createdDate}"/></li>
                                             </ul>

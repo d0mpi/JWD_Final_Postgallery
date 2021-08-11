@@ -4,9 +4,8 @@ import by.bsu.d0mpi.UP_PostGallery.dao.PostDao;
 import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
-import by.bsu.d0mpi.UP_PostGallery.service.FilterService;
-import by.bsu.d0mpi.UP_PostGallery.service.FilterType;
 import by.bsu.d0mpi.UP_PostGallery.service.MyPair;
+import by.bsu.d0mpi.UP_PostGallery.util.PageRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -43,11 +41,8 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
 
     private static final Logger logger = LogManager.getLogger();
 
-    private final FilterService filterService;
-
     private MySqlPostDao(String tableName, String idColumn) {
         super(tableName, idColumn);
-        filterService = FilterService.simple();
     }
 
     private static volatile MySqlPostDao instance;
@@ -188,37 +183,37 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
 
 
     @Override
-    public MyPair<List<Post>, Integer> getPage(int startNumber, ArrayList<FilterType> filters, ArrayList<String> filterParams) {
+    public MyPair<List<Post>, Integer> getPage(PageRequest pageRequest) {
         List<Post> posts;
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
              final PreparedStatement postStatement =
-                     connection.prepareStatement(filterService.buildAndGetPageWithFiltersRequest(filters));
-             final PreparedStatement countStatement = connection.prepareStatement(filterService.buildAndGetPostsCountWithFiltersRequest(filters))
+                     connection.prepareStatement(pageRequest.getPageRequestString());
+             final PreparedStatement countStatement = connection.prepareStatement(pageRequest.getPostsCountRequestString())
         ) {
-            int i = 0;
-            if (filters.contains(FilterType.HASHTAG)) {
-                postStatement.setString(i + 1, filterParams.get(i));
-                countStatement.setString(i + 1, filterParams.get(i));
+            int i = 1;
+            if (!pageRequest.getHashtagFilter().isEmpty()) {
+                postStatement.setString(i, pageRequest.getHashtagFilter());
+                countStatement.setString(i, pageRequest.getHashtagFilter());
                 i++;
             }
-            if (filters.contains(FilterType.AUTHOR)) {
-                postStatement.setString(i + 1, filterParams.get(i));
-                countStatement.setString(i + 1, filterParams.get(i));
+            if (!pageRequest.getAuthorFilter().isEmpty()) {
+                postStatement.setString(i, pageRequest.getAuthorFilter());
+                countStatement.setString(i, pageRequest.getAuthorFilter());
                 i++;
             }
-            if (filters.contains(FilterType.DATE)) {
+            if (!pageRequest.getDateFilter().isEmpty()) {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Calendar c = Calendar.getInstance();
-                c.setTime(sdf.parse(filterParams.get(i)));
-                postStatement.setString(i + 1, sdf.format(c.getTime()));
-                countStatement.setString(i + 1, sdf.format(c.getTime()));
+                c.setTime(sdf.parse(pageRequest.getDateFilter()));
+                postStatement.setString(i, sdf.format(c.getTime()));
+                countStatement.setString(i, sdf.format(c.getTime()));
                 c.add(Calendar.DATE, 1);
                 i++;
-                postStatement.setString(i + 1, sdf.format(c.getTime()));
-                countStatement.setString(i + 1, sdf.format(c.getTime()));
+                postStatement.setString(i, sdf.format(c.getTime()));
+                countStatement.setString(i, sdf.format(c.getTime()));
                 i++;
             }
-            postStatement.setInt(i + 1, startNumber);
+            postStatement.setInt(i, pageRequest.getStartNumber());
             ResultSet resultSet = postStatement.executeQuery();
             posts = getRequestResult(connection, resultSet);
             ResultSet resultSet1 = countStatement.executeQuery();
@@ -227,6 +222,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             return new MyPair<>(posts, postCount);
         } catch (SQLException | DAOException | ParseException e) {
             logger.error("DB connection error", e);
+            e.printStackTrace();
             return new MyPair<>(Collections.emptyList(), 0);
         }
     }
