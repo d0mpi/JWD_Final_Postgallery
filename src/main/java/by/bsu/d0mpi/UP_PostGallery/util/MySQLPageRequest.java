@@ -16,14 +16,14 @@ public class MySQLPageRequest implements PageRequest {
     @Getter
     private final String sortType;
     @Getter
-    private final Boolean isDecreasingSort;
+    private final Boolean isDescendingSort;
 
-    public MySQLPageRequest(String authorFilter, String dateFilter, String hashtagFilter, PageSortType sortType, Boolean isDecreasingSort, int startNumber) {
+    public MySQLPageRequest(String authorFilter, String dateFilter, String hashtagFilter, PageSortType sortType, Boolean isDescendingSort, int startNumber) {
         this.authorFilter = authorFilter;
         this.dateFilter = dateFilter;
         this.hashtagFilter = hashtagFilter;
         this.sortType = sortType.getColumnName();
-        this.isDecreasingSort = isDecreasingSort;
+        this.isDescendingSort = isDescendingSort;
         this.startNumber = startNumber;
     }
 
@@ -62,7 +62,7 @@ public class MySQLPageRequest implements PageRequest {
         StringBuilder requestString = new StringBuilder();
         if (sortType != null) {
             requestString.append(" ORDER BY ").append(sortType);
-            if (this.isDecreasingSort)
+            if (this.isDescendingSort)
                 requestString.append(" DESC ");
         }
         requestString.append(" LIMIT ?, 10 ");
@@ -83,7 +83,7 @@ public class MySQLPageRequest implements PageRequest {
         private String dateFilter = "";
         private String hashtagFilter = "";
         private PageSortType sortType = PageSortType.DATE;
-        private Boolean isDecreasingSort = true;
+        private Boolean isDescendingSort = true;
 
         private Builder() {
         }
@@ -110,17 +110,12 @@ public class MySQLPageRequest implements PageRequest {
 
         public Builder sortType(PageSortType sortType) {
             this.sortType = sortType;
+            this.isDescendingSort = sortType.isDescending();
             return this;
         }
-
-        public Builder isDecreasingSort(Boolean decreasing) {
-            this.isDecreasingSort = true;
-            return this;
-        }
-
 
         public MySQLPageRequest build() {
-            return new MySQLPageRequest(authorFilter, dateFilter, hashtagFilter, sortType, isDecreasingSort, startNumber);
+            return new MySQLPageRequest(authorFilter, dateFilter, hashtagFilter, sortType, isDescendingSort, startNumber);
         }
     }
 

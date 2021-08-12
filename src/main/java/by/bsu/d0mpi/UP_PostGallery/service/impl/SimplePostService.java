@@ -31,7 +31,6 @@ public class SimplePostService implements PostService {
         return localInstance;
     }
 
-
     @Override
     public Post createEntity(Post entity) {
         return postDao.create(entity);

@@ -6,6 +6,7 @@
 <fmt:setBundle basename="text"/>
 <fmt:setBundle basename="countries" var="countries"/>
 <fmt:setBundle basename="plane_types" var="plane_types"/>
+<fmt:setBundle basename="sort_type" var="sort_type"/>
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -28,7 +29,7 @@
     <div class="main-container">
         <div class="mg-b-120">
             <div class="filter-col">
-                <form class="filter-fieldset" name="filter" method="post"
+                <form class="filter-fieldset" name="filter" method="post" id="filter-form"
                       action="${pageContext.request.contextPath}/controller?command=main_page">
                     <div class="filter-head"><fmt:message key="filterTitle"/></div>
                     <ul class="filter-ul">
@@ -61,12 +62,63 @@
                                        value="${requestScope.filter_hashtags_text}">
                             </label>
                         </li>
+                        <li class="sort-li">
+                            <label class="filter-label">
+                                <div class="sort-head"><fmt:message key="filterSortTitle"/></div>
+                                <select id="sort" name="filter_sort" type="text" class="filter-input">
+                                    <option value="date_desc" selected="selected"><fmt:message key="date_desc"
+                                                                                               bundle="${sort_type}"/></option>
+                                    <option value="date"><fmt:message key="date" bundle="${sort_type}"/></option>
+                                    <option value="price_desc"><fmt:message key="price_desc"
+                                                                            bundle="${sort_type}"/></option>
+                                    <option value="price"><fmt:message key="price" bundle="${sort_type}"/></option>
+                                    <option value="length_desc"><fmt:message key="length_desc"
+                                                                             bundle="${sort_type}"/></option>
+                                    <option value="length"><fmt:message key="length" bundle="${sort_type}"/></option>
+                                    <option value="wingspan_desc"><fmt:message key="wingspan_desc"
+                                                                               bundle="${sort_type}"/></option>
+                                    <option value="wingspan"><fmt:message key="wingspan"
+                                                                          bundle="${sort_type}"/></option>
+                                    <option value="height_desc"><fmt:message key="height_desc"
+                                                                             bundle="${sort_type}"/></option>
+                                    <option value="height"><fmt:message key="height" bundle="${sort_type}"/></option>
+                                    <option value="crew_desc"><fmt:message key="crew_desc"
+                                                                           bundle="${sort_type}"/></option>
+                                    <option value="crew"><fmt:message key="crew" bundle="${sort_type}"/></option>
+                                    <option value="speed_desc"><fmt:message key="speed_desc"
+                                                                            bundle="${sort_type}"/></option>
+                                    <option value="speed"><fmt:message key="speed" bundle="${sort_type}"/></option>
+                                    <option value="distance_desc"><fmt:message key="distance_desc"
+                                                                               bundle="${sort_type}"/></option>
+                                    <option value="distance"><fmt:message key="distance"
+                                                                          bundle="${sort_type}"/></option>
+                                </select>
+                                <script>
+                                    const select = document.getElementById('sort').getElementsByTagName('option');
+                                    for (let i = 0; i < select.length; i++) {
+                                        if (select[i].value === '${requestScope.filter_sort}') select[i].selected = true;
+                                    }
+                                </script>
+                            </label>
+                        </li>
                         <li class="li-filter-button">
                             <input type="submit" id="filter_btn" class="filter-button"
                                    value="<fmt:message key="filterBtn"/>">
-                            <button title="<fmt:message key="filterResetTitle"/>" class="filter-reset-button">
+                            <label class="reset-div filter-reset-label">
+                                <input type="button" onclick="resetFilter()"
+                                       title="<fmt:message key="filterResetTitle"/>"
+                                       class="reset-input" hidden>
                                 <i class="fas fa-sync" id="fa_sync"></i>
-                            </button>
+                            </label>
+                            <script>
+                                function resetFilter() {
+                                    $('.filter-input').val('');
+                                    const select = document.getElementById('sort').getElementsByTagName('option');
+                                    for (let i = 0; i < select.length; i++) {
+                                        if (select[i].value === 'date_desc') select[i].selected = true;
+                                    }
+                                }
+                            </script>
                         </li>
                     </ul>
                 </form>

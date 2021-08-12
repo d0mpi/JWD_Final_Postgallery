@@ -59,7 +59,7 @@ public class ShowPostEditPage implements Command {
         if (postId == null ||
                 session == null ||
                 postService.findEntityById(postId) == null ||
-                (!postService.doesPostBelongsToAuthor(postId, (String) session.getAttribute(SESSION_USER_NAME)) &&
+                (postService.postDoesNotBelongToUser(postId, (String) session.getAttribute(SESSION_USER_NAME)) &&
                         !(session.getAttribute(SESSION_USER_ROLE).toString().equals(Role.ADMIN.toString()) ||
                                 session.getAttribute(SESSION_USER_ROLE).toString().equals(Role.ADMIN.toString()))
                 )) {

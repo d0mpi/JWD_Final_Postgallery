@@ -354,6 +354,7 @@ header {
     display: flex;
     flex-direction: column;
     height: 90%;
+    width: 100%;
     justify-content: flex-start;
 }
 
@@ -977,7 +978,7 @@ footer {
 }
 
 
-.filter-reset-button {
+.filter-reset-label {
     border-radius: 50%;
     font-size: 14px;
     align-items: center;
@@ -993,7 +994,7 @@ footer {
     color: white;
 }
 
-.filter-reset-button:hover {
+.filter-reset-label:hover {
     background: #34b759;
     transform: scale(0.95) rotate(360deg);
     transition-duration: 1s;
@@ -1085,6 +1086,30 @@ footer {
     }
 }
 
+.sort-border{
+    border-top: solid white 2px;
+    padding-top: 20px;
+}
+
+.reset-div{
+    display: flex;
+    align-items: center;
+}
+
+.sort-head{
+    font-family: Ubuntu-Medium, sans-serif;
+    border-bottom: solid;
+    font-size: 20px;
+    text-transform: uppercase;
+    width: 100%;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    border-color: #ffffff;
+    color: #0b2852;
+}
+
 @media (max-width: 1000px) {
 
     .main-container {
@@ -1092,7 +1117,7 @@ footer {
     }
 
     .main-box-inline-block {
-        margin-top: 320px;
+        margin-top: 350px;
         padding-left: 20px;
     }
 
@@ -1104,7 +1129,7 @@ footer {
     }
 
     .filter-fieldset {
-        width: inherit;
+        width: 350px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1124,9 +1149,18 @@ footer {
     .filter-head {
         height: 30px;
         color: white;
-        border-bottom: solid 0;
-        border-top: solid 2px;
+        border: none;
         padding: 10px 0 0 0;
+    }
+
+    .sort-head{
+        color: white;
+        border: none;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        width: fit-content;
+        margin-right: 10px;
     }
 
     .filter-ul {
@@ -1185,7 +1219,7 @@ footer {
         height: 25px;
     }
 
-    .filter-reset-button{
+    .filter-reset-label{
         margin-top: 10px;
         background: #e0f2ff;
         color: #0b2852;
@@ -1194,10 +1228,19 @@ footer {
         width: 25px;
     }
 
-    .filter-reset-button:hover {
+    .filter-reset-label:hover i{
         background: #34b759;
         color: white;
         transform: scale(0.95) rotate(360deg);
         transition-duration: 1s;
+    }
+
+    .li-filter-button{
+        padding: 0;
+    }
+
+    .sort-li{
+        border-top:solid white 2px;
+        padding-top: 5px;
     }
 }

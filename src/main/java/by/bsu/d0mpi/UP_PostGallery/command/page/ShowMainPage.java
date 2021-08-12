@@ -9,6 +9,7 @@ import by.bsu.d0mpi.UP_PostGallery.service.LikeService;
 import by.bsu.d0mpi.UP_PostGallery.service.MyPair;
 import by.bsu.d0mpi.UP_PostGallery.service.PostService;
 import by.bsu.d0mpi.UP_PostGallery.util.MySQLPageRequest;
+import by.bsu.d0mpi.UP_PostGallery.util.PageSortType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,6 +29,7 @@ public class ShowMainPage implements Command {
     public static final String REQUEST_FILTER_AUTHOR_PARAM = "filter_author_text";
     public static final String REQUEST_FILTER_DATE_PARAM = "filter_date_text";
     public static final String REQUEST_FILTER_HASHTAG_PARAM = "filter_hashtags_text";
+    public static final String REQUEST_FILTER_SORT_PARAM = "filter_sort";
     private static volatile ShowMainPage instance;
     private final PostService postService;
     private final LikeService likeService;
@@ -78,6 +80,12 @@ public class ShowMainPage implements Command {
                 request.setAttribute(REQUEST_FILTER_DATE_PARAM, date);
             } catch (DateTimeParseException ignored) {
             }
+        }
+
+        if(request.hasParameter(REQUEST_FILTER_SORT_PARAM)){
+            String sort = request.getParameter(REQUEST_FILTER_SORT_PARAM);
+            requestStringBuilder.sortType(PageSortType.of(sort));
+            request.setAttribute(REQUEST_FILTER_SORT_PARAM, sort);
         }
 
         int startNumber = 0;

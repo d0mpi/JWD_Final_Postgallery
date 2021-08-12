@@ -48,9 +48,5 @@ $(document).ready(function () {
         }
     });
 
-    $('.filter-reset-button').on('click', function (e) {
-        $('.filter-input').val('');
-        e.stopPropagation();
-        e.preventDefault();
-    });
+
 });
