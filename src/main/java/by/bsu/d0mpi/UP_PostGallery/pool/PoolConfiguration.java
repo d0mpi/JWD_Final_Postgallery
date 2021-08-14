@@ -8,6 +8,7 @@ import java.util.Properties;
 
 public class PoolConfiguration {
     public static final String DATABASE_PROPERTIES_PATH = "database.properties";
+    protected final int DB_TIME_OUT;
     protected final String DB_DRIVER;
     protected final String DB_URL;
     protected final String DB_USER_NAME;
@@ -48,6 +49,7 @@ public class PoolConfiguration {
         DB_MAX_POOL_SIZE = Integer.parseInt(poolProperties.getProperty("max_pool_size"));
         DB_GROW_SIZE = Integer.parseInt(poolProperties.getProperty("grow_size"));
         DB_INTERVAL = Integer.parseInt(poolProperties.getProperty("update_interval"));
+        DB_TIME_OUT = Integer.parseInt(poolProperties.getProperty("pool_timeout"));
     }
 
 }

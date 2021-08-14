@@ -82,7 +82,7 @@ public class ShowMainPage implements Command {
             }
         }
 
-        if(request.hasParameter(REQUEST_FILTER_SORT_PARAM)){
+        if (request.hasParameter(REQUEST_FILTER_SORT_PARAM)) {
             String sort = request.getParameter(REQUEST_FILTER_SORT_PARAM);
             requestStringBuilder.sortType(PageSortType.of(sort));
             request.setAttribute(REQUEST_FILTER_SORT_PARAM, sort);
