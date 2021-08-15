@@ -42,6 +42,7 @@
             <input class="form-input" name="password" pattern="[A-za-z0-9]{1,40}" type="password" id="password"
                    placeholder="<fmt:message key="signInPasswordInput"/>" required>
         </div>
+
         <a class="text-forgot"><fmt:message key="signInForgot"/></a>
         <input name="sign" type="submit" id="sign_btn" class="sign-in-btn" value="<fmt:message key="headerSignInBtn"/>">
         <div class="text-span"><fmt:message key="orSignUp"/></div>

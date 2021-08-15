@@ -23,7 +23,8 @@ public class SendMailAction implements Command {
     public static final String REQUEST_CONTACT_TEXT_PARAM = "contact-text";
     private static volatile SendMailAction instance;
 
-    private final CommandResponse homePageResponse;
+    private final CommandResponse redirectHomePage;
+    private final CommandResponse forwardContactPage;
     private final Properties mailProperties;
 
     public static SendMailAction getInstance() {
@@ -40,7 +41,8 @@ public class SendMailAction implements Command {
     }
 
     public SendMailAction() {
-        homePageResponse = new SimpleCommandResponse("/controller?command=main_page", true);
+        redirectHomePage = new SimpleCommandResponse("/controller?command=contact_page", true);
+        forwardContactPage = new SimpleCommandResponse("/controller?command=contact_page", false);
         mailProperties = new Properties();
         try {
             mailProperties.load(new FileInputStream(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("")).getPath() + "mail.properties"));
@@ -64,6 +66,13 @@ public class SendMailAction implements Command {
         systemProperties.put("mail.smtp.auth", mailProperties.getProperty("mail.smtp.auth"));
         systemProperties.put("mail.smtp.starttls.enable", mailProperties.getProperty("mail.smtp.starttls.enable"));
 
+        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+        if (gRecaptchaResponse == null || gRecaptchaResponse.length() == 0) {
+            request.setAttribute("errorString", "You missed Captcha. Try again.");
+            return forwardContactPage;
+        }
+
+
         Session session = Session.getDefaultInstance(systemProperties,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
@@ -80,6 +89,6 @@ public class SendMailAction implements Command {
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
-        return homePageResponse;
+        return redirectHomePage;
     }
 }

@@ -135,3 +135,9 @@
     color: #e20505;
     text-align: center;
 }
+.error-text{
+    margin-bottom: 10px;
+    font-family: Ubuntu, sans-serif;
+    color: red;
+    font-size: 20px;
+}

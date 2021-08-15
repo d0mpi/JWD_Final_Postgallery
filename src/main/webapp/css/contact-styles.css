@@ -177,7 +177,7 @@ h3 {
 .contact-btn {
     height: 40px;
 
-    padding: 0 20px;
+    padding: 0 40px;
 
     font-family: Ubuntu, sans-serif;
     font-size: 20px;
@@ -206,4 +206,16 @@ h3 {
 
 .col-50-1 {
     max-width: 900px;
+}
+
+.captcha{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.error-text{
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
 }

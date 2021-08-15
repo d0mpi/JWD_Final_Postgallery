@@ -90,7 +90,8 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
 
     @Override
     public User update(User entity) {
-        try (final PreparedStatement statement = BasicConnectionPool.getInstance().getConnection().prepareStatement(SQL_UPDATE_USER)) {
+        try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
+             final PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER)) {
             setUpdateStatementArgs(statement, entity);
             statement.executeUpdate();
             return entity;

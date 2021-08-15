@@ -67,7 +67,7 @@ body:before{
 }
 
 .error-text{
-    padding: 20px;
+    margin: 20px;
     font-family: Barlow-SemiBold, sans-serif;
     color: white;
     font-size: 30px;

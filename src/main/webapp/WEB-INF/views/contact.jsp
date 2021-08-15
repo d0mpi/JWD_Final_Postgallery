@@ -1,4 +1,4 @@
-<%@ page  contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${cookie['language'].value}" scope="session"/>
 <fmt:setBundle basename="text"/>
@@ -6,12 +6,13 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
-    <meta name="viewport" content="width=device-width, initial-scale=1 text/html; charset=cp1251">
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Contact</title>
     <link rel="stylesheet" type="text/css" href="../../css/index-styles.css">
     <link rel="stylesheet" type="text/css" href="../../css/contact-styles.css">
     <script src="https://kit.fontawesome.com/ede64561b8.js" crossorigin="anonymous"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
     <link rel="stylesheet" type="text/css" href="../../fonts/fonts.css">
     <jsp:include page="title-logo.jsp"/>
 </head>
@@ -52,6 +53,13 @@
                                               required> </textarea>
                                 </div>
                             </div>
+                        </div>
+                        <div>
+                            <p class="error-text">${errorString}</p>
+                            <div class="g-recaptcha captcha"
+                                    data-sitekey="6Lezc_4bAAAAACvsNQZbPp94_HoyqgsYUihp-PTo">
+                            </div>
+
                         </div>
                         <div class="col-full contact-btn-box">
                             <input type="submit" value="<fmt:message key="sendBtn"/>" class="contact-btn">

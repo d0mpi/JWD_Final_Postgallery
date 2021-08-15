@@ -24,10 +24,12 @@ public class ChangePasswordAction implements Command {
 
     private final CommandResponse redirectErrorPage;
     private final CommandResponse forwardProfilePage;
+    private final CommandResponse redirectProfilePage;
     private final UserService userService;
 
     public ChangePasswordAction() {
         redirectErrorPage = new SimpleCommandResponse("/controller?command=error_page", false);
+        redirectProfilePage = new SimpleCommandResponse("/controller?command=user_profile_page&error_text='Successfully!!!'", true);
         forwardProfilePage = new SimpleCommandResponse("/WEB-INF/views/profile.jsp", false);
         userService = UserService.simple();
     }
@@ -50,8 +52,10 @@ public class ChangePasswordAction implements Command {
         if (!request.hasParameter(REQUEST_OLD_PASSWORD_PARAM) || !request.hasParameter(REQUEST_NEW_PASSWORD_PARAM)) {
             return redirectErrorPage;
         }
+
         final String oldPassword = request.getParameter(REQUEST_OLD_PASSWORD_PARAM);
         final String newPassword = request.getParameter(REQUEST_NEW_PASSWORD_PARAM);
+        System.out.println(oldPassword);
         HttpSession session = request.getCurrentSession().orElse(null);
         if (oldPassword.equals(newPassword)) {
             request.setAttribute(REQUEST_ATTRIBUTE_ERROR_TEXT, "Passwords match.\nTry again.");
@@ -71,6 +75,6 @@ public class ChangePasswordAction implements Command {
         user.setPassword(newPassword);
         userService.changePassword(user);
         request.setAttribute(REQUEST_ATTRIBUTE_ERROR_TEXT, "Successfully.");
-        return forwardProfilePage;
+        return redirectProfilePage;
     }
 }

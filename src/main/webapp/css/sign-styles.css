@@ -279,3 +279,15 @@ h3 {
     color: #e20505;
     text-align: center;
 }
+
+.captcha{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.error-text{
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+}

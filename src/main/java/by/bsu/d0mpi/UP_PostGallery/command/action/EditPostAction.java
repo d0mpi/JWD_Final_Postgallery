@@ -32,13 +32,11 @@ public class EditPostAction implements Command {
     private static volatile EditPostAction instance;
 
     private final CommandResponse redirectHomePage;
-    private final CommandResponse redirectErrorPage;
     private final PostService postService;
 
     public EditPostAction() {
         redirectHomePage = new SimpleCommandResponse("/controller?command=main_page", true);
         postService = PostService.simple();
-        redirectErrorPage = new SimpleCommandResponse("/controller?command=error_page", true);
     }
 
     public static EditPostAction getInstance() {
@@ -80,30 +78,15 @@ public class EditPostAction implements Command {
         post.setOrigin(request.getParameter("origin"));
         post.setCrew(Integer.valueOf(request.getParameter("crew")));
         post.setSpeed(new BigDecimal(request.getParameter("speed").replace(',', '.')));
-        System.out.println(new BigDecimal(request.getParameter("speed").replace(',', '.')));
         post.setDistance(new BigDecimal(request.getParameter("dist").replace(',', '.')));
         post.setPrice(new BigDecimal(request.getParameter("price").replace(',', '.')));
-        List<String> hashtags;
-        if (request.getParameter("hashtags") != null && !request.getParameter("hashtags").equals("")) {
-            hashtags = Arrays.stream(
-                    request.getParameter("hashtags").
-                            split(" ")).distinct().collect(Collectors.toList());
-        } else {
-            hashtags = new ArrayList<>();
-        }
+        List<String> hashtags = AddPostAction.getInstance().parseHashtagsListFromRequest(request);
 
         try {
-            Part filePart = request.getPart("file");
-            if (filePart.getSize() != 0) {
-                File uploads = new File(IMAGES_UPLOAD_PATH);
-                File file = new File(uploads, post.getId() + PLANE_IMAGE_POSTFIX);
-                try (InputStream input = filePart.getInputStream()) {
-                    Files.copy(input, file.toPath(), REPLACE_EXISTING);
-                }
-            }
+            AddPostAction.getInstance().uploadImageToDirectory(request, post.getId());
         } catch (ServletException | IOException e) {
-            e.printStackTrace();
-            return redirectErrorPage;
+            logger.error("Error during uploading image to the server file system!");
+            return redirectHomePage;
         }
 
         post.setHashtags(hashtags);
@@ -111,4 +94,5 @@ public class EditPostAction implements Command {
 
         return redirectHomePage;
     }
+
 }
