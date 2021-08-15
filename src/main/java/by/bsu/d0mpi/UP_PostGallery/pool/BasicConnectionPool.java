@@ -1,5 +1,6 @@
 package by.bsu.d0mpi.UP_PostGallery.pool;
 
+import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlLikeDao;
 import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
 import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
 import org.apache.logging.log4j.LogManager;
@@ -19,18 +20,40 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Thread-safe implementation of {@link ConnectionPool}.
+ * Connection pool is a well-known data access pattern, whose main
+ * purpose is to reduce the overhead involved in performing database
+ * connections and read/write database operations.
+ *
+ * @author d0mpi
+ * @version 2.0
+ * @see PoolConfiguration
+ * @see ProxyConnection
+ * @see Lock
+ * @see Condition
+ * @see Timer
+ */
 public class BasicConnectionPool implements ConnectionPool {
 
     private static final Logger logger = LogManager.getLogger(BasicConnectionPool.class);
+
     private final Lock locker = new ReentrantLock();
     private final Condition condition = locker.newCondition();
     private final BlockingDeque<ProxyConnection> freeConnections;
     private final BlockingDeque<ProxyConnection> usedConnections;
     private static BasicConnectionPool instance;
     private final PoolConfiguration config;
-
     private final AtomicBoolean isActive;
 
+    /**
+     * Provide a global access point to the instance of the {@link BasicConnectionPool} class.
+     * Аt the first time, it starts the constructor, which starts a {@link TimerTask}
+     * that is executed every specified time interval.
+     * This task checks the number of free connections and removes the extra ones if necessary.
+     *
+     * @return the only instance of the {@link BasicConnectionPool} class
+     */
     public static BasicConnectionPool getInstance() {
         BasicConnectionPool localInstance = instance;
         if (localInstance == null) {
@@ -44,6 +67,7 @@ public class BasicConnectionPool implements ConnectionPool {
         return localInstance;
     }
 
+
     private BasicConnectionPool() {
         config = PoolConfiguration.getInstance();
         freeConnections = new LinkedBlockingDeque<>();
@@ -55,6 +79,12 @@ public class BasicConnectionPool implements ConnectionPool {
         timer.schedule(checkPool, config.DB_INTERVAL, config.DB_INTERVAL);
     }
 
+    /**
+     * Initializes the pool with the initial number of connections by placing then
+     * in the {@link BasicConnectionPool#freeConnections}
+     * Also registers the driver for connecting to the database.
+     * Uses {@link ReentrantLock} to avoid concurrency problems.
+     */
     public void init() {
         locker.lock();
         if (isActive.get())
@@ -72,17 +102,27 @@ public class BasicConnectionPool implements ConnectionPool {
         }
     }
 
+    /**
+     * Checks whether the connection can be used
+     *
+     * @param conn connection with the database
+     * @return true - if connection is valid, otherwise returns false
+     * @throws SQLException - if database access occurs
+     */
     private Boolean isValidConnection(Connection conn) throws SQLException {
-        try {
-            if (conn == null || conn.isClosed()) {
-                return false;
-            }
-        } catch (SQLException e) {
-            throw new SQLException(e);
-        }
-        return true;
+        return conn != null && !conn.isClosed();
     }
 
+    /**
+     * If there is free connection in the pool, it returns it.
+     * If there is no free connection then it expands the pool until the maximum allowed size is reached.
+     * When the maximum number of connection is reached, new connections go into the waiting state
+     * until connections become available.
+     * Uses {@link ReentrantLock} to avoid concurrency problems.
+     *
+     * @return {@link ProxyConnection} from the {@link BasicConnectionPool}
+     * @throws DAOException - if something goes wrong with DAO
+     */
     @Override
     public ProxyConnection getConnection() throws DAOException {
         locker.lock();
@@ -115,13 +155,11 @@ public class BasicConnectionPool implements ConnectionPool {
         } else {
             long startTime = System.currentTimeMillis();
 
-
             try {
                 boolean isAwait = condition.await(config.DB_INTERVAL, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
 
 //            if (this.config.DB_TIME_OUT != 0) {
 //                if (System.currentTimeMillis() - startTime > config.DB_TIME_OUT)
@@ -137,6 +175,13 @@ public class BasicConnectionPool implements ConnectionPool {
         return connection;
     }
 
+    /**
+     * Creates a new database connection if possible
+     * Uses {@link ReentrantLock} to avoid concurrency problems.
+     *
+     * @return new {@link ProxyConnection}
+     * @throws SQLException - if database access occurs
+     */
     private ProxyConnection createConnection() throws SQLException {
         locker.lock();
         try {
@@ -150,6 +195,15 @@ public class BasicConnectionPool implements ConnectionPool {
         }
     }
 
+    /**
+     * Release connection - removes it from {@link #usedConnections}.
+     * If connection is valid, adds it to {@link #freeConnections},
+     * otherwise adds new connection to the connection pool.
+     * Signal all waiting connection about the appearance of a free connection.
+     * Uses {@link ReentrantLock} to avoid concurrency problems.
+     *
+     * @param connection connection with the database
+     */
     @Override
     public void releaseConnection(ProxyConnection connection) {
         locker.lock();
@@ -172,6 +226,10 @@ public class BasicConnectionPool implements ConnectionPool {
         logger.debug(String.format("Connection was returned into pool. Current pool size: %d used connections; %d free connection", usedConnections.size(), freeConnections.size()));
     }
 
+    /**
+     * Destroys {@link BasicConnectionPool} and clears {@link #freeConnections} and {@link #usedConnections}
+     * Uses {@link ReentrantLock} to avoid concurrency problems.
+     */
     public void destroy() {
         locker.lock();
         for (ProxyConnection connection : usedConnections) {
@@ -211,6 +269,7 @@ public class BasicConnectionPool implements ConnectionPool {
         this.isActive.set(false);
         AbandonedConnectionCleanupThread.uncheckedShutdown();
     }
+
 
     private class CheckPool extends TimerTask {
         @Override

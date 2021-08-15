@@ -4,7 +4,6 @@ import by.bsu.d0mpi.UP_PostGallery.command.Command;
 import by.bsu.d0mpi.UP_PostGallery.command.CommandRequest;
 import by.bsu.d0mpi.UP_PostGallery.command.CommandResponse;
 import by.bsu.d0mpi.UP_PostGallery.command.SimpleCommandResponse;
-import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlPostDao;
 import by.bsu.d0mpi.UP_PostGallery.exception.SessionAttributeNotFoundException;
 import by.bsu.d0mpi.UP_PostGallery.exception.SessionNotFoundException;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
@@ -14,16 +13,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static by.bsu.d0mpi.UP_PostGallery.command.page.ShowPostEditPage.SESSION_USER_NAME;
@@ -35,6 +35,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
  * Implementation of the Command interface, which is responsible
  * for adding a {@link Post} to the database and the feed of posts
  * by a registered {@link User} using {@link AddPostAction#execute} method.
+ * Implements thread-safe Singleton pattern using double checked locking idiom.
  *
  * @author d0mpi
  * @version 1.0
@@ -42,6 +43,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
  * @see CommandResponse
  * @see PostService
  * @see Part
+ * @see HttpSession
  * @see SessionAttributeNotFoundException
  * @see SessionNotFoundException
  */
@@ -60,7 +62,6 @@ public class AddPostAction implements Command {
 
     /**
      * Provide a global access point to the instance of the {@link AddPostAction} class.
-     * Implements thread-safe Singleton using double checked locking idiom.
      *
      * @return the only instance of the {@link AddPostAction} class
      */
@@ -79,8 +80,12 @@ public class AddPostAction implements Command {
 
 
     /**
+     * Parses the post data received from the request, adds the post to the database and the user feed.
+     * If an error occurred during the creation of the post, a redirect to the main page also occurs
+     *
      * @param request the object contains a request received from the client
-     * @return an object of the {@link CommandResponse} class with a redirect to the main page
+     * @return an object of the {@link CommandResponse} class with redirection to the main page
+     * after successful or unsuccessful creation of the post
      */
     @Override
     public CommandResponse execute(CommandRequest request) {

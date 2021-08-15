@@ -5,7 +5,13 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
-
+/**
+ * Filter sets UTF-8 as the request and response character encoding,
+ * text/html as content type.
+ *
+ * @author d0mpi
+ * @version 1.0
+ */
 @WebFilter(urlPatterns = "/controller")
 public class EncodingFilter implements Filter {
 

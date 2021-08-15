@@ -19,6 +19,17 @@ import static by.bsu.d0mpi.UP_PostGallery.command.action.RegistrationAction.*;
 import static by.bsu.d0mpi.UP_PostGallery.command.page.ShowPostEditPage.SESSION_USER_NAME;
 import static by.bsu.d0mpi.UP_PostGallery.command.page.ShowPostEditPage.SESSION_USER_ROLE;
 
+/**
+ * Implementation of the Command interface, which is responsible
+ * for the sign in of the {@link User}.
+ * Implements thread-safe Singleton pattern using double checked locking idiom.
+ *
+ * @author d0mpi
+ * @version 1.0
+ * @see Command
+ * @see CommandResponse
+ * @see UserService
+ */
 public class SignInAction implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static volatile SignInAction instance;
@@ -27,6 +38,17 @@ public class SignInAction implements Command {
     private final CommandResponse loginPageResponse;
     private final CommandResponse homePageResponse;
 
+    private SignInAction() {
+        loginPageResponse = new SimpleCommandResponse("/WEB-INF/views/sign.jsp", false);
+        homePageResponse = new SimpleCommandResponse("/controller?command=main_page", true);
+        userService = UserService.simple();
+    }
+
+    /**
+     * Provide a global access point to the instance of the {@link SignInAction} class.
+     *
+     * @return the only instance of the {@link SignInAction} class
+     */
     public static SignInAction getInstance() {
         SignInAction localInstance = instance;
         if (localInstance == null) {
@@ -40,12 +62,16 @@ public class SignInAction implements Command {
         return localInstance;
     }
 
-    private SignInAction() {
-        loginPageResponse = new SimpleCommandResponse("/WEB-INF/views/sign.jsp", false);
-        homePageResponse = new SimpleCommandResponse("/controller?command=main_page", true);
-        userService = UserService.simple();
-    }
-
+    /**
+     * Parses user data from the received request.
+     * Checks whether there is a user with the same username in the database.
+     * If there is one, the user will be sign in and redirected to the main page, otherwise
+     * user need to enter the data again.
+     *
+     * @param request the object contains a request received from the client
+     * @return an object of the {@link CommandResponse} class with redirection to the main page
+     * after successful sign in and to the sign in page if something goes wrong.
+     */
     @Override
     public CommandResponse execute(CommandRequest request) {
         final String login = request.getParameter(REQUEST_LOGIN_PARAM);

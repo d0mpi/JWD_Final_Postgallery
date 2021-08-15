@@ -16,6 +16,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * An abstract class that provides basic operations on entities contained in the MySQL database
+ * Database connections are taken from the {@link BasicConnectionPool}
+ *
+ * @param <K> entity id type
+ * @param <T> database entity type
+ * @author d0mpi
+ * @version 1.0
+ * @see BasicConnectionPool
+ * @see ResultSet
+ * @see by.bsu.d0mpi.UP_PostGallery.pool.ProxyConnection
+ * @see DAOException
+ * @see PreparedStatement
+ * @see Statement
+ */
 public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntity> implements Dao<K, T> {
 
     private static final Logger logger = LogManager.getLogger();
@@ -30,6 +45,12 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
     private final String sqlDeleteById;
     private final String sqlCountAll;
 
+    /**
+     * constructor inserts the necessary data into the query strings
+     *
+     * @param tableName the name of the table to which requests are made
+     * @param idColumn  the name of id column in the table with provided tableName
+     */
     protected MySqlAbstractDao(String tableName, String idColumn) {
         this.sqlFindAll = String.format(SQL_SELECT_ALL, tableName);
         this.sqlFindById = String.format(SQL_SELECT_BY_ID, tableName, idColumn);
@@ -37,6 +58,14 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
         this.sqlCountAll = String.format(SQL_COUNT_ALL, idColumn, tableName);
     }
 
+    /**
+     * Takes a connection from {@link BasicConnectionPool}, executes
+     * {@link PreparedStatement} according to provided consumer and returns result of this statement.
+     *
+     * @param sql      database query string
+     * @param consumer enters the necessary data in the statement
+     * @return {@link List} of the specified database entities
+     */
     protected List<T> findPreparedEntities(String sql, Consumer<PreparedStatement> consumer) {
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
              final PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -56,6 +85,12 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
 
     protected abstract void setUpdateStatementArgs(PreparedStatement statement, T entity) throws SQLException;
 
+    /**
+     * Takes a connection from {@link BasicConnectionPool}, executes
+     * {@link PreparedStatement} and returns result of this statement.
+     *
+     * @return {@link List} of all the specified entities contained in the database
+     */
     @Override
     public List<T> findAll() {
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
@@ -69,6 +104,14 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
         }
     }
 
+    /**
+     * Takes a connection from {@link BasicConnectionPool}, executes
+     * {@link PreparedStatement} and returns result of this statement.
+     *
+     * @param id entity ID
+     * @return {@link List} of all the specified entities contained in the database
+     * with specified id.
+     */
     @Override
     public T findEntityById(K id) {
         return findPreparedEntities(sqlFindById, statement -> {
@@ -80,6 +123,12 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
         }).stream().findFirst().orElse(null);
     }
 
+    /**
+     * Takes a connection from {@link BasicConnectionPool}, executes
+     * {@link PreparedStatement} and deletes entity with specified id from the database
+     *
+     * @return true - if the specified entity was deleted, otherwise returns false
+     */
     @Override
     public boolean delete(K id) {
         boolean deleted = false;
@@ -94,6 +143,12 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
         return deleted;
     }
 
+    /**
+     * Takes a connection from {@link BasicConnectionPool}, executes
+     * {@link PreparedStatement} and deletes specified entity from the database
+     *
+     * @return true - if the specified entity was deleted, otherwise returns false
+     */
     @Override
     public boolean delete(T entity) {
         boolean deleted = false;
@@ -111,8 +166,15 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
     @Override
     public abstract T create(T entity);
 
+    /**
+     * Takes a connection from {@link BasicConnectionPool} and creates an entity with all the parameters
+     *
+     * @param entity    the entity to be added to the database
+     * @param insertSQL the required query string for adding the specified entity to the database
+     * @return created entities or null if something goes wrong
+     */
     @Override
-    public T createEntityWithoutDependencies(T entity, String insertSQL){
+    public T createEntityWithoutDependencies(T entity, String insertSQL) {
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
              final PreparedStatement statement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
             setCreateStatementArgs(statement, entity);
@@ -135,6 +197,12 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
     @Override
     public abstract T update(T entity);
 
+    /**
+     * Takes a connection from {@link BasicConnectionPool} and returns count of all entities
+     * with the specified type
+     *
+     * @return count of all entities with the specified type
+     */
     @Override
     public int getEntriesCount() {
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();

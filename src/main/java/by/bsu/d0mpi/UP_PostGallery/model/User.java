@@ -6,6 +6,15 @@ import lombok.EqualsAndHashCode;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Object of the {@link User} class contains information about user of the web application.
+ *
+ * @author d0mpi
+ * @version 1.0
+ * @see DatabaseEntity
+ * @see Date
+ * @see Calendar
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class User extends DatabaseEntity {
@@ -15,6 +24,15 @@ public class User extends DatabaseEntity {
     private Date createdDate;
 
 
+    /**
+     * Default {@link User} all args constructor
+     *
+     * @param id user id
+     * @param login user login
+     * @param password user password
+     * @param role user {@link Role}
+     * @param registrationDate date of registration of the user
+     */
     public User(int id, String login, String password, Role role, Date registrationDate) {
         super(id);
         this.login = login;

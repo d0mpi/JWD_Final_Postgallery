@@ -16,14 +16,28 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static by.bsu.d0mpi.UP_PostGallery.command.page.ShowPostEditPage.SESSION_USER_NAME;
 
+/**
+ * Implementation of the Command interface, which is responsible
+ * for the forwarding to the main page.
+ * Implements thread-safe Singleton pattern using double checked locking idiom.
+ *
+ * @author d0mpi
+ * @version 1.0
+ * @see Command
+ * @see CommandResponse
+ * @see CommandRequest
+ * @see PostService
+ * @see LikeService
+ * @see MySQLPageRequest
+ */
 public class ShowMainPage implements Command {
     private static final Logger logger = LogManager.getLogger();
+
     public static final int PAGE_SIZE = 10;
     public static final String LIKED_POSTS_ID_LIST = "likedPostsIdList";
     public static final String REQUEST_FILTER_AUTHOR_PARAM = "filter_author_text";
@@ -35,12 +49,17 @@ public class ShowMainPage implements Command {
     private final LikeService likeService;
     private final CommandResponse forwardHomePage;
 
-    public ShowMainPage() {
+    private ShowMainPage() {
         postService = PostService.simple();
         likeService = LikeService.simple();
         forwardHomePage = new SimpleCommandResponse("WEB-INF/views/index.jsp", false);
     }
 
+    /**
+     * Provide a global access point to the instance of the {@link ShowMainPage} class.
+     *
+     * @return the only instance of the {@link ShowMainPage} class
+     */
     public static ShowMainPage getInstance() {
         ShowMainPage localInstance = instance;
         if (localInstance == null) {
@@ -54,10 +73,44 @@ public class ShowMainPage implements Command {
         return localInstance;
     }
 
+    /**
+     * Forwards user to the main page.
+     * Checks whether filters and sorting should be applied.
+     * Provides pagination of the post feed.
+     *
+     * @param request the object contains a request received from the client
+     * @return an object of the {@link CommandResponse} class with forwarding to the main page.
+     */
     @Override
     public CommandResponse execute(CommandRequest request) {
-        ArrayList<String> filterParams = new ArrayList<>();
+        MySQLPageRequest mySQLPageRequest = buildRequestString(request);
 
+        MyPair<List<Post>, Integer> myPair = postService.getPage(mySQLPageRequest);
+        List<Post> postList = myPair.getFirst();
+        int pageCount = calculatePageCount(myPair.getSecond());
+        retrieveAndDetLikedPostIdList(request);
+
+        request.setAttribute("pageNumber", mySQLPageRequest.getStartNumber() / PAGE_SIZE + 1);
+        request.setAttribute("postList", postList);
+        request.setAttribute("pageCount", pageCount);
+        return forwardHomePage;
+    }
+
+    private void retrieveAndDetLikedPostIdList(CommandRequest request) {
+        HttpSession session = request.getCurrentSession().orElse(null);
+        if (session != null && session.getAttribute(SESSION_USER_NAME) != null) {
+            request.setAttribute(LIKED_POSTS_ID_LIST,
+                    likeService.getLikedPostIdList((String) session.getAttribute(SESSION_USER_NAME)));
+        } else {
+            request.setAttribute(LIKED_POSTS_ID_LIST, Collections.emptyList());
+        }
+    }
+
+    private int calculatePageCount(int numberOfPosts) {
+        return Math.max((int) Math.ceil(numberOfPosts / (double) PAGE_SIZE), 1);
+    }
+
+    private MySQLPageRequest buildRequestString(CommandRequest request) {
         MySQLPageRequest.Builder requestStringBuilder = MySQLPageRequest.newBuilder();
         if (request.hasParameter(REQUEST_FILTER_AUTHOR_PARAM) && request.hasParameter(REQUEST_FILTER_HASHTAG_PARAM) &&
                 request.hasParameter(REQUEST_FILTER_DATE_PARAM)) {
@@ -94,28 +147,10 @@ public class ShowMainPage implements Command {
         } catch (NumberFormatException ignored) {
         }
         requestStringBuilder.startNumber(startNumber);
-        MyPair<List<Post>, Integer> myPair = postService.getPage(requestStringBuilder.build());
-
-        List<Post> postList = myPair.getFirst();
-        int pageCount = (int) Math.ceil(myPair.getSecond() / (double) PAGE_SIZE);
-        pageCount = Math.max(pageCount, 1);
-
-
-        HttpSession session = request.getCurrentSession().orElse(null);
-        if (session != null && session.getAttribute(SESSION_USER_NAME) != null) {
-            request.setAttribute(LIKED_POSTS_ID_LIST,
-                    likeService.getLikedPostIdList((String) session.getAttribute(SESSION_USER_NAME)));
-        } else {
-            request.setAttribute(LIKED_POSTS_ID_LIST, Collections.emptyList());
-        }
-
-        request.setAttribute("pageNumber", startNumber / PAGE_SIZE + 1);
-        request.setAttribute("postList", postList);
-        request.setAttribute("pageCount", pageCount);
-        return forwardHomePage;
+        return requestStringBuilder.build();
     }
 
-    int calculateStartNumber(CommandRequest request) throws NumberFormatException {
+    private int calculateStartNumber(CommandRequest request) throws NumberFormatException {
         int startNumber = 0;
         if (request.hasParameter("page_number")) {
             startNumber = Integer.parseInt(request.getParameter("page_number"));

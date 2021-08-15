@@ -15,6 +15,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * the servlet that processes the request received from the client,
+ * performs the necessary {@link Command} based on the 'command' parameter in the URL
+ * and transmits the necessary response to the server.
+ *
+ * @author d0mpi
+ * @version 1.0
+ * @see HttpServlet
+ * @see CommandResponse
+ * @see by.bsu.d0mpi.UP_PostGallery.command.CommandRequest
+ * @see Command
+ */
 @WebServlet(urlPatterns = "/controller")
 @MultipartConfig
 public class ApplicationController extends HttpServlet {
@@ -36,6 +48,10 @@ public class ApplicationController extends HttpServlet {
         super.init();
     }
 
+    /**
+     * Parses the command from the url and passes control to it,
+     * then executes the received response
+     */
     private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final String commandName = req.getParameter(COMMAND_PARAM_NAME);
         final Command command = Command.withName(commandName);

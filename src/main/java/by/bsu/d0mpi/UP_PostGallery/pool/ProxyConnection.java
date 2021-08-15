@@ -8,6 +8,10 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * Proxy class containing {@link Connection} and makes it easier to work with {@link BasicConnectionPool}
+ * Allows to compare connection with each other.
+ */
 public class ProxyConnection implements Connection, Comparable<ProxyConnection> {
 
     @Getter
@@ -80,7 +84,7 @@ public class ProxyConnection implements Connection, Comparable<ProxyConnection> 
         BasicConnectionPool.getInstance().releaseConnection(this);
     }
 
-    void realClose() throws SQLException{
+    void realClose() throws SQLException {
         connection.close();
     }
 

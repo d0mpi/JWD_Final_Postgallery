@@ -14,6 +14,12 @@ import static by.bsu.d0mpi.UP_PostGallery.command.page.ShowPostEditPage.SESSION_
 import static by.bsu.d0mpi.UP_PostGallery.controller.ApplicationController.COMMAND_PARAM_NAME;
 import static by.bsu.d0mpi.UP_PostGallery.model.Role.UNAUTHORIZED;
 
+/**
+ * Filter that checks the user's access rights.
+ *
+ * @author d0mpi
+ * @version 1.0
+ */
 @WebFilter(urlPatterns = "/*")
 public class PermissionFilter implements Filter {
     @Override

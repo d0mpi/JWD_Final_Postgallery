@@ -3,6 +3,13 @@ package by.bsu.d0mpi.UP_PostGallery.util;
 import by.bsu.d0mpi.UP_PostGallery.command.CommandType;
 import lombok.Getter;
 
+/**
+ * Storage af all possible sort types.
+ *
+ * @author d0mpi
+ * @version 1.0
+ * @see MySQLPageRequest
+ */
 public enum PageSortType {
     LENGTH("posts.post_length", false),
     WINGSPAN("posts.post_wingspan", false),
@@ -35,6 +42,13 @@ public enum PageSortType {
         this.descending = isDescending;
     }
 
+    /**
+     * Allows you to find the sorting type in the storage by name.
+     *
+     * @param name name of sort type
+     * @return type of sorting depending on the name, if type with this name does not exists
+     * it returns {@link #DATE_DESC}
+     */
     public static PageSortType of(String name) {
         for (PageSortType sortType : values()) {
             if (sortType.name().equalsIgnoreCase(name)) {

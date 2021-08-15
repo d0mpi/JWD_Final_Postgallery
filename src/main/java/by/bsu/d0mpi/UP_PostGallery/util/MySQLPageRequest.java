@@ -2,6 +2,15 @@ package by.bsu.d0mpi.UP_PostGallery.util;
 
 import lombok.Getter;
 
+/**
+ * Class is responsible for building request query string with help
+ * of builder pattern, needed for the {@link by.bsu.d0mpi.UP_PostGallery.dao.PostDao#getPage(PageRequest)}
+ *
+ * @author d0mpi
+ * @version 1.0
+ * @see by.bsu.d0mpi.UP_PostGallery.dao.PostDao
+ * @see PageSortType
+ */
 public class MySQLPageRequest implements PageRequest {
     public static final String DEFAULT_START_PART = "SELECT * FROM posts";
     public static final String COUNT_START_PART = "SELECT COUNT(posts.post_id) FROM posts";
@@ -27,10 +36,18 @@ public class MySQLPageRequest implements PageRequest {
         this.startNumber = startNumber;
     }
 
+    /**
+     * Creates new builder for this class
+     *
+     * @return builder for this class
+     */
     public static Builder newBuilder() {
         return new Builder();
     }
 
+    /**
+     * @return request query string part with filters
+     */
     private String buildRequestFilterPart() {
         StringBuilder requestString = new StringBuilder();
         boolean isFirstFilter = true;
@@ -58,6 +75,9 @@ public class MySQLPageRequest implements PageRequest {
         return requestString.toString();
     }
 
+    /**
+     * @return request query string part with sorting
+     */
     private String buildRequestSortedPart() {
         StringBuilder requestString = new StringBuilder();
         if (sortType != null) {
@@ -69,14 +89,23 @@ public class MySQLPageRequest implements PageRequest {
         return requestString.toString();
     }
 
+    /**
+     * @return request query string start part
+     */
     public String getPageRequestString() {
         return DEFAULT_START_PART + buildRequestFilterPart() + buildRequestSortedPart();
     }
 
+    /**
+     * @return request query string post count part
+     */
     public String getPostsCountRequestString() {
         return COUNT_START_PART + buildRequestFilterPart();
     }
 
+    /**
+     * Implementations of builder pattern for {@link MySQLPageRequest}
+     */
     public static class Builder {
         private int startNumber = 1;
         private String authorFilter = "";
@@ -88,32 +117,67 @@ public class MySQLPageRequest implements PageRequest {
         private Builder() {
         }
 
+        /**
+         * Sets number of the start post on the page.
+         *
+         * @param startNumber number of the start post on the page
+         * @return builder object
+         */
         public Builder startNumber(int startNumber) {
             this.startNumber = startNumber;
             return this;
         }
 
+        /**
+         * Sets author value to request string.
+         *
+         * @param author author from filter input
+         * @return builder object
+         */
         public Builder author(String author) {
             this.authorFilter = author;
             return this;
         }
 
+        /**
+         * Sets date value to request string.
+         *
+         * @param date date from filter input
+         * @return builder object
+         */
         public Builder date(String date) {
             this.dateFilter = date;
             return this;
         }
 
+        /**
+         * Sets hashtag value to request string.
+         *
+         * @param hashtag hashtag from filter input
+         * @return builder object
+         */
         public Builder hashtag(String hashtag) {
             this.hashtagFilter = hashtag;
             return this;
         }
 
+        /**
+         * Sets sort type to request string.
+         *
+         * @param sortType sort type from sort input
+         * @return builder object
+         */
         public Builder sortType(PageSortType sortType) {
             this.sortType = sortType;
             this.isDescendingSort = sortType.isDescending();
             return this;
         }
 
+        /**
+         * Creates new {@link MySQLPageRequest} instance
+         *
+         * @return built request query string
+         */
         public MySQLPageRequest build() {
             return new MySQLPageRequest(authorFilter, dateFilter, hashtagFilter, sortType, isDescendingSort, startNumber);
         }

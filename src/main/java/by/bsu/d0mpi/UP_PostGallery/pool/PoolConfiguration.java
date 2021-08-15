@@ -5,7 +5,16 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.TimerTask;
 
+/**
+ * A class containing all the necessary information for the connection pool configuration.
+ *
+ * @author d0mpi
+ * @version 1.0
+ * @see BasicConnectionPool
+ * @see Properties
+ */
 public class PoolConfiguration {
     public static final String DATABASE_PROPERTIES_PATH = "database.properties";
     protected final int DB_TIME_OUT;
@@ -20,6 +29,11 @@ public class PoolConfiguration {
 
     private static PoolConfiguration instance;
 
+    /**
+     * Provide a global access point to the instance of the {@link PoolConfiguration} class.
+     *
+     * @return the only instance of the {@link PoolConfiguration} class
+     */
     public static PoolConfiguration getInstance() {
         PoolConfiguration localInstance = instance;
         if (localInstance == null) {
@@ -33,6 +47,10 @@ public class PoolConfiguration {
         return localInstance;
     }
 
+    /**
+     * Using {@link Properties}, it gets the configuration information from the file
+     * and writes it to the corresponding fields of the class.
+     */
     protected PoolConfiguration() {
         Properties poolProperties = new Properties();
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(DATABASE_PROPERTIES_PATH)) {

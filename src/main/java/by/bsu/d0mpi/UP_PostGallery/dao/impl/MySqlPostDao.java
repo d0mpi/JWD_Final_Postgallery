@@ -2,6 +2,7 @@ package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.PostDao;
 import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
+import by.bsu.d0mpi.UP_PostGallery.model.Like;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
 import by.bsu.d0mpi.UP_PostGallery.service.MyPair;
@@ -19,6 +20,22 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * Class that provides operations on {@link Post} contained in the MySQL database.
+ * Database connections are taken from the {@link BasicConnectionPool}
+ * Implements thread-safe Singleton pattern using double checked locking idiom.
+ *
+ * @author d0mpi
+ * @version 1.0
+ * @see BasicConnectionPool
+ * @see MySqlAbstractDao
+ * @see by.bsu.d0mpi.UP_PostGallery.service.PostService
+ * @see ResultSet
+ * @see by.bsu.d0mpi.UP_PostGallery.pool.ProxyConnection
+ * @see DAOException
+ * @see PreparedStatement
+ * @see by.bsu.d0mpi.UP_PostGallery.util.MySQLPageRequest
+ */
 public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements PostDao {
     private static final String SQL_UPDATE_POST =
             "UPDATE posts SET post_model = ?, post_type = ?,post_length = ?, post_wingspan = ?, post_height = ?," +
@@ -47,6 +64,11 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
 
     private static volatile MySqlPostDao instance;
 
+    /**
+     * Provide a global access point to the instance of the {@link MySqlPostDao} class.
+     *
+     * @return the only instance of the {@link MySqlPostDao} class
+     */
     public static MySqlPostDao getInstance() {
         MySqlPostDao localInstance = instance;
         if (localInstance == null) {
@@ -60,6 +82,12 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
         return localInstance;
     }
 
+    /**
+     * @param connection connection with the MySQL database
+     * @param rs         the object to which the received data will be written
+     * @return {@link Post} of all {@link Post} objects received from the database
+     * @throws SQLException if something goes wrong during receiving the next entity in the {@link ResultSet}
+     */
     @Override
     protected List<Post> getRequestResult(Connection connection, ResultSet rs) throws SQLException {
         List<Post> posts = new ArrayList<>();
@@ -92,6 +120,9 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
     }
 
 
+    /**
+     * sets all {@link Like} parameters necessary for creating entity in the database
+     */
     @Override
     protected void setCreateStatementArgs(PreparedStatement statement, Post entity) throws SQLException {
         setUpdateStatementArgs(statement, entity);
@@ -102,6 +133,9 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
         statement.setString(12, created_date);
     }
 
+    /**
+     * sets all {@link Like} parameters necessary for updating entity in the database
+     */
     @Override
     protected void setUpdateStatementArgs(PreparedStatement statement, Post entity) throws SQLException {
         statement.setString(1, entity.getModel());
@@ -118,6 +152,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
         statement.setInt(12, entity.getId());
     }
 
+
     protected void setAndExecuteHashtagStatement(PreparedStatement statement, Post entity) throws SQLException {
         for (String hashtag : entity.getHashtags()) {
             statement.setString(1, hashtag);
@@ -126,6 +161,13 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
         }
     }
 
+    /**
+     * adds {@link Post} entity to the MySQL database and hashtags
+     *
+     * @param entity the {@link Post} object the information about
+     *               which should be added to the database
+     * @return {@link Post} object if it was added to the database and null otherwise
+     */
     @Override
     public Post create(Post entity) {
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
@@ -149,6 +191,12 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
         return entity;
     }
 
+    /**
+     * update information of the {@link Post} entity in the MySQL database
+     *
+     * @param entity the {@link Post} object the information about which should be updated in the database
+     * @return {@link Post} object if information about it was updated and null otherwise
+     */
     @Override
     public Post update(Post entity) {
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
@@ -167,6 +215,12 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
         }
     }
 
+    /**
+     * Finds all posts belong to the user with specified login
+     *
+     * @param login the username of the user you want to get information about
+     * @return {@link List} of {@link Post} objects belong to the specified user
+     */
     @Override
     public List<Post> getPostsByAuthorLogin(String login) {
         try (final Connection connection = BasicConnectionPool.getInstance().getConnection();
@@ -181,7 +235,12 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
         }
     }
 
-
+    /**
+     * Finds all posts with specified filters and sort type according to the page number.
+     *
+     * @param pageRequest constructed query string
+     * @return {@link MyPair<>} contained received {@link List} of posts and total number of posts
+     */
     @Override
     public MyPair<List<Post>, Integer> getPage(PageRequest pageRequest) {
         List<Post> posts;

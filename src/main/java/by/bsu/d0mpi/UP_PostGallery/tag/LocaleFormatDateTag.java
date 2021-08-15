@@ -16,6 +16,18 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+/**
+ * Custom tag which is responsible for formatting the date depending on {@link Cookie}
+ *
+ * @author d0mpi
+ * @version 1.0
+ * @see PageContext
+ * @see Cookie
+ * @see Locale
+ * @see SimpleDateFormat
+ * @see JspWriter
+ * @see HttpServletRequest
+ */
 public class LocaleFormatDateTag extends SimpleTagSupport {
 
     @Setter

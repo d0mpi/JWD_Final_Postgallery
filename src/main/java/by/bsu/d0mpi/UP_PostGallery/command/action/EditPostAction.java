@@ -5,27 +5,30 @@ import by.bsu.d0mpi.UP_PostGallery.command.CommandRequest;
 import by.bsu.d0mpi.UP_PostGallery.command.CommandResponse;
 import by.bsu.d0mpi.UP_PostGallery.command.SimpleCommandResponse;
 import by.bsu.d0mpi.UP_PostGallery.model.Post;
+import by.bsu.d0mpi.UP_PostGallery.model.User;
 import by.bsu.d0mpi.UP_PostGallery.service.PostService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static by.bsu.d0mpi.UP_PostGallery.controller.ImageServlet.IMAGES_UPLOAD_PATH;
-import static by.bsu.d0mpi.UP_PostGallery.controller.ImageServlet.PLANE_IMAGE_POSTFIX;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-
+/**
+ * Implementation of the Command interface, which is responsible
+ * for editing the {@link Post} in the database and the feed of posts
+ * by a registered {@link User} using {@link AddPostAction#execute} method.
+ * Implements thread-safe Singleton pattern using double checked locking idiom.
+ *
+ * @author d0mpi
+ * @version 1.0
+ * @see Command
+ * @see CommandResponse
+ * @see PostService
+ * @see Post
+ */
 public class EditPostAction implements Command {
     private static final Logger logger = LogManager.getLogger();
     public static final String SESSION_EDIT_POST_ID = "lastEditPostId";
@@ -34,11 +37,16 @@ public class EditPostAction implements Command {
     private final CommandResponse redirectHomePage;
     private final PostService postService;
 
-    public EditPostAction() {
+    private EditPostAction() {
         redirectHomePage = new SimpleCommandResponse("/controller?command=main_page", true);
         postService = PostService.simple();
     }
 
+    /**
+     * Provide a global access point to the instance of the {@link DeletePostAction} class.
+     *
+     * @return the only instance of the {@link DeletePostAction} class
+     */
     public static EditPostAction getInstance() {
         EditPostAction localInstance = instance;
         if (localInstance == null) {
@@ -52,6 +60,13 @@ public class EditPostAction implements Command {
         return localInstance;
     }
 
+    /**
+     * Parses post data from the received request and changes post information.
+     *
+     * @param request the object contains a request received from the client
+     * @return an object of the {@link CommandResponse} class with redirection to the main page
+     * after successful or unsuccessful editing the post.
+     */
     @Override
     public CommandResponse execute(CommandRequest request) {
         HttpSession session = request.getCurrentSession().orElse(null);
@@ -94,5 +109,4 @@ public class EditPostAction implements Command {
 
         return redirectHomePage;
     }
-
 }

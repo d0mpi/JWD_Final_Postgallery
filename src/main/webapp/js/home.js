@@ -3,7 +3,6 @@ $(document).ready(function () {
         let id = $(this).attr("value");
         let result = confirm("Are you sure?");
         if (result) {
-            $(this).closest(".card-box").remove();
             $.ajax({
                 type: "post",
                 url: "controller",
@@ -11,7 +10,8 @@ $(document).ready(function () {
                     "command": "delete_post",
                     "post_id": id
                 },
-                success: function (data) {
+                success: function () {
+                    $(this).closest(".card-box").remove();
                 }
             });
         }
