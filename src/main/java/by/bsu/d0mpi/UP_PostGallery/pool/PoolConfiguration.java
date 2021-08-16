@@ -16,7 +16,6 @@ import java.util.TimerTask;
  * @see Properties
  */
 public class PoolConfiguration {
-    public static final String DATABASE_PROPERTIES_PATH = "database.properties";
     protected final int DB_TIME_OUT;
     protected final String DB_DRIVER;
     protected final String DB_URL;
@@ -34,13 +33,13 @@ public class PoolConfiguration {
      *
      * @return the only instance of the {@link PoolConfiguration} class
      */
-    public static PoolConfiguration getInstance() {
+    public static PoolConfiguration getInstance(String propertyFile) {
         PoolConfiguration localInstance = instance;
         if (localInstance == null) {
             synchronized (PoolConfiguration.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new PoolConfiguration();
+                    instance = localInstance = new PoolConfiguration(propertyFile);
                 }
             }
         }
@@ -51,9 +50,9 @@ public class PoolConfiguration {
      * Using {@link Properties}, it gets the configuration information from the file
      * and writes it to the corresponding fields of the class.
      */
-    protected PoolConfiguration() {
+    protected PoolConfiguration(String propertyFile) {
         Properties poolProperties = new Properties();
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(DATABASE_PROPERTIES_PATH)) {
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propertyFile)) {
             poolProperties.load(inputStream);
         } catch (IOException ioException) {
             ioException.printStackTrace();

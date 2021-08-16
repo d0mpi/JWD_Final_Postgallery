@@ -8,6 +8,10 @@
     align-items: center;
     width: inherit;
 }
+.main-col{
+    max-width: 1600px;
+    background:rgba(255, 255, 255, 0.28);
+}
 
 .profile-main-box {
     width: 100%;

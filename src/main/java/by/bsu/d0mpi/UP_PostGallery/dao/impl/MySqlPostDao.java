@@ -11,14 +11,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 /**
  * Class that provides operations on {@link Post} contained in the MySQL database.
@@ -103,7 +100,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             BigDecimal speed = rs.getBigDecimal(9);
             BigDecimal distance = rs.getBigDecimal(10);
             BigDecimal price = rs.getBigDecimal(11);
-            Date createdDate = rs.getDate(12);
+            Date createdDate = rs.getTimestamp(12);
             String author = rs.getString(13);
             PreparedStatement statement2 = connection.prepareStatement(SQL_SELECT_HASHTAGS_BY_POST_ID);
             statement2.setInt(1, id);
@@ -184,8 +181,8 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
                 return null;
             }
             setAndExecuteHashtagStatement(hashtagStatement, entity);
-        } catch (SQLException | DAOException e) {
-            logger.error("DB connection error", e);
+        } catch (SQLException e) {
+            logger.error("DB connection error");
             return null;
         }
         return entity;
@@ -209,7 +206,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             statement1.executeUpdate();
             setAndExecuteHashtagStatement(hashtagStatement, entity);
             return entity;
-        } catch (SQLException | DAOException e) {
+        } catch (SQLException e) {
             logger.error("DB connection error", e);
             return entity;
         }
@@ -229,7 +226,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             return getRequestResult(connection, resultSet);
-        } catch (SQLException | DAOException e) {
+        } catch (SQLException e) {
             logger.error("DB connection error", e);
             return Collections.emptyList();
         }
@@ -279,7 +276,7 @@ public class MySqlPostDao extends MySqlAbstractDao<Integer, Post> implements Pos
             resultSet1.next();
             int postCount = resultSet1.getInt(1);
             return new MyPair<>(posts, postCount);
-        } catch (SQLException | DAOException | ParseException e) {
+        } catch (SQLException | ParseException e) {
             logger.error("DB connection error", e);
             e.printStackTrace();
             return new MyPair<>(Collections.emptyList(), 0);

@@ -16,9 +16,12 @@ import javax.servlet.annotation.WebListener;
  */
 @WebListener
 public class ApplicationContextListener implements ServletContextListener {
+
+    public static final String DATABASE_PROPERTIES = "database.properties";
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        BasicConnectionPool.getInstance().init();
+        BasicConnectionPool.getInstance().init(DATABASE_PROPERTIES);
     }
 
     @Override

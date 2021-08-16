@@ -72,7 +72,7 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
             consumer.accept(statement);
             ResultSet resultSet = statement.executeQuery();
             return getRequestResult(connection, resultSet);
-        } catch (SQLException | DAOException e) {
+        } catch (SQLException e) {
             logger.error("Dao connection exception");
             e.printStackTrace();
             return Collections.emptyList();
@@ -97,7 +97,7 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
              final PreparedStatement statement = connection.prepareStatement(sqlFindAll)) {
             ResultSet resultSet = statement.executeQuery();
             return getRequestResult(connection, resultSet);
-        } catch (SQLException | DAOException e) {
+        } catch (SQLException e) {
             logger.error("Dao connection exception");
             e.printStackTrace();
             return Collections.emptyList();
@@ -137,7 +137,7 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
             statement.setInt(1, (Integer) id);
             statement.executeUpdate();
             deleted = true;
-        } catch (SQLException | DAOException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return deleted;
@@ -157,7 +157,7 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
             statement.setInt(1, entity.getId());
             statement.executeUpdate();
             deleted = true;
-        } catch (SQLException | DAOException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return deleted;
@@ -188,7 +188,7 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
                 logger.error("No autoincremented index after trying to add record into table user");
                 return null;
             }
-        } catch (SQLException | DAOException e) {
+        } catch (SQLException e) {
             logger.error("DB connection error", e);
             return null;
         }
@@ -211,7 +211,7 @@ public abstract class MySqlAbstractDao<K extends Number, T extends DatabaseEntit
             ResultSet resultSet = statement.executeQuery(sqlCountAll);
             resultSet.next();
             return resultSet.getInt(1);
-        } catch (SQLException | DAOException e) {
+        } catch (SQLException e) {
             logger.error("DB connection error", e);
             return 0;
         }

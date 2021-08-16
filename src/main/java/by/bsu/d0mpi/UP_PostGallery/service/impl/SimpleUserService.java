@@ -5,8 +5,6 @@ import by.bsu.d0mpi.UP_PostGallery.dao.PostDao;
 import by.bsu.d0mpi.UP_PostGallery.dao.UserDao;
 import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlUserDao;
 import by.bsu.d0mpi.UP_PostGallery.model.DatabaseEntity;
-import by.bsu.d0mpi.UP_PostGallery.model.Like;
-import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import by.bsu.d0mpi.UP_PostGallery.model.User;
 import by.bsu.d0mpi.UP_PostGallery.service.UserService;
 import org.apache.logging.log4j.LogManager;

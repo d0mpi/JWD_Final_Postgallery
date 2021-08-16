@@ -1,8 +1,7 @@
 package by.bsu.d0mpi.UP_PostGallery.pool;
 
-import by.bsu.d0mpi.UP_PostGallery.dao.impl.MySqlLikeDao;
-import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
 import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +10,6 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Enumeration;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.*;
@@ -43,7 +41,8 @@ public class BasicConnectionPool implements ConnectionPool {
     private final BlockingDeque<ProxyConnection> freeConnections;
     private final BlockingDeque<ProxyConnection> usedConnections;
     private static BasicConnectionPool instance;
-    private final PoolConfiguration config;
+    @Getter
+    private PoolConfiguration config = null;
     private final AtomicBoolean isActive;
 
     /**
@@ -69,14 +68,9 @@ public class BasicConnectionPool implements ConnectionPool {
 
 
     private BasicConnectionPool() {
-        config = PoolConfiguration.getInstance();
         freeConnections = new LinkedBlockingDeque<>();
         usedConnections = new LinkedBlockingDeque<>();
         isActive = new AtomicBoolean(false);
-
-        final Timer timer = new Timer(true);
-        final CheckPool checkPool = new CheckPool();
-        timer.schedule(checkPool, config.DB_INTERVAL, config.DB_INTERVAL);
     }
 
     /**
@@ -85,8 +79,9 @@ public class BasicConnectionPool implements ConnectionPool {
      * Also registers the driver for connecting to the database.
      * Uses {@link ReentrantLock} to avoid concurrency problems.
      */
-    public void init() {
+    public void init(String propertyFile) {
         locker.lock();
+        config = PoolConfiguration.getInstance(propertyFile);
         if (isActive.get())
             this.destroy();
         try {
@@ -94,10 +89,14 @@ public class BasicConnectionPool implements ConnectionPool {
             for (int counter = 0; counter < config.DB_INIT_POOL_SIZE; counter++) {
                 freeConnections.put(createConnection());
             }
+            final Timer timer = new Timer(true);
+            final CheckPool checkPool = new CheckPool();
+            timer.schedule(checkPool, config.DB_INTERVAL, config.DB_INTERVAL);
             isActive.set(true);
+            locker.unlock();
+
         } catch (SQLException | InterruptedException e) {
             logger.fatal("Impossible to initialize connection pool", e);
-        } finally {
             locker.unlock();
         }
     }
@@ -121,10 +120,9 @@ public class BasicConnectionPool implements ConnectionPool {
      * Uses {@link ReentrantLock} to avoid concurrency problems.
      *
      * @return {@link ProxyConnection} from the {@link BasicConnectionPool}
-     * @throws DAOException - if something goes wrong with DAO
      */
     @Override
-    public ProxyConnection getConnection() throws DAOException {
+    public ProxyConnection getConnection() {
         locker.lock();
         ProxyConnection connection = null;
 
@@ -169,7 +167,6 @@ public class BasicConnectionPool implements ConnectionPool {
         }
 
         logger.info(String.format("Connection was gotten from pool. Current pool size: %d used connections; %d free connection%n", usedConnections.size(), freeConnections.size()));
-        System.out.printf("Connection was gotten from pool. Current pool size: %d used connections; %d free connection%n", usedConnections.size(), freeConnections.size());
 
         locker.unlock();
         return connection;
@@ -189,7 +186,6 @@ public class BasicConnectionPool implements ConnectionPool {
             return new ProxyConnection(DriverManager.getConnection(config.DB_URL, config.DB_USER_NAME, config.DB_PASSWORD));
         } catch (SQLException e) {
             condition.signalAll();
-            e.printStackTrace();
             locker.unlock();
             throw new SQLException("Connection not available", e);
         }
@@ -222,8 +218,7 @@ public class BasicConnectionPool implements ConnectionPool {
         condition.signalAll();
         locker.unlock();
 
-        System.out.printf("Connection was returned into pool. Current pool size: %d used connections; %d free connection%n", usedConnections.size(), freeConnections.size());
-        logger.debug(String.format("Connection was returned into pool. Current pool size: %d used connections; %d free connection", usedConnections.size(), freeConnections.size()));
+        logger.info(String.format("Connection was returned into pool. Current pool size: %d used connections; %d free connection", usedConnections.size(), freeConnections.size()));
     }
 
     /**
@@ -244,26 +239,24 @@ public class BasicConnectionPool implements ConnectionPool {
 
 
     private void registerDrivers() {
-        System.out.println("sql drivers registration start...");
         try {
             Class.forName(config.DB_DRIVER);
-            System.out.println("registration successful");
+            logger.info("registration successful");
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("registration driver failed");
         }
         this.isActive.set(true);
 
     }
 
     private void deregisterDrivers() {
-        System.out.println("sql drivers unregistering start...");
         final Enumeration<Driver> drivers = DriverManager.getDrivers();
         while (drivers.hasMoreElements()) {
             try {
                 DriverManager.deregisterDriver(drivers.nextElement());
+                logger.info("unregistering successful");
             } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println("unregistering drivers failed");
+                logger.error("unregistering drivers failed");
             }
         }
         this.isActive.set(false);
@@ -277,9 +270,9 @@ public class BasicConnectionPool implements ConnectionPool {
             if (isNeedToReducePool()) {
                 for (int i = config.DB_GROW_SIZE; i > 0; i--) {
                     try {
-                        final Connection connection = freeConnections.take();
+                        freeConnections.take();
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        logger.error("error during taking connection");
                     }
 
                 }
@@ -289,6 +282,14 @@ public class BasicConnectionPool implements ConnectionPool {
         private boolean isNeedToReducePool() {
             return freeConnections.size() > Math.max(config.DB_INIT_POOL_SIZE + 1, config.DB_GROW_SIZE + 1);
         }
+    }
+
+    public int getNumberOfFreeConnections() {
+        return freeConnections.size();
+    }
+
+    public int getNumberOfUsedConnections() {
+        return usedConnections.size();
     }
 
 }

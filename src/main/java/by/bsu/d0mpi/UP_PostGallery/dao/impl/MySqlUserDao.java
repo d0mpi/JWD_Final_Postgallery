@@ -2,8 +2,6 @@ package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 
 import by.bsu.d0mpi.UP_PostGallery.dao.UserDao;
 import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
-import by.bsu.d0mpi.UP_PostGallery.model.Like;
-import by.bsu.d0mpi.UP_PostGallery.model.Post;
 import by.bsu.d0mpi.UP_PostGallery.model.Role;
 import by.bsu.d0mpi.UP_PostGallery.model.User;
 import by.bsu.d0mpi.UP_PostGallery.pool.BasicConnectionPool;
@@ -142,7 +140,7 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
             setUpdateStatementArgs(statement, entity);
             statement.executeUpdate();
             return entity;
-        } catch (SQLException | DAOException e) {
+        } catch (SQLException e) {
             logger.error("DB connection error", e);
             return entity;
         }
@@ -212,7 +210,7 @@ public class MySqlUserDao extends MySqlAbstractDao<Integer, User> implements Use
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             return resultSet.getInt(1);
-        } catch (SQLException | DAOException e) {
+        } catch (SQLException e) {
             logger.error("DB connection error", e);
             return 0;
         }

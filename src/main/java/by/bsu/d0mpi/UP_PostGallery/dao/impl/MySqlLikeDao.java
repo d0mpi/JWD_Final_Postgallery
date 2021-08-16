@@ -1,6 +1,5 @@
 package by.bsu.d0mpi.UP_PostGallery.dao.impl;
 
-import by.bsu.d0mpi.UP_PostGallery.command.page.ShowContactPage;
 import by.bsu.d0mpi.UP_PostGallery.dao.LikeDao;
 import by.bsu.d0mpi.UP_PostGallery.exception.DAOException;
 import by.bsu.d0mpi.UP_PostGallery.model.Like;
@@ -129,7 +128,7 @@ public class MySqlLikeDao extends MySqlAbstractDao<Integer, Like> implements Lik
             setUpdateStatementArgs(statement, entity);
             statement.executeUpdate();
             return entity;
-        } catch (SQLException | DAOException e) {
+        } catch (SQLException e) {
             logger.error("DB connection error", e);
             return entity;
         }
@@ -148,7 +147,7 @@ public class MySqlLikeDao extends MySqlAbstractDao<Integer, Like> implements Lik
             statement.setInt(1, postId);
             statement.setString(2, userLogin);
             statement.executeUpdate();
-        } catch (SQLException | DAOException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

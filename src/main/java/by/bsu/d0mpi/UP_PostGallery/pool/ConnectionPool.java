@@ -10,7 +10,7 @@ public interface ConnectionPool {
 
     void releaseConnection(ProxyConnection connection);
 
-    void init();
+    void init(String propertyFileName);
 
     void destroy();
 }
