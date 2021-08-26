@@ -42,6 +42,7 @@ body {
 
 .circle-info {
     display: flex;
+    color: #0b2852;
     justify-content: center;
     align-items: center;
     margin: 50px;
@@ -229,7 +230,7 @@ h3 {
 
     font-family: Ubuntu, sans-serif;
     color: #0b2852;
-    font-size: 5vw;
+    font-size: 100px;
 }
 
 .size-title:before{
@@ -525,4 +526,11 @@ h3 {
 .add-post-img img{
     width: 100%;
     border-radius: 15px;
+}
+
+.sort-left{
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

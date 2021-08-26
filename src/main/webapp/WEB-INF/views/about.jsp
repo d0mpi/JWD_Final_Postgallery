@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${cookie['language'].value}" scope="session"/>
 <fmt:setBundle basename="text"/>
@@ -149,6 +149,16 @@
                         <fmt:message key="aboutHashtagText"/>
                     </div>
                 </div>
+            </div>
+            <div class="part back-blur">
+                <div class="sort-left col-33">
+                        <i class="fas fa-sort-amount-up fa-10x"></i>
+                </div>
+                <div class="col-66">
+                    <div class="col-full contact-title"><fmt:message key="filterSortTitle"/></div>
+                    <div class="col-full contact-text"><fmt:message key="sortingText"/></div>
+                </div>
+
             </div>
         </div>
     </div>
