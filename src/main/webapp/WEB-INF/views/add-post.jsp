@@ -95,7 +95,7 @@
                                                 <option value="bomber"><fmt:message key="bomber" bundle="${plane_types}"/></option>
                                                 <option value="attack"><fmt:message key="attack" bundle="${plane_types}"/></option>
                                                 <option value="reconnaissance"><fmt:message key="reconnaissance" bundle="${plane_types}"/></option>
-                                                <option value="multirole"><fmt:message key="multirole" bundle="${plane_types}"/></option>
+                                                <option value="drone"><fmt:message key="drone" bundle="${plane_types}"/></option>
                                                 <option value="airborne"><fmt:message key="airborne" bundle="${plane_types}"/></option>
                                                 <option value="experimental"><fmt:message key="experimental" bundle="${plane_types}"/></option>
                                                 <option value="electronic"><fmt:message key="electronic" bundle="${plane_types}"/></option>
