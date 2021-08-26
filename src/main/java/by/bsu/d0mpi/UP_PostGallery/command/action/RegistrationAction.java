@@ -82,7 +82,7 @@ public class RegistrationAction implements Command {
     public CommandResponse execute(CommandRequest request) {
         final String login = request.getParameter(REQUEST_LOGIN_PARAM);
         final String password = request.getParameter(REQUEST_PASSWORD_PARAM);
-        final User enteredUser = new User(login, password, new Date());
+        final User enteredUser = new User(login, password, new Date(System.currentTimeMillis()));
         if (userService.isLoginPresented(login)) {
             request.setAttribute(REQUEST_ATTRIBUTE_ERROR_TEXT, "User with this login is already exist. Try again.");
             return registrationPageResponse;

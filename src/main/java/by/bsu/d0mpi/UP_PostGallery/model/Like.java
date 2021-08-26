@@ -24,5 +24,4 @@ public class Like extends DatabaseEntity {
         this.postId = postId;
         this.authorLogin = authorLogin;
     }
-
 }

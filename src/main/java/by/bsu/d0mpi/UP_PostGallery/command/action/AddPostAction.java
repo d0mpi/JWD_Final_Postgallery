@@ -151,7 +151,7 @@ public class AddPostAction implements Command {
         if (request.getParameter("hashtags") != null && !request.getParameter("hashtags").equals("")) {
             return Arrays.stream(
                     request.getParameter("hashtags").
-                            split(" ")).distinct().collect(Collectors.toList());
+                            split(" ")).distinct().map((string)->(string.replaceAll("#", ""))).collect(Collectors.toList());
         } else {
             return new ArrayList<>();
         }

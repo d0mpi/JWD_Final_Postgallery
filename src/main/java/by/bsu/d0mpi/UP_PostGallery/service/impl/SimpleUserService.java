@@ -66,7 +66,8 @@ public class SimpleUserService implements UserService {
     public User createEntity(User user) {
         final char[] rawPassword = user.getPassword().toCharArray();
         final String encryptedPassword = hasher.hashToString(MIN_COST, rawPassword);
-        return userDao.create(new User(user.getLogin(), encryptedPassword, user.getRole()));
+        user.setPassword(encryptedPassword);
+        return userDao.create(user);
     }
 
     /**
